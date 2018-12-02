@@ -14,3 +14,10 @@
 /tests/phpbb_unit_tests.sqlite2
 /tests/test_config*.php
 /tests/tmp/*
+
+# Log file
+*.log
+
+# IDE generated files
+*.iml
+.idea/

@@ -1,0 +1,19 @@
+Subject: 版面帖子通知 - "{FORUM_NAME}"
+
+Hello {USERNAME},
+
+您收到这个通知是因为您在 "{SITENAME}" 上关注了版面 "{FORUM_NAME}". 这个版面在您上次访问后主题 "{TOPIC_TITLE}"收到了<!-- IF AUTHOR_NAME !== '' --> 来自于 {AUTHOR_NAME} 的<!-- ENDIF -->新回复。您可以使用下面的链接查看这个主题, 在您再次查看这个主题前不会再发送新通知。
+
+{U_NEWEST_POST}
+
+如果您想查看这个主题，点击下面的链接：
+{U_TOPIC}
+
+如果您想查看这个版面，点击下面的链接：
+{U_FORUM}
+
+如果您不想再关注这个版面, 您可以在上面的版面中点击 "取消关注版面" 链接或点击下面的链接:
+
+{U_STOP_WATCHING_FORUM}
+
+{EMAIL_SIG}

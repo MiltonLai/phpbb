@@ -1,0 +1,12 @@
+Subject: 帖子审核未通过 - "{POST_SUBJECT}"
+
+Hello {USERNAME},
+
+您收到这个通知是因为您在 "{SITENAME}" 上发表的帖子 "{POST_SUBJECT}" 未通过版主或管理员审核.
+
+未通过的理由是:
+
+{REASON}
+
+
+{EMAIL_SIG}
