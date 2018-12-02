@@ -669,7 +669,9 @@ if (sizeof($topic_list))
 			'VIEWS'				=> $row['topic_views'],
 			'TOPIC_TITLE'		=> censor_text($row['topic_title']),
 			'TOPIC_TYPE'		=> $topic_type,
+            'FORUM_NAME'		=> (isset($row['forum_name'])) ? $row['forum_name'] : $forum_data['forum_name'],
 
+            'TOPIC_IMG_STYLE'		=> $folder_img,
 			'TOPIC_FOLDER_IMG'		=> $user->img($folder_img, $folder_alt),
 			'TOPIC_FOLDER_IMG_SRC'	=> $user->img($folder_img, $folder_alt, false, '', 'src'),
 			'TOPIC_FOLDER_IMG_ALT'	=> $user->lang[$folder_alt],
@@ -700,6 +702,7 @@ if (sizeof($topic_list))
 			'U_LAST_POST_AUTHOR'	=> get_username_string('profile', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
 			'U_TOPIC_AUTHOR'		=> get_username_string('profile', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
 			'U_VIEW_TOPIC'			=> $view_topic_url,
+            'U_VIEW_FORUM'			=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']),
 			'U_MCP_REPORT'			=> append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=reports&amp;mode=reports&amp;f=' . $topic_forum_id . '&amp;t=' . $topic_id, true, $user->session_id),
 			'U_MCP_QUEUE'			=> $u_mcp_queue,
 

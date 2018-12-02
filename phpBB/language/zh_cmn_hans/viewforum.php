@@ -53,6 +53,7 @@ $lang = array_merge($lang, array(
 	'NO_NEW_POSTS_HOT'		=> '无新帖[活跃]',	// Not used anymore
 	'NO_NEW_POSTS_LOCKED'	=> '无新帖[锁定]',	// Not used anymore
 	'NO_READ_ACCESS'		=> '您没有阅读本版面帖子的权限。',
+    'NO_FORUMS_IN_CATEGORY'	=> '这个分区没有版面。',
 	'NO_UNREAD_POSTS_HOT'      => '无新帖 [ 活跃 ]',
 	'NO_UNREAD_POSTS_LOCKED'   => '无新帖 [ 锁定 ]',
 
