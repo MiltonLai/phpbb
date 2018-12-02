@@ -1,0 +1,175 @@
+<div class="navbar" role="navigation">
+	<div class="inner">
+		<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+			<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+				<a href="#" class="dropdown-trigger">
+					<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>{L_QUICK_LINKS}</span>
+				</a>
+				<div class="dropdown">
+					<div class="pointer"><div class="pointer-inner"></div></div>
+					<ul class="dropdown-contents" role="menu">
+						<!-- IF S_DISPLAY_SEARCH -->
+						<li class="separator"></li>
+						<!-- IF S_REGISTERED_USER -->
+						<li>
+							<a href="{U_SEARCH_SELF}" role="menuitem">
+								<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>{L_SEARCH_SELF}</span>
+							</a>
+						</li>
+						<!-- ENDIF -->
+						<!-- IF S_USER_LOGGED_IN -->
+						<li>
+							<a href="{U_SEARCH_NEW}" role="menuitem">
+								<i class="icon fa-file-o fa-fw icon-red" aria-hidden="true"></i><span>{L_SEARCH_NEW}</span>
+							</a>
+						</li>
+						<!-- ENDIF -->
+						<!-- IF S_LOAD_UNREADS -->
+						<li>
+							<a href="{U_SEARCH_UNREAD}" role="menuitem">
+								<i class="icon fa-file-o fa-fw icon-red" aria-hidden="true"></i><span>{L_SEARCH_UNREAD}</span>
+							</a>
+						</li>
+						<!-- ENDIF -->
+						<li>
+							<a href="{U_SEARCH_UNANSWERED}" role="menuitem">
+								<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>{L_SEARCH_UNANSWERED}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{U_SEARCH_ACTIVE_TOPICS}" role="menuitem">
+								<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>{L_SEARCH_ACTIVE_TOPICS}</span>
+							</a>
+						</li>
+						<li class="separator"></li>
+						<li>
+							<a href="{U_SEARCH}" role="menuitem">
+								<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>{L_SEARCH}</span>
+							</a>
+						</li>
+						<!-- ENDIF -->
+
+						<!-- IF not S_IS_BOT and (S_DISPLAY_MEMBERLIST or U_TEAM) -->
+						<li class="separator"></li>
+						<!-- IF S_DISPLAY_MEMBERLIST -->
+						<li>
+							<a href="{U_MEMBERLIST}" role="menuitem">
+								<i class="icon fa-group fa-fw" aria-hidden="true"></i><span>{L_MEMBERLIST}</span>
+							</a>
+						</li>
+						<!-- ENDIF -->
+						<!-- IF U_TEAM -->
+						<li>
+							<a href="{U_TEAM}" role="menuitem">
+								<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>{L_THE_TEAM}</span>
+							</a>
+						</li>
+						<!-- ENDIF -->
+						<!-- ENDIF -->
+						<li class="separator"></li>
+					</ul>
+				</div>
+			</li>
+
+			<li <!-- IF not S_USER_LOGGED_IN -->data-skip-responsive="true"<!-- ELSE -->data-last-responsive="true"<!-- ENDIF -->>
+			<a href="{U_FAQ}" rel="help" title="{L_FAQ_EXPLAIN}" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>{L_FAQ}</span>
+			</a>
+			</li>
+			<!-- IF U_ACP -->
+			<li data-last-responsive="true">
+				<a href="{U_ACP}" title="{L_ACP}" role="menuitem">
+					<i class="icon fa-cogs fa-fw" aria-hidden="true"></i><span>{L_ACP_SHORT}</span>
+				</a>
+			</li>
+			<!-- ENDIF -->
+			<!-- IF U_MCP -->
+			<li data-last-responsive="true">
+				<a href="{U_MCP}" title="{L_MCP}" role="menuitem">
+					<i class="icon fa-gavel fa-fw" aria-hidden="true"></i><span>{L_MCP_SHORT}</span>
+				</a>
+			</li>
+			<!-- ENDIF -->
+
+			<!-- IF S_REGISTERED_USER -->
+			<li id="username_logged_in" class="rightside" data-skip-responsive="true">
+				<div class="header-profile dropdown-container">
+					<a href="{U_PROFILE}" class="header-avatar dropdown-trigger"><!-- IF CURRENT_USER_AVATAR -->{CURRENT_USER_AVATAR} <!-- ENDIF --> {CURRENT_USERNAME_SIMPLE}</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<ul class="dropdown-contents" role="menu">
+							<!-- IF U_RESTORE_PERMISSIONS -->
+							<li>
+								<a href="{U_RESTORE_PERMISSIONS}">
+									<i class="icon fa-refresh fa-fw" aria-hidden="true"></i><span>{L_RESTORE_PERMISSIONS}</span>
+								</a>
+							</li>
+							<!-- ENDIF -->
+
+							<li>
+								<a href="{U_PROFILE}" title="{L_PROFILE}" role="menuitem">
+									<i class="icon fa-sliders fa-fw" aria-hidden="true"></i><span>{L_PROFILE}</span>
+								</a>
+							</li>
+							<!-- IF U_USER_PROFILE -->
+							<li>
+								<a href="{U_USER_PROFILE}" title="{L_READ_PROFILE}" role="menuitem">
+									<i class="icon fa-user fa-fw" aria-hidden="true"></i><span>{L_READ_PROFILE}</span>
+								</a>
+							</li>
+							<!-- ENDIF -->
+
+							<li class="separator"></li>
+							<li>
+								<a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem">
+									<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<!-- IF S_DISPLAY_PM -->
+			<li class="rightside" data-skip-responsive="true">
+				<a href="{U_PRIVATEMSGS}" role="menuitem">
+					<i class="icon fa-inbox fa-fw" aria-hidden="true"></i><span>{L_PRIVATE_MESSAGES} </span><strong class="badge<!-- IF not PRIVATE_MESSAGE_COUNT --> hidden<!-- ENDIF -->">{PRIVATE_MESSAGE_COUNT}</strong>
+				</a>
+			</li>
+			<!-- ENDIF -->
+			<!-- ELSE -->
+			<li class="rightside"  data-skip-responsive="true">
+				<a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem">
+					<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span>
+				</a>
+			</li>
+			<!-- IF S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) -->
+			<li class="rightside" data-skip-responsive="true">
+				<a href="{U_REGISTER}" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>{L_REGISTER}</span>
+				</a>
+			</li>
+			<!-- ENDIF -->
+			<!-- ENDIF -->
+
+
+		</ul>
+
+		<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+			<li class="breadcrumbs">
+				<span class="crumb"><a href="{U_INDEX}" itemprop="url" accesskey="h" data-navbar-reference="index"><i class="icon fa-home fa-fw"></i><span itemprop="title">{L_INDEX}</span></a></span>
+				<!-- BEGIN navlinks -->
+				<span class="crumb"><a href="{navlinks.U_VIEW_FORUM}" itemprop="url"><span itemprop="title">{navlinks.FORUM_NAME}</span></a></span>
+				<!-- END navlinks -->
+			</li>
+			<!-- IF S_DISPLAY_SEARCH -->
+			<li class="rightside responsive-search">
+				<a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span>
+				</a>
+			</li>
+			<!-- ENDIF -->
+		</ul>
+
+	</div>
+</div>

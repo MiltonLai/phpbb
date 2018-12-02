@@ -57,6 +57,7 @@ $lang = array_merge($lang, array(
 	'ACCOUNT_DEACTIVATED'			=> '您的帐号已经被冻结, 并且只有管理员才能重新激活.',
 	'ACCOUNT_NOT_ACTIVATED'			=> '您的帐号尚未被激活',
 	'ACP'							=> '管理员控制面板',
+    'ACP_SHORT'						=> 'ACP',
 	'ACTIVE'						=> '激活',
 	'ACTIVE_ERROR'					=> '您指定了一个未被激活的用户名，请激活您的帐号后再试一次。如果还是有问题请联络论坛管理员。',
 	'ADMINISTRATOR'					=> '管理员',
@@ -330,6 +331,7 @@ $lang = array_merge($lang, array(
 	'MB'					=> 'MB',
 	'MIB'					=> 'MiB',
 	'MCP'					=> '版主控制面板',
+    'MCP_SHORT'				=> 'MCP',
 	'MEMBERLIST'			=> '用户列表',
 	'MEMBERLIST_EXPLAIN'	=> '查看本站用户的完整列表',
 	'MERGE'					=> '合并',
@@ -465,6 +467,8 @@ $lang = array_merge($lang, array(
 	'PRIVATE_MESSAGES'		=> '站内消息',
 	'PRIVATE_MESSAGING'		=> '站内消息',
 	'PROFILE'				=> '用户控制面板',
+
+    'QUICK_LINKS'			=> '快速链接',
 
 	'RANK'						=> '等级',
 	'READING_FORUM'				=> '查看 %s 版面的主题',

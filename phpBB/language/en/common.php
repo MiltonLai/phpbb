@@ -57,6 +57,7 @@ $lang = array_merge($lang, array(
 	'ACCOUNT_DEACTIVATED'			=> 'Your account has been manually deactivated and is only able to be reactivated by an administrator.',
 	'ACCOUNT_NOT_ACTIVATED'			=> 'Your account has not been activated yet.',
 	'ACP'							=> 'Administration Control Panel',
+    'ACP_SHORT'						=> 'ACP',
 	'ACTIVE'						=> 'active',
 	'ACTIVE_ERROR'					=> 'The specified username is currently inactive. If you have problems activating your account, please contact a board administrator.',
 	'ADMINISTRATOR'					=> 'Administrator',
@@ -330,6 +331,7 @@ $lang = array_merge($lang, array(
 	'MB'					=> 'MB',
 	'MIB'					=> 'MiB',
 	'MCP'					=> 'Moderator Control Panel',
+    'MCP_SHORT'				=> 'MCP',
 	'MEMBERLIST'			=> 'Members',
 	'MEMBERLIST_EXPLAIN'	=> 'View complete list of members',
 	'MERGE'					=> 'Merge',
@@ -465,6 +467,8 @@ $lang = array_merge($lang, array(
 	'PRIVATE_MESSAGES'		=> 'Private messages',
 	'PRIVATE_MESSAGING'		=> 'Private messaging',
 	'PROFILE'				=> 'User Control Panel',
+
+    'QUICK_LINKS'			=> 'Quick links',
 
 	'RANK'						=> 'Rank',
 	'READING_FORUM'				=> 'Viewing topics in %s',
