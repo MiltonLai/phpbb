@@ -42,6 +42,8 @@ echo '|| Clean '
 touch ${TARGET}/config.php
 
 rm -rf ${TARGET}/develop
+rm -rf ${TARGET}/composer.json
+rm -rf ${TARGET}/composer.lock
 rm -rf ${TARGET}/install/data
 rm -rf ${TARGET}/install/install_update.php
 echo '   Clean: Done'
