@@ -55,7 +55,7 @@ $lang = array_merge($lang, array(
 
 	'EDITED_TIMES_TOTAL'	=> '最后由 %1$s 编辑于 %2$s，总共编辑了 %3$d 次',
 	'EDITED_TIME_TOTAL'		=> '最后由 %1$s 编辑于 %2$s，总共编辑了 %3$d 次',
-	'EMAIL_TOPIC'			=> 'Email 给朋友',
+	'EMAIL_TOPIC'			=> '邮件转发',
 	'ERROR_NO_ATTACHMENT'	=> '选择的附件已经不存在',
 
 	'FILE_NOT_FOUND_404'	=> '文件 <strong>%s</strong> 不存在。',
@@ -97,6 +97,7 @@ $lang = array_merge($lang, array(
 	'SHOW_QR'				=> '快速回复',
 	'SUBMIT_VOTE'			=> '提交投票',
 
+    'TOPIC_TOOLS'			=> '主题工具',
 	'TOTAL_VOTES'			=> '总计票数',
 
 	'UNLOCK_TOPIC'			=> '主题解锁',

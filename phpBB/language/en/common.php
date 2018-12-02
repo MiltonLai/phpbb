@@ -147,6 +147,7 @@ $lang = array_merge($lang, array(
 	'CONGRATULATIONS'		=> 'Congratulations to',
 	'CONNECTION_FAILED'		=> 'Connection failed.',
 	'CONNECTION_SUCCESS'	=> 'Connection was successful!',
+    'CONTACT'				=> 'Contact',
 	'COOKIES_DELETED'		=> 'All board cookies successfully deleted.',
 	'CURRENT_TIME'			=> 'It is currently %s',
 

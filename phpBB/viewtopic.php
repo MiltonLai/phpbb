@@ -662,6 +662,7 @@ $template->assign_vars(array(
 	'S_MOD_ACTION' 			=> append_sid("{$phpbb_root_path}mcp.$phpEx", "f=$forum_id&amp;t=$topic_id" . (($start == 0) ? '' : "&amp;start=$start") . "&amp;quickmod=1&amp;redirect=" . urlencode(str_replace('&amp;', '&', $viewtopic_url)), true, $user->session_id),
 
 	'S_VIEWTOPIC'			=> true,
+    'S_UNREAD_VIEW'			=> $view == 'unread',
 	'S_DISPLAY_SEARCHBOX'	=> ($auth->acl_get('u_search') && $auth->acl_get('f_search', $forum_id) && $config['load_search']) ? true : false,
 	'S_SEARCHBOX_ACTION'	=> append_sid("{$phpbb_root_path}search.$phpEx"),
 	'S_SEARCH_LOCAL_HIDDEN_FIELDS'	=> build_hidden_fields($s_search_hidden_fields),
@@ -840,9 +841,11 @@ if (!empty($topic_data['poll_start']))
 	}
 
 	$poll_total = 0;
+    $poll_most = 0;
 	foreach ($poll_info as $poll_option)
 	{
 		$poll_total += $poll_option['poll_option_total'];
+        $poll_most = ($poll_option['poll_option_total'] >= $poll_most) ? $poll_option['poll_option_total'] : $poll_most;
 	}
 
 	if ($poll_info[0]['bbcode_bitfield'])
@@ -883,15 +886,20 @@ if (!empty($topic_data['poll_start']))
 	{
 		$option_pct = ($poll_total > 0) ? $poll_option['poll_option_total'] / $poll_total : 0;
 		$option_pct_txt = sprintf("%.1d%%", round($option_pct * 100));
+        $option_pct_rel = ($poll_most > 0) ? $poll_option['poll_option_total'] / $poll_most : 0;
+        $option_pct_rel_txt = sprintf("%.1d%%", round($option_pct_rel * 100));
+        $option_most_votes = ($poll_option['poll_option_total'] > 0 && $poll_option['poll_option_total'] == $poll_most) ? true : false;
 
 		$template->assign_block_vars('poll_option', array(
-			'POLL_OPTION_ID' 		=> $poll_option['poll_option_id'],
-			'POLL_OPTION_CAPTION' 	=> $poll_option['poll_option_text'],
-			'POLL_OPTION_RESULT' 	=> $poll_option['poll_option_total'],
-			'POLL_OPTION_PERCENT' 	=> $option_pct_txt,
-			'POLL_OPTION_PCT'		=> round($option_pct * 100),
-			'POLL_OPTION_IMG' 		=> $user->img('poll_center', $option_pct_txt, round($option_pct * 250)),
-			'POLL_OPTION_VOTED'		=> (in_array($poll_option['poll_option_id'], $cur_voted_id)) ? true : false)
+            'POLL_OPTION_ID' 			=> $poll_option['poll_option_id'],
+            'POLL_OPTION_CAPTION' 		=> $poll_option['poll_option_text'],
+            'POLL_OPTION_RESULT' 		=> $poll_option['poll_option_total'],
+            'POLL_OPTION_PERCENT' 		=> $option_pct_txt,
+            'POLL_OPTION_PERCENT_REL' 	=> $option_pct_rel_txt,
+            'POLL_OPTION_PCT'			=> round($option_pct * 100),
+            'POLL_OPTION_WIDTH'     	=> round($option_pct * 250),
+            'POLL_OPTION_VOTED'			=> (in_array($poll_option['poll_option_id'], $cur_voted_id)) ? true : false,
+            'POLL_OPTION_MOST_VOTES'	=> $option_most_votes)
 		);
 	}
 

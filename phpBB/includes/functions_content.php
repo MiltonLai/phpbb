@@ -171,8 +171,9 @@ function make_jumpbox($action, $forum_id = false, $select_all = false, $acl_list
 			$template->assign_block_vars('jumpbox_forums', array(
 				'FORUM_ID'		=> ($select_all) ? 0 : -1,
 				'FORUM_NAME'	=> ($select_all) ? $user->lang['ALL_FORUMS'] : $user->lang['SELECT_FORUM'],
-				'S_FORUM_COUNT'	=> $iteration)
-			);
+				'S_FORUM_COUNT'	=> $iteration,
+                'LINK'          => (strpos($action, '?') > 0)? $action . '&f=' . $forum_id : $action . '?f=' . $forum_id
+            ));
 
 			$iteration++;
 			$display_jumpbox = true;
@@ -185,8 +186,9 @@ function make_jumpbox($action, $forum_id = false, $select_all = false, $acl_list
 			'S_FORUM_COUNT'	=> $iteration,
 			'S_IS_CAT'		=> ($row['forum_type'] == FORUM_CAT) ? true : false,
 			'S_IS_LINK'		=> ($row['forum_type'] == FORUM_LINK) ? true : false,
-			'S_IS_POST'		=> ($row['forum_type'] == FORUM_POST) ? true : false)
-		);
+			'S_IS_POST'		=> ($row['forum_type'] == FORUM_POST) ? true : false,
+            'LINK'			=> (strpos($action, '?') > 0)? $action . '&f=' . $row['forum_id'] : $action . '?f=' . $row['forum_id']
+        ));
 
 		for ($i = 0; $i < $padding; $i++)
 		{

@@ -1,8 +1,8 @@
-Subject: "{SITENAME}" - 给朋友发送email
+Subject: "{SITENAME}" - 转发文章
 
 Hello {TO_USERNAME},
 
-这个email由 {FROM_USERNAME} 发送自 "{SITENAME}",  他/她觉得您可能会对这些内容感兴趣:
+这个Email由 {FROM_USERNAME} 发送自 "{SITENAME}",  他/她觉得您可能会对这些内容感兴趣:
 
 {TOPIC_NAME}
 
