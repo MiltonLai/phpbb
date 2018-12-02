@@ -39,7 +39,7 @@ class phpbb_recaptcha extends phpbb_default_captcha
 	var $response;
 
 	// PHP4 Constructor
-	function phpbb_recaptcha()
+	function __construct()
 	{
 		$this->recaptcha_server = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $this->recaptcha_server_secure : $this->recaptcha_server;
 	}
@@ -52,12 +52,6 @@ class phpbb_recaptcha extends phpbb_default_captcha
 		parent::init($type);
 		$this->challenge = request_var('recaptcha_challenge_field', '');
 		$this->response = request_var('recaptcha_response_field', '');
-	}
-
-	function &get_instance()
-	{
-		$instance =& new phpbb_recaptcha();
-		return $instance;
 	}
 
 	function is_available()

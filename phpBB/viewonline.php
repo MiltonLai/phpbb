@@ -352,18 +352,18 @@ $vars_online = array(
 
 foreach ($vars_online as $l_prefix => $var_ary)
 {
-	switch ($$var_ary[0])
+	switch (${$var_ary[0]})
 	{
 		case 0:
-			$$var_ary[1] = $user->lang[$l_prefix . '_USERS_ZERO_ONLINE'];
+			${$var_ary[1]} = $user->lang[$l_prefix . '_USERS_ZERO_ONLINE'];
 		break;
 
 		case 1:
-			$$var_ary[1] = $user->lang[$l_prefix . '_USER_ONLINE'];
+			${$var_ary[1]} = $user->lang[$l_prefix . '_USER_ONLINE'];
 		break;
 
 		default:
-			$$var_ary[1] = $user->lang[$l_prefix . '_USERS_ONLINE'];
+			${$var_ary[1]} = $user->lang[$l_prefix . '_USERS_ONLINE'];
 		break;
 	}
 }

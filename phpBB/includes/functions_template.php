@@ -113,7 +113,7 @@ class template_compile
 
 		if ($echo_var)
 		{
-			global $$echo_var;
+			global ${$echo_var};
 		}
 
 		// Remove any "loose" php ... we want to give admins the ability
@@ -554,7 +554,7 @@ class template_compile
 							// Add the block reference for the last child.
 							$varref .= "['" . $blocks[0] . "']";
 						}
-						$token = "sizeof($varref)";
+						$token = "!empty($varref)";
 					}
 					else if (!empty($token))
 					{

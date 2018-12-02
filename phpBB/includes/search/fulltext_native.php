@@ -38,26 +38,17 @@ class fulltext_native extends search_backend
 	var $must_exclude_one_ids = array();
 
 	/**
-	* Initialises the fulltext_native search backend with min/max word length and makes sure the UTF-8 normalizer is loaded.
+	* Initialises the fulltext_native search backend with min/max word length
 	*
 	* @param	boolean|string	&$error	is passed by reference and should either be set to false on success or an error message on failure.
 	*
 	* @access	public
 	*/
-	function fulltext_native(&$error)
+	public function __construct(&$error)
 	{
-		global $phpbb_root_path, $phpEx, $config;
+		global $config;
 
 		$this->word_length = array('min' => $config['fulltext_native_min_chars'], 'max' => $config['fulltext_native_max_chars']);
-
-		/**
-		* Load the UTF tools
-		*/
-		if (!class_exists('utf_normalizer'))
-		{
-			include($phpbb_root_path . 'includes/utf/utf_normalizer.' . $phpEx);
-		}
-
 
 		$error = false;
 	}
@@ -1504,7 +1495,13 @@ class fulltext_native extends search_backend
 		* If we use it more widely, an instance of that class should be held in a
 		* a global variable instead
 		*/
-		utf_normalizer::nfc($text);
+		global $normalizer;
+		if (empty($normalizer))
+		{
+			include($phpbb_root_path . 'includes/utf/utf_normalizer.' . $phpEx);
+			$normalizer = new utf_normalizer;
+		}
+		$normalizer->nfc($text);
 
 		/**
 		* The first thing we do is:

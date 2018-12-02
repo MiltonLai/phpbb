@@ -40,11 +40,6 @@ class phpbb_captcha_gd_wave extends phpbb_default_captcha
 		}
 	}
 
-	function get_instance()
-	{
-		return new phpbb_captcha_gd_wave();
-	}
-
 	function is_available()
 	{
 		global $phpbb_root_path, $phpEx;

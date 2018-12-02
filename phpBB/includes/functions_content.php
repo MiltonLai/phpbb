@@ -75,7 +75,7 @@ function gen_sort_selects(&$limit_days, &$sort_by_text, &$sort_days, &$sort_key,
 	foreach ($sorts as $name => $sort_ary)
 	{
 		$key = $sort_ary['key'];
-		$selected = $$sort_ary['key'];
+		$selected = ${$sort_ary['key']};
 
 		// Check if the key is selectable. If not, we reset to the default or first key found.
 		// This ensures the values are always valid. We also set $sort_dir/sort_key/etc. to the
@@ -84,12 +84,12 @@ function gen_sort_selects(&$limit_days, &$sort_by_text, &$sort_days, &$sort_key,
 		{
 			if ($sort_ary['default'] !== false)
 			{
-				$selected = $$key = $sort_ary['default'];
+				$selected = ${$key} = $sort_ary['default'];
 			}
 			else
 			{
 				@reset($sort_ary['options']);
-				$selected = $$key = key($sort_ary['options']);
+				$selected = ${$key} = key($sort_ary['options']);
 			}
 		}
 
@@ -453,7 +453,7 @@ function generate_text_for_display($text, $uid, $bitfield, $flags)
 		}
 		else
 		{
-			$bbcode->bbcode($bitfield);
+			$bbcode->__construct($bitfield);
 		}
 
 		$bbcode->bbcode_second_pass($text, $uid);
@@ -663,37 +663,63 @@ function make_clickable($text, $server_url = false, $class = 'postlink')
 		$server_url = generate_board_url();
 	}
 
-	static $magic_url_match;
-	static $magic_url_replace;
-	static $static_class;
+	static $static_class, $static_local_class;
+	static $magic_url_match_args;
 
-	if (!is_array($magic_url_match) || $static_class != $class)
+	if (!isset($magic_url_match_args[$server_url]) || $static_class != $class)
 	{
 		$static_class = $class;
+		$static_local_class = "$class {$class}-local";
 		$class = ($static_class) ? ' class="' . $static_class . '"' : '';
-		$local_class = ($static_class) ? ' class="' . $static_class . '-local"' : '';
+		$local_class = ($static_class) ? ' class="' . $static_local_class . '"' : '';
 
-		$magic_url_match = $magic_url_replace = array();
-		// Be sure to not let the matches cross over. ;)
+		if (!is_array($magic_url_match_args))
+		{
+			$magic_url_match_args = array();
+		}
 
 		// relative urls for this board
-		$magic_url_match[] = '#(^|[\n\t (>.])(' . preg_quote($server_url, '#') . ')/(' . get_preg_expression('relative_url_inline') . ')#ie';
-		$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_LOCAL, '\$1', '\$2', '\$3', '$local_class')";
+		$magic_url_match_args[$server_url][] = array(
+			'#(^|[\n\t (>.])(' . preg_quote($server_url, '#') . ')/(' . get_preg_expression('relative_url_inline') . ')#iu',
+			MAGIC_URL_LOCAL,
+			$local_class,
+		);
 
 		// matches a xxxx://aaaaa.bbb.cccc. ...
-		$magic_url_match[] = '#(^|[\n\t (>.])(' . get_preg_expression('url_inline') . ')#ie';
-		$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_FULL, '\$1', '\$2', '', '$class')";
+		$magic_url_match_args[$server_url][] = array(
+			'#(^|[\n\t (>.])(' . get_preg_expression('url_inline') . ')#iu',
+			MAGIC_URL_FULL,
+			$class,
+		);
 
 		// matches a "www.xxxx.yyyy[/zzzz]" kinda lazy URL thing
-		$magic_url_match[] = '#(^|[\n\t (>])(' . get_preg_expression('www_url_inline') . ')#ie';
-		$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_WWW, '\$1', '\$2', '', '$class')";
+		$magic_url_match_args[$server_url][] = array(
+			'#(^|[\n\t (>])(' . get_preg_expression('www_url_inline') . ')#iu',
+			MAGIC_URL_WWW,
+			$class,
+		);
 
 		// matches an email@domain type address at the start of a line, or after a space or after what might be a BBCode.
-		$magic_url_match[] = '/(^|[\n\t (>])(' . get_preg_expression('email') . ')/ie';
-		$magic_url_replace[] = "make_clickable_callback(MAGIC_URL_EMAIL, '\$1', '\$2', '', '')";
+		$magic_url_match_args[$server_url][] = array(
+			'/(^|[\n\t (>])(' . get_preg_expression('email') . ')/iu',
+			MAGIC_URL_EMAIL,
+			'',
+		);
 	}
 
-	return preg_replace($magic_url_match, $magic_url_replace, $text);
+	foreach ($magic_url_match_args[$server_url] as $magic_args)
+	{
+		if (preg_match($magic_args[0], $text, $matches))
+		{
+			$text = preg_replace_callback($magic_args[0], function($matches) use ($magic_args)
+			{
+				$relative_url = isset($matches[3]) ? $matches[3] : '';
+				return make_clickable_callback($magic_args[1], $matches[1], $matches[2], $relative_url, $magic_args[2]);
+			}, $text);
+		}
+	}
+
+	return $text;
 }
 
 /**
@@ -1140,6 +1166,13 @@ function truncate_string($string, $max_length = 60, $max_store_length = 255, $al
 		$string = substr($string, 4);
 	}
 
+	if (@extension_loaded('mbstring'))
+	{
+		$string = preg_replace_callback('/(&#x1f[0-9a-f]{3};)/', function($matches) {
+			return mb_convert_encoding($matches[1], 'UTF-8', 'HTML-ENTITIES');
+		}, $string);
+	}
+
 	$_chars = utf8_str_split(htmlspecialchars_decode($string));
 	$chars = array_map('utf8_htmlspecialchars', $_chars);
 
@@ -1174,6 +1207,13 @@ function truncate_string($string, $max_length = 60, $max_store_length = 255, $al
 	if ($append != '' && $stripped)
 	{
 		$string = $string . $append;
+	}
+
+	if (@extension_loaded('mbstring'))
+	{
+		$string = preg_replace_callback('/([\x{1f000}-\x{1ffff}])/u', function($matches) {
+			return strtolower('&#x' . dechex(substr(mb_convert_encoding($matches[1], 'HTML-ENTITIES', 'UTF-8'), 2, -1)) . ';');
+		}, $string);
 	}
 
 	return $string;
@@ -1286,7 +1326,7 @@ class bitfield
 {
 	var $data;
 
-	function bitfield($bitfield = '')
+	function __construct($bitfield = '')
 	{
 		$this->data = base64_decode($bitfield);
 	}

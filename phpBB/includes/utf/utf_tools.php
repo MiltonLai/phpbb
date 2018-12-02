@@ -774,7 +774,7 @@ function utf8_recode($string, $encoding)
 		trigger_error('Unknown encoding: ' . $encoding, E_USER_ERROR);
 	}
 
-	global $phpbb_root_path, $phpEx;
+	global $phpbb_root_path, $phpEx, $normalizer;
 
 	// iso-8859-* character encoding
 	if (preg_match('/iso[_ -]?8859[_ -]?(\\d+)/', $encoding, $array))
@@ -909,7 +909,7 @@ function utf8_recode($string, $encoding)
 
 	// Trigger an error?! Fow now just give bad data :-(
 	trigger_error('Unknown encoding: ' . $encoding, E_USER_ERROR);
-	//return $string; // use utf_normalizer::cleanup() ?
+	//return $string; // use $normalizer->cleanup() ?
 }
 
 /**
@@ -1653,14 +1653,15 @@ function utf8_case_fold_nfkc($text, $option = 'full')
 	// do the case fold
 	$text = utf8_case_fold($text, $option);
 
-	if (!class_exists('utf_normalizer'))
+	global $phpbb_root_path, $phpEx, $normalizer;
+	if (empty($normalizer))
 	{
-		global $phpbb_root_path, $phpEx;
 		include($phpbb_root_path . 'includes/utf/utf_normalizer.' . $phpEx);
+		$normalizer = new utf_normalizer;
 	}
 
 	// convert to NFKC
-	utf_normalizer::nfkc($text);
+	$normalizer->nfkc($text);
 
 	// FC_NFKC_Closure, http://www.unicode.org/Public/5.0.0/ucd/DerivedNormalizationProps.txt
 	$text = strtr($text, $fc_nfkc_closure);
@@ -1770,15 +1771,16 @@ function utf8_normalize_nfc($strings)
 		return $strings;
 	}
 
-	if (!class_exists('utf_normalizer'))
+	global $phpbb_root_path, $phpEx, $normalizer;
+	if (empty($normalizer))
 	{
-		global $phpbb_root_path, $phpEx;
 		include($phpbb_root_path . 'includes/utf/utf_normalizer.' . $phpEx);
+		$normalizer = new utf_normalizer;
 	}
 
 	if (!is_array($strings))
 	{
-		utf_normalizer::nfc($strings);
+		$normalizer->nfc($strings);
 	}
 	else if (is_array($strings))
 	{
@@ -1788,12 +1790,12 @@ function utf8_normalize_nfc($strings)
 			{
 				foreach ($string as $_key => $_string)
 				{
-					utf_normalizer::nfc($strings[$key][$_key]);
+					$normalizer->nfc($strings[$key][$_key]);
 				}
 			}
 			else
 			{
-				utf_normalizer::nfc($strings[$key]);
+				$normalizer->nfc($strings[$key]);
 			}
 		}
 	}

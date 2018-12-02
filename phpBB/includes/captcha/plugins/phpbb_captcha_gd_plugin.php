@@ -50,12 +50,6 @@ class phpbb_captcha_gd extends phpbb_default_captcha
 		}
 	}
 
-	function &get_instance()
-	{
-		$instance =& new phpbb_captcha_gd();
-		return $instance;
-	}
-
 	function is_available()
 	{
 		global $phpbb_root_path, $phpEx;

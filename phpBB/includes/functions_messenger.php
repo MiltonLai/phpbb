@@ -22,10 +22,10 @@ if (!defined('IN_PHPBB'))
 */
 class messenger
 {
-	var $vars, $msg, $extra_headers, $replyto, $from, $subject;
+	var $vars, $msg, $replyto, $from, $subject;
 	var $addresses = array();
+	var $extra_headers = array();
 
-	var $mail_priority = MAIL_NORMAL_PRIORITY;
 	var $use_queue = true;
 
 	var $tpl_obj = NULL;
@@ -35,7 +35,7 @@ class messenger
 	/**
 	* Constructor
 	*/
-	function messenger($use_queue = true)
+	function __construct($use_queue = true)
 	{
 		global $config;
 
@@ -54,7 +54,6 @@ class messenger
 	{
 		$this->addresses = $this->extra_headers = array();
 		$this->vars = $this->msg = $this->replyto = $this->from = '';
-		$this->mail_priority = MAIL_NORMAL_PRIORITY;
 	}
 
 	/**
@@ -94,7 +93,7 @@ class messenger
 			return;
 		}
 
-		$pos = isset($this->addresses['cc']) ? sizeof($this->addresses['cc']) : 0;
+		$pos = isset($this->addresses['cc']) ? count($this->addresses['cc']) : 0;
 		$this->addresses['cc'][$pos]['email'] = trim($address);
 		$this->addresses['cc'][$pos]['name'] = trim($realname);
 	}
@@ -109,7 +108,7 @@ class messenger
 			return;
 		}
 
-		$pos = isset($this->addresses['bcc']) ? sizeof($this->addresses['bcc']) : 0;
+		$pos = isset($this->addresses['bcc']) ? count($this->addresses['bcc']) : 0;
 		$this->addresses['bcc'][$pos]['email'] = trim($address);
 		$this->addresses['bcc'][$pos]['name'] = trim($realname);
 	}
@@ -125,7 +124,7 @@ class messenger
 			return;
 		}
 
-		$pos = isset($this->addresses['im']) ? sizeof($this->addresses['im']) : 0;
+		$pos = isset($this->addresses['im']) ? count($this->addresses['im']) : 0;
 		$this->addresses['im'][$pos]['uid'] = trim($address);
 		$this->addresses['im'][$pos]['name'] = trim($realname);
 	}
@@ -173,17 +172,13 @@ class messenger
 	function anti_abuse_headers($config, $user)
 	{
 		$this->headers('X-AntiAbuse: Board servername - ' . mail_encode($config['server_name']));
-		$this->headers('X-AntiAbuse: User_id - ' . $user->data['user_id']);
 		$this->headers('X-AntiAbuse: Username - ' . mail_encode($user->data['username']));
-		$this->headers('X-AntiAbuse: User IP - ' . $user->ip);
 	}
 
-	/**
-	* Set the email priority
-	*/
+	// deprecated...will result in spam
 	function set_mail_priority($priority = MAIL_NORMAL_PRIORITY)
 	{
-		$this->mail_priority = $priority;
+		return;
 	}
 
 	/**
@@ -237,7 +232,7 @@ class messenger
 
 		$this->tpl_obj = &$this->tpl_msg[$template_lang . $template_file];
 		$this->vars = &$this->tpl_obj->_rootref;
-		$this->tpl_msg = '';
+		$this->tpl_msg = array();
 
 		return true;
 	}
@@ -434,7 +429,6 @@ class messenger
 		}
 
 		$headers[] = 'Reply-To: ' . $this->replyto;
-		$headers[] = 'Return-Path: <' . $config['board_email'] . '>';
 		$headers[] = 'Sender: <' . $config['board_email'] . '>';
 		$headers[] = 'MIME-Version: 1.0';
 		$headers[] = 'Message-ID: <' . $this->generate_message_id() . '>';
@@ -442,13 +436,7 @@ class messenger
 		$headers[] = 'Content-Type: text/plain; charset=UTF-8'; // format=flowed
 		$headers[] = 'Content-Transfer-Encoding: 8bit'; // 7bit
 
-		$headers[] = 'X-Priority: ' . $this->mail_priority;
-		$headers[] = 'X-MSMail-Priority: ' . (($this->mail_priority == MAIL_LOW_PRIORITY) ? 'Low' : (($this->mail_priority == MAIL_NORMAL_PRIORITY) ? 'Normal' : 'High'));
-		$headers[] = 'X-Mailer: phpBB3';
-		$headers[] = 'X-MimeOLE: phpBB3';
-		$headers[] = 'X-phpBB-Origin: phpbb://' . str_replace(array('http://', 'https://'), array('', ''), generate_board_url());
-
-		if (sizeof($this->extra_headers))
+		if (count($this->extra_headers))
 		{
 			$headers = array_merge($headers, $this->extra_headers);
 		}
@@ -509,7 +497,7 @@ class messenger
 
 			foreach ($address_ary as $which_ary)
 			{
-				$$type .= (($$type != '') ? ', ' : '') . (($which_ary['name'] != '') ? mail_encode($which_ary['name'], $encode_eol) . ' <' . $which_ary['email'] . '>' : $which_ary['email']);
+				${$type} .= ((${$type} != '') ? ', ' : '') . (($which_ary['name'] != '') ? mail_encode($which_ary['name'], $encode_eol) . ' <' . $which_ary['email'] . '>' : $which_ary['email']);
 			}
 		}
 
@@ -639,7 +627,7 @@ class queue
 	/**
 	* constructor
 	*/
-	function queue()
+	function __construct()
 	{
 		global $phpEx, $phpbb_root_path;
 
@@ -764,7 +752,7 @@ class queue
 			}
 
 			$package_size = $data_ary['package_size'];
-			$num_items = (!$package_size || sizeof($data_ary['data']) < $package_size) ? sizeof($data_ary['data']) : $package_size;
+			$num_items = (!$package_size || count($data_ary['data']) < $package_size) ? count($data_ary['data']) : $package_size;
 
 			/*
 			* This code is commented out because it causes problems on some web hosts.
@@ -860,7 +848,7 @@ class queue
 			}
 
 			// No more data for this object? Unset it
-			if (!sizeof($this->queue_data[$object]['data']))
+			if (!count($this->queue_data[$object]['data']))
 			{
 				unset($this->queue_data[$object]);
 			}
@@ -876,7 +864,7 @@ class queue
 			}
 		}
 
-		if (!sizeof($this->queue_data))
+		if (!count($this->queue_data))
 		{
 			@unlink($this->cache_file);
 		}
@@ -899,7 +887,7 @@ class queue
 	*/
 	function save()
 	{
-		if (!sizeof($this->data))
+		if (!count($this->data))
 		{
 			return;
 		}
@@ -912,7 +900,7 @@ class queue
 
 			foreach ($this->queue_data as $object => $data_ary)
 			{
-				if (isset($this->data[$object]) && sizeof($this->data[$object]))
+				if (isset($this->data[$object]) && count($this->data[$object]))
 				{
 					$this->data[$object]['data'] = array_merge($data_ary['data'], $this->data[$object]['data']);
 				}
@@ -986,7 +974,7 @@ function smtpmail($addresses, $subject, $message, &$err_msg, $headers = false)
 	$mail_rcpt = $mail_to = $mail_cc = array();
 
 	// Build correct addresses for RCPT TO command and the client side display (TO, CC)
-	if (isset($addresses['to']) && sizeof($addresses['to']))
+	if (isset($addresses['to']) && count($addresses['to']))
 	{
 		foreach ($addresses['to'] as $which_ary)
 		{
@@ -995,7 +983,7 @@ function smtpmail($addresses, $subject, $message, &$err_msg, $headers = false)
 		}
 	}
 
-	if (isset($addresses['bcc']) && sizeof($addresses['bcc']))
+	if (isset($addresses['bcc']) && count($addresses['bcc']))
 	{
 		foreach ($addresses['bcc'] as $which_ary)
 		{
@@ -1003,7 +991,7 @@ function smtpmail($addresses, $subject, $message, &$err_msg, $headers = false)
 		}
 	}
 
-	if (isset($addresses['cc']) && sizeof($addresses['cc']))
+	if (isset($addresses['cc']) && count($addresses['cc']))
 	{
 		foreach ($addresses['cc'] as $which_ary)
 		{
@@ -1155,11 +1143,9 @@ function smtpmail($addresses, $subject, $message, &$err_msg, $headers = false)
 }
 
 /**
-* SMTP Class
-* Auth Mechanisms originally taken from the AUTH Modules found within the PHP Extension and Application Repository (PEAR)
-* See docs/AUTHORS for more details
-* @package phpBB3
-*/
+ * SMTP class has been heavily modified by Dion Designs
+ * to bring it up to modern email standards
+ */
 class smtp_class
 {
 	var $server_response = '';
@@ -1171,7 +1157,7 @@ class smtp_class
 	var $backtrace = false;
 	var $backtrace_log = array();
 
-	function smtp_class()
+	function __construct()
 	{
 		// Always create a backtrace for admins to identify SMTP problems
 		$this->backtrace = true;
@@ -1252,7 +1238,7 @@ class smtp_class
 	*/
 	function log_into_server($hostname, $username, $password, $default_auth_method)
 	{
-		global $user;
+		global $config, $user;
 
 		$err_msg = '';
 
@@ -1282,8 +1268,6 @@ class smtp_class
 		// severe problems and is not fixable!
 		if ($default_auth_method == 'POP-BEFORE-SMTP' && $username && $password)
 		{
-			global $config;
-
 			$errno = 0;
 			$errstr = '';
 
@@ -1314,30 +1298,28 @@ class smtp_class
 			}
 		}
 
-		// Try EHLO first
-		$this->server_send("EHLO {$local_host}");
-		if ($err_msg = $this->server_parse('250', __LINE__))
+		if ($result = $this->ehlo($local_host) !== true)
 		{
-			// a 503 response code means that we're already authenticated
-			if ($this->numeric_response_code == 503)
-			{
-				return false;
-			}
-
-			// If EHLO fails, we try HELO
-			$this->server_send("HELO {$local_host}");
-			if ($err_msg = $this->server_parse('250', __LINE__))
-			{
-				return ($this->numeric_response_code == 503) ? false : $err_msg;
-			}
+			return $result;
 		}
 
-		foreach ($this->responses as $response)
+		if (isset($this->commands['STARTTLS']) && strpos($config['smtp_host'], 'tls://') === false && strpos($config['smtp_host'], 'ssl://') === false)
 		{
-			$response = explode(' ', $response);
-			$response_code = $response[0];
-			unset($response[0]);
-			$this->commands[$response_code] = implode(' ', $response);
+			$this->server_send('STARTTLS');
+			if (!$this->server_parse('220', __LINE__))
+			{
+				$stream_meta = stream_get_meta_data($this->socket);
+				if (stream_set_blocking($this->socket, true))
+				{
+					$crypto = (version_compare(PHP_VERSION, '5.6.7', '<')) ? STREAM_CRYPTO_METHOD_TLS_CLIENT : STREAM_CRYPTO_METHOD_SSLv23_CLIENT;
+					$result2 = stream_socket_enable_crypto($this->socket, true, $crypto);
+					stream_set_blocking($this->socket, $stream_meta['blocked']);
+					if ($result2 && $result = $this->ehlo($local_host) !== true)
+					{
+						return $result;
+					}
+				}
+			}
 		}
 
 		// If we are not authenticated yet, something might be wrong if no username and passwd passed
@@ -1381,6 +1363,33 @@ class smtp_class
 
 		$method = strtolower(str_replace('-', '_', $method));
 		return $this->$method($username, $password);
+	}
+
+	function ehlo($hostname) {
+		$this->server_send("EHLO $hostname");
+		if ($err_msg = $this->server_parse('250', __LINE__))
+		{
+			if ($this->numeric_response_code == 503)
+			{
+				return false;
+			}
+
+			$this->server_send("HELO $hostname");
+			if ($err_msg = $this->server_parse('250', __LINE__))
+			{
+				return ($this->numeric_response_code == 503) ? false : $err_msg;
+			}
+		}
+
+		foreach ($this->responses as $response)
+		{
+			$response = explode(' ', $response);
+			$response_code = $response[0];
+			unset($response[0]);
+			$this->commands[$response_code] = implode(' ', $response);
+		}
+
+		return true;
 	}
 
 	/**
@@ -1640,11 +1649,11 @@ function mail_encode($str, $eol = "\r\n")
 	$array = utf8_str_split($str);
 	$str = '';
 
-	while (sizeof($array))
+	while (count($array))
 	{
 		$text = '';
 
-		while (sizeof($array) && intval((strlen($text . $array[0]) + 2) / 3) << 2 <= $split_length)
+		while (count($array) && intval((strlen($text . $array[0]) + 2) / 3) << 2 <= $split_length)
 		{
 			$text .= array_shift($array);
 		}
@@ -1656,8 +1665,13 @@ function mail_encode($str, $eol = "\r\n")
 }
 
 /**
-* Wrapper for sending out emails with the PHP's mail function
-*/
+ * Wrapper for sending out emails with the PHP's mail function
+ *
+ * 2018 update: this function should never be used with shared hosting, or with
+ * brain-dead webservers that don't run PHP as the owner of the phpBB filesystem
+ *
+ * SMTP is much preferred!
+ */
 function phpbb_mail($to, $subject, $msg, $headers, $eol, &$err_msg)
 {
 	global $config, $phpbb_root_path, $phpEx;

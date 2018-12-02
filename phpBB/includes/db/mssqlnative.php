@@ -28,7 +28,7 @@ include_once($phpbb_root_path . 'includes/db/dbal.' . $phpEx);
  */
 class result_mssqlnative
 {
-	public function result_mssqlnative($queryresult = false)
+	public function __construct($queryresult = false)
 	{
 		$this->m_cursor = 0;
 		$this->m_rows = array();

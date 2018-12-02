@@ -97,16 +97,6 @@ class phpbb_captcha_qa
 	}
 
 	/**
-	*  API function
-	*/
-	function &get_instance()
-	{
-		$instance =& new phpbb_captcha_qa();
-
-		return $instance;
-	}
-
-	/**
 	* See if the captcha has created its tables.
 	*/
 	function is_installed()
