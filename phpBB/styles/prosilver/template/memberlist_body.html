@@ -3,65 +3,60 @@
 	<!-- INCLUDE memberlist_search.html -->
 	<form method="post" id="results" action="{S_MODE_ACTION}" onsubmit="insert_marked(this.user); return false">
 
-<!-- ELSEIF S_SEARCH_USER -->
-	<!-- INCLUDE overall_header.html -->	
-	<!-- INCLUDE memberlist_search.html -->
-	<form method="post" action="{S_MODE_ACTION}">
-
 <!-- ELSE -->
 	<!-- INCLUDE overall_header.html -->
+	<div class="panel" id="memberlist_search"<!-- IF not S_SEARCH_USER --> style="display: none;"<!-- ENDIF -->>
+	<!-- INCLUDE memberlist_search.html -->
+	</div>
 	<form method="post" action="{S_MODE_ACTION}">
 
 <!-- ENDIF -->
 
 	<!-- IF S_SHOW_GROUP -->
+        <h2 class="group-title"<!-- IF GROUP_COLOR --> style="color:#{GROUP_COLOR};"<!-- ENDIF -->>{GROUP_NAME}</h2>
+        <!-- IF U_MANAGE -->
+        <p class="right responsive-center manage rightside"><a href="{U_MANAGE}">{L_MANAGE_GROUP}</a></p>
+        <!-- ENDIF -->
+        <p>{GROUP_DESC} {GROUP_TYPE}</p>
 
-		<h2<!-- IF GROUP_COLOR --> style="color:#{GROUP_COLOR};"<!-- ENDIF -->>{GROUP_NAME}</h2>
-		<p>{GROUP_DESC} {GROUP_TYPE}</p>
-		<p>
-			<!-- IF AVATAR_IMG -->{AVATAR_IMG}<!-- ENDIF -->
-			<!-- IF RANK_IMG -->{RANK_IMG}<!-- ENDIF -->
-			<!-- IF GROUP_RANK -->{GROUP_RANK}<!-- ENDIF -->
-		</p>
-
+        <p>
+            <!-- IF AVATAR_IMG -->{AVATAR_IMG}<!-- ENDIF -->
+            <!-- IF RANK_IMG -->{RANK_IMG}<!-- ENDIF -->
+            <!-- IF GROUP_RANK -->{GROUP_RANK}<!-- ENDIF -->
+        </p>
 	<!-- ELSE -->
 		<h2 class="solo">{PAGE_TITLE}<!-- IF SEARCH_WORDS -->: <a href="{U_SEARCH_WORDS}">{SEARCH_WORDS}</a><!-- ENDIF --></h2>
 
-		<div class="panel">
-			<div class="inner">
+        <div class="action-bar bar-top">
+            <div class="member-search panel">
+                <!-- IF U_FIND_MEMBER and not S_SEARCH_USER --><a href="{U_FIND_MEMBER}" id="member_search" data-alt-text="{L_HIDE_MEMBER_SEARCH}">{L_FIND_USERNAME}</a> &bull; <!-- ELSEIF S_SEARCH_USER and U_HIDE_FIND_MEMBER and not S_IN_SEARCH_POPUP --><a href="{U_HIDE_FIND_MEMBER}" id="member_search" data-alt-text="{L_FIND_USERNAME}">{L_HIDE_MEMBER_SEARCH}</a> &bull; <!-- ENDIF -->
+                <strong>
+                    <!-- BEGIN first_char -->
+                    <a href="{first_char.U_SORT}">{first_char.DESC}</a>&nbsp;
+                    <!-- END first_char -->
+                </strong>
+            </div>
 
-			<ul class="linklist">
-				<li>
-
-				<!-- IF U_FIND_MEMBER and not S_SEARCH_USER --><a href="{U_FIND_MEMBER}">{L_FIND_USERNAME}</a> &bull; <!-- ELSEIF S_SEARCH_USER and U_HIDE_FIND_MEMBER and not S_IN_SEARCH_POPUP --><a href="{U_HIDE_FIND_MEMBER}">{L_HIDE_MEMBER_SEARCH}</a> &bull; <!-- ENDIF -->
-				<strong style="font-size: 0.95em;">
-				<!-- BEGIN first_char -->
-					<a href="{first_char.U_SORT}">{first_char.DESC}</a>&nbsp; 
-				<!-- END first_char -->
-				</strong>
-				</li>
-				<li class="rightside pagination">
-					{TOTAL_USERS} &bull; 
-					<!-- IF PAGINATION --><a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE -->{PAGE_NUMBER}<!-- ENDIF -->
-				</li>
-			</ul>
-
-			</div>
-		</div>
+            <div class="pagination">
+                {TOTAL_USERS}
+                <!-- IF PAGINATION --><a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <ul>{PAGINATION}</ul><!-- ELSE -->{PAGE_NUMBER}<!-- ENDIF -->
+            </div>
+        </div>
 	<!-- ENDIF -->
+
 	<!-- IF S_LEADERS_SET or not S_SHOW_GROUP or not .memberrow -->
 	<div class="forumbg forumbg-table">
 		<div class="inner">
 
 		<table class="table1" cellspacing="1" id="memberlist">
 		<thead>
-		<tr>
-			<th class="name"><span class="rank-img"><a href="{U_SORT_RANK}">{L_RANK}</a></span><a href="{U_SORT_USERNAME}"><!-- IF S_SHOW_GROUP and .memberrow -->{L_GROUP_LEADER}<!-- ELSE -->{L_USERNAME}<!-- ENDIF --></a></th>
-			<th class="posts"><a href="{U_SORT_POSTS}#memberlist">{L_POSTS}</a></th>
-			<th class="info"><a href="{U_SORT_WEBSITE}#memberlist">{L_WEBSITE}</a>{L_COMMA_SEPARATOR}<a href="{U_SORT_LOCATION}">{L_LOCATION}</a></th>
-			<th class="joined"><a href="{U_SORT_JOINED}#memberlist">{L_JOINED}</a></th>
-			<!-- IF U_SORT_ACTIVE --><th class="active"><a href="{U_SORT_ACTIVE}#memberlist">{L_LAST_ACTIVE}</a></th><!-- ENDIF -->
-		</tr>
+        <tr>
+            <th class="name" data-dfn="{L_RANK}{L_COMMA_SEPARATOR}<!-- IF S_SHOW_GROUP and .memberrow -->{L_GROUP_LEADER}<!-- ELSE -->{L_USERNAME}<!-- ENDIF -->"><span class="rank-img"><a href="{U_SORT_RANK}">{L_RANK}</a></span><a href="{U_SORT_USERNAME}"><!-- IF S_SHOW_GROUP and .memberrow -->{L_GROUP_LEADER}<!-- ELSE -->{L_USERNAME}<!-- ENDIF --></a></th>
+            <th class="posts"><a href="{U_SORT_POSTS}#memberlist">{L_POSTS}</a></th>
+            <th class="info"><a href="{U_SORT_WEBSITE}#memberlist">{L_WEBSITE}</a>{L_COMMA_SEPARATOR}<a href="{U_SORT_LOCATION}">{L_LOCATION}</a></th>
+            <th class="joined"><a href="{U_SORT_JOINED}#memberlist">{L_JOINED}</a></th>
+            <!-- IF U_SORT_ACTIVE --><th class="active"><a href="{U_SORT_ACTIVE}#memberlist">{L_LAST_ACTIVE}</a></th><!-- ENDIF -->
+        </tr>
 		</thead>
 		<tbody>
 	<!-- ENDIF -->
@@ -87,17 +82,17 @@
 	<thead>
 	<tr>
 	<!-- IF not S_LEADERS_SET -->
-		<th class="name"><span class="rank-img"><a href="{U_SORT_RANK}">{L_RANK}</a></span><a href="{U_SORT_USERNAME}"><!-- IF S_SHOW_GROUP -->{L_GROUP_MEMBERS}<!-- ELSE -->{L_USERNAME}<!-- ENDIF --></a></th>
-			<th class="posts"><a href="{U_SORT_POSTS}#memberlist">{L_POSTS}</a></th>
-			<th class="info"><a href="{U_SORT_WEBSITE}#memberlist">{L_WEBSITE}</a>{L_COMMA_SEPARATOR}<a href="{U_SORT_LOCATION}">{L_LOCATION}</a></th>
-			<th class="joined"><a href="{U_SORT_JOINED}#memberlist">{L_JOINED}</a></th>
-			<!-- IF U_SORT_ACTIVE --><th class="active"><a href="{U_SORT_ACTIVE}#memberlist">{L_LAST_ACTIVE}</a></th><!-- ENDIF -->
-	<!-- ELSEIF S_SHOW_GROUP -->
-		<th class="name">{L_GROUP_MEMBERS}</th>
-		<th class="posts">&nbsp;</th>
-		<th class="info">&nbsp;</th>
-		<th class="joined">&nbsp;</th>
-		<!-- IF U_SORT_ACTIVE --><th class="active">&nbsp;</th><!-- ENDIF -->
+        <th class="name" data-dfn="{L_RANK}{L_COMMA_SEPARATOR}{L_USERNAME}"><span class="rank-img"><a href="{U_SORT_RANK}">{L_RANK}</a></span><a href="{U_SORT_USERNAME}"><!-- IF S_SHOW_GROUP -->{L_GROUP_MEMBERS}<!-- ELSE -->{L_USERNAME}<!-- ENDIF --></a></th>
+        <th class="posts"><a href="{U_SORT_POSTS}#memberlist">{L_POSTS}</a></th>
+        <th class="info"><a href="{U_SORT_WEBSITE}#memberlist">{L_WEBSITE}</a>{L_COMMA_SEPARATOR}<a href="{U_SORT_LOCATION}">{L_LOCATION}</a></th>
+        <th class="joined"><a href="{U_SORT_JOINED}#memberlist">{L_JOINED}</a></th>
+        <!-- IF U_SORT_ACTIVE --><th class="active"><a href="{U_SORT_ACTIVE}#memberlist">{L_LAST_ACTIVE}</a></th><!-- ENDIF -->
+    <!-- ELSEIF S_SHOW_GROUP -->
+        <th class="name">{L_GROUP_MEMBERS}</th>
+        <th class="posts">{L_POSTS}</th>
+        <th class="info">&nbsp;</th>
+        <th class="joined">{L_JOINED}</th>
+        <!-- IF U_SORT_ACTIVE --><th class="active">{L_LAST_ACTIVE}</th><!-- ENDIF -->
 	<!-- ENDIF -->
 	</tr>
 	</thead>
@@ -147,11 +142,12 @@
 
 </form>
 
-<hr />
-
-<ul class="linklist">
-	<li class="rightside pagination">{TOTAL_USERS} &bull; <!-- IF PAGINATION --><a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE -->{PAGE_NUMBER}<!-- ENDIF --></li>
-</ul>
+<div class="action-bar bar-bottom">
+    <div class="pagination">
+        {TOTAL_USERS}
+        <!-- IF PAGINATION --><a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <ul>{PAGINATION}</ul><!-- ELSE -->{PAGE_NUMBER}<!-- ENDIF -->
+    </div>
+</div>
 
 <!-- IF S_IN_SEARCH_POPUP -->
 	<!-- INCLUDE simple_footer.html -->

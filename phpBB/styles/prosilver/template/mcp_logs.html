@@ -7,36 +7,34 @@
 <div class="panel">
 	<div class="inner">
 
-	<ul class="linklist">
-		<li class="leftside">
-			{L_SEARCH_KEYWORDS}: <input type="text" class="inputbox autowidth" name="keywords" value="{S_KEYWORDS}" />&nbsp;<input type="submit" class="button2" name="filter" value="{L_SEARCH}" />
-		</li>
-		<li class="rightside pagination">
-			<!-- IF TOTAL -->{TOTAL} <!-- ENDIF -->
-			<!-- IF PAGE_NUMBER --><!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF --><!-- ENDIF -->
-		</li>
-	</ul>
+	<div class="action-bar bar-top">
+		{L_SEARCH_KEYWORDS}: <input type="search" class="inputbox autowidth" name="keywords" value="{S_KEYWORDS}" />&nbsp;<input type="submit" class="button2" name="filter" value="{L_SEARCH}" />
+		<div class="pagination">
+			{TOTAL}
+			<!-- IF PAGE_NUMBER --><!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <ul>{PAGINATION}</ul><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF --><!-- ENDIF -->
+		</div>
+	</div>
 
-	<table cellspacing="1" class="table1">
-	<thead>
-	<tr>
-		<th>{L_USERNAME}</th>
-		<th style="text-align: center">{L_IP}</th>
-		<th style="text-align: center">{L_TIME}</th>
-		<th>{L_ACTION}</th>
-		<!-- IF S_CLEAR_ALLOWED --><th>{L_MARK}</th><!-- ENDIF -->
-	</tr>
-	</thead>
+    <table class="table1">
+        <thead>
+        <tr>
+            <th class="name">{L_USERNAME}</th>
+            <th class="center">{L_IP}</th>
+            <th class="center">{L_TIME}</th>
+            <th class="name">{L_ACTION}</th>
+            <!-- IF S_CLEAR_ALLOWED --><th>{L_MARK}</th><!-- ENDIF -->
+        </tr>
+        </thead>
 		<tbody>
 	<!-- IF S_LOGS -->
 		<!-- BEGIN log -->
-		<!-- IF log.S_ROW_COUNT is even --><tr class="bg1"><!-- ELSE --><tr class="bg2"><!-- ENDIF -->
-			<td>{log.USERNAME}</td>
-			<td style="text-align: center">{log.IP}</td>
-			<td style="text-align: center">{log.DATE}</td>
-			<td>{log.ACTION}<br />
-			{log.DATA}
-		</td>
+    <!-- IF log.S_ROW_COUNT is even --><tr class="bg1"><!-- ELSE --><tr class="bg2"><!-- ENDIF -->
+            <td>{log.USERNAME}</td>
+            <td class="center">{log.IP}</td>
+            <td class="center">{log.DATE}</td>
+            <td>{log.ACTION}<br />
+            {log.DATA}
+            </td>
 			<!-- IF S_CLEAR_ALLOWED --><td style="width: 5%" align="center"><input type="checkbox" name="mark[]" value="{log.ID}" /></td><!-- ENDIF -->
 		</tr>
 		<!-- END log -->
@@ -49,26 +47,18 @@
 	</table>
 
 	<!-- IF .log -->
-		<fieldset class="display-options">
-			<!-- IF NEXT_PAGE --><a href="{NEXT_PAGE}" class="right-box {S_CONTENT_FLOW_END}">{L_NEXT}</a><!-- ENDIF -->
-			<!-- IF PREVIOUS_PAGE --><a href="{PREVIOUS_PAGE}" class="left-box {S_CONTENT_FLOW_BEGIN}">{L_PREVIOUS}</a><!-- ENDIF -->
-			<label>{L_DISPLAY_POSTS}: {S_SELECT_SORT_DAYS}</label>
-			<label>{L_SORT_BY} {S_SELECT_SORT_KEY}</label>
-			<label>{S_SELECT_SORT_DIR}</label>
-			<input type="submit" name="sort" value="{L_GO}" class="button2" />
-		</fieldset>
+        <div class="action-bar bottom">
+            <!-- INCLUDE display_options.html -->
 
-		<hr />
+            <div class="pagination">
+                {TOTAL}
+                <!-- IF PAGE_NUMBER --><!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <ul>{PAGINATION}</ul><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF --><!-- ENDIF -->
+            </div>
+        </div>
 
-		<ul class="linklist">
-			<li class="rightside pagination">
-				<!-- IF TOTAL -->{TOTAL} <!-- ENDIF -->
-				<!-- IF PAGE_NUMBER --><!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF --><!-- ENDIF -->
-			</li>
-		</ul>
-		{S_FORM_TOKEN}
-		</div>
-	</div>
+        {S_FORM_TOKEN}
+    </div>
+</div>
 
 		<!-- IF S_CLEAR_ALLOWED -->
 			<fieldset class="display-actions">

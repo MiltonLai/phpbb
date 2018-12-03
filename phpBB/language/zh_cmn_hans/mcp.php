@@ -147,7 +147,7 @@ $lang = array_merge($lang, array(
 	'MCP_BAN_IPS'				=> '封禁IP地址',
 	'MCP_BAN_USERNAMES'			=> '封禁用户名',
 
-	'MCP_LOGS'						=> '版主活动记录',
+	'MCP_LOGS'						=> '版主日志',
 	'MCP_LOGS_FRONT'				=> '首页',
 	'MCP_LOGS_FORUM_VIEW'			=> '版面相关记录',
 	'MCP_LOGS_TOPIC_VIEW'			=> '主题相关记录',
@@ -194,7 +194,7 @@ $lang = array_merge($lang, array(
 	'MCP_REPORTS_OPEN'				=> '等待审核的举报',
 	'MCP_REPORTS_OPEN_EXPLAIN'		=> '这是等待处理的帖子举报列表',
 
-	'MCP_QUEUE'								=> '审核通过',
+	'MCP_QUEUE'								=> '审核列表',
 	'MCP_QUEUE_APPROVE_DETAILS'				=> '审核说明',
 	'MCP_QUEUE_UNAPPROVED_POSTS'			=> '等待审核的帖子',
 	'MCP_QUEUE_UNAPPROVED_POSTS_EXPLAIN'	=> '这是需要审核后才对用户可见的帖子列表',
