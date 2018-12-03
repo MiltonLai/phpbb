@@ -2181,7 +2181,7 @@ function generate_pagination($base_url, $num_items, $per_page, $start_item, $add
 	// Make sure $per_page is a valid value
 	$per_page = ($per_page <= 0) ? 1 : $per_page;
 
-	$seperator = '<span class="page-sep">' . $user->lang['COMMA_SEPARATOR'] . '</span>';
+	$seperator = "\n";
 	$total_pages = ceil($num_items / $per_page);
 
 	if ($total_pages == 1 || !$num_items)
@@ -2192,25 +2192,25 @@ function generate_pagination($base_url, $num_items, $per_page, $start_item, $add
 	$on_page = floor($start_item / $per_page) + 1;
 	$url_delim = (strpos($base_url, '?') === false) ? '?' : ((strpos($base_url, '?') === strlen($base_url) - 1) ? '' : '&amp;');
 
-	$page_string = ($on_page == 1) ? '<strong>1</strong>' : '<a href="' . $base_url . '">1</a>';
+	$page_string = ($on_page == 1) ? '<li class="active"><span>1</span></li>' : '<li><a class="button" role="button" href="' . $base_url . '">1</a></li>';
 
 	if ($total_pages > 5)
 	{
 		$start_cnt = min(max(1, $on_page - 4), $total_pages - 5);
 		$end_cnt = max(min($total_pages, $on_page + 4), 6);
 
-		$page_string .= ($start_cnt > 1) ? '<span class="page-dots"> ... </span>' : $seperator;
+		$page_string .= ($start_cnt > 1) ? '<li class="ellipsis" role="separator"><span>…</span></li>' : $seperator;
 
 		for ($i = $start_cnt + 1; $i < $end_cnt; $i++)
 		{
-			$page_string .= ($i == $on_page) ? '<strong>' . $i . '</strong>' : '<a href="' . $base_url . "{$url_delim}start=" . (($i - 1) * $per_page) . '">' . $i . '</a>';
+			$page_string .= ($i == $on_page) ? '<li class="active"><span>' . $i . '</span></li>' : '<li><a class="button" role="button" href="' . $base_url . "{$url_delim}start=" . (($i - 1) * $per_page) . '">' . $i . '</a></li>';
 			if ($i < $end_cnt - 1)
 			{
 				$page_string .= $seperator;
 			}
 		}
 
-		$page_string .= ($end_cnt < $total_pages) ? '<span class="page-dots"> ... </span>' : $seperator;
+		$page_string .= ($end_cnt < $total_pages) ? '<li class="ellipsis" role="separator"><span>…</span></li>' : $seperator;
 	}
 	else
 	{
@@ -2218,7 +2218,7 @@ function generate_pagination($base_url, $num_items, $per_page, $start_item, $add
 
 		for ($i = 2; $i < $total_pages; $i++)
 		{
-			$page_string .= ($i == $on_page) ? '<strong>' . $i . '</strong>' : '<a href="' . $base_url . "{$url_delim}start=" . (($i - 1) * $per_page) . '">' . $i . '</a>';
+			$page_string .= ($i == $on_page) ? '<li class="active"><span>' . $i . '</span></li>' : '<li><a class="button" role="button" href="' . $base_url . "{$url_delim}start=" . (($i - 1) * $per_page) . '">' . $i . '</a></li>';
 			if ($i < $total_pages)
 			{
 				$page_string .= $seperator;
@@ -2226,18 +2226,18 @@ function generate_pagination($base_url, $num_items, $per_page, $start_item, $add
 		}
 	}
 
-	$page_string .= ($on_page == $total_pages) ? '<strong>' . $total_pages . '</strong>' : '<a href="' . $base_url . "{$url_delim}start=" . (($total_pages - 1) * $per_page) . '">' . $total_pages . '</a>';
+	$page_string .= ($on_page == $total_pages) ? '<li class="active"><span>' . $total_pages . '</span></li>' : '<li><a class="button" role="button" href="' . $base_url . "{$url_delim}start=" . (($total_pages - 1) * $per_page) . '">' . $total_pages . '</a></li>';
 
 	if ($add_prevnext_text)
 	{
 		if ($on_page != 1)
 		{
-			$page_string = '<a href="' . $base_url . "{$url_delim}start=" . (($on_page - 2) * $per_page) . '">' . $user->lang['PREVIOUS'] . '</a>&nbsp;&nbsp;' . $page_string;
+			$page_string = '<li><a class="button" role="button" href="' . $base_url . "{$url_delim}start=" . (($on_page - 2) * $per_page) . '">' . $user->lang['PREVIOUS'] . '</a></li>&nbsp;&nbsp;' . $page_string;
 		}
 
 		if ($on_page != $total_pages)
 		{
-			$page_string .= '&nbsp;&nbsp;<a href="' . $base_url . "{$url_delim}start=" . ($on_page * $per_page) . '">' . $user->lang['NEXT'] . '</a>';
+			$page_string .= '&nbsp;&nbsp;<li class="arrow next"><a class="button button-icon-only" rel="next" role="button" href="' . $base_url . "{$url_delim}start=" . ($on_page * $per_page) . '"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">' . $user->lang['NEXT'] . '</span></a></li>';
 		}
 	}
 

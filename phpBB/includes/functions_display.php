@@ -673,10 +673,10 @@ function topic_generate_pagination($replies, $url)
 		$times = 1;
 		for ($j = 0; $j < $replies + 1; $j += $per_page)
 		{
-			$pagination .= '<a href="' . $url . ($j == 0 ? '' : '&amp;start=' . $j) . '">' . $times . '</a>';
+			$pagination .= '<li><a class="button" href="' . $url . ($j == 0 ? '' : '&amp;start=' . $j) . '">' . $times . '</a></li>';
 			if ($times == 1 && $total_pages > 5)
 			{
-				$pagination .= '<span class="page-dots"> ... </span>';
+				$pagination .= '<li><span class="page-dots">…</span></li>';
 
 				// Display the last three pages
 				$times = $total_pages - 3;
@@ -684,7 +684,7 @@ function topic_generate_pagination($replies, $url)
 			}
 			else if ($times < $total_pages)
 			{
-				$pagination .= '<span class="page-sep">' . $user->lang['COMMA_SEPARATOR'] . '</span>';
+				$pagination .= "\n";
 			}
 			$times++;
 		}

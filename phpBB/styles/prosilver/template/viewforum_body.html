@@ -67,7 +67,7 @@
 		<!-- IF not S_IS_BOT and U_MARK_TOPICS --><a href="{U_MARK_TOPICS}" class="mark" accesskey="m" data-ajax="mark_topics_read">{L_MARK_TOPICS_READ}</a> &bull; <!-- ENDIF -->
 		<!-- IF TOTAL_TOPICS -->{TOTAL_TOPICS}<!-- ENDIF -->
 		<!-- IF PAGE_NUMBER -->
-		<!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF -->
+		<!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <ul>{PAGINATION}</ul><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF -->
 		<!-- ENDIF -->
 	</div>
 
@@ -160,10 +160,10 @@
 
                         <!-- IF not S_IS_BOT -->
                         <div class="responsive-show" style="display: none;">
-                            {L_LAST_POST} {L_POST_BY_AUTHOR} {topicrow.LAST_POST_AUTHOR_FULL} &laquo; <a href="{topicrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}">{topicrow.LAST_POST_TIME}</a>
+                            {topicrow.LAST_POST_AUTHOR_FULL} &laquo; <a href="{topicrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}">{topicrow.LAST_POST_TIME}</a>
                             <!-- IF topicrow.S_POST_GLOBAL and FORUM_ID != topicrow.FORUM_ID --><br />{L_POSTED} {L_IN} <a href="{topicrow.U_VIEW_FORUM}">{topicrow.FORUM_NAME}</a><!-- ENDIF -->
                         </div>
-                            <!-- IF topicrow.REPLIES --><span class="responsive-show left-box" style="display: none;">{L_REPLIES}{L_COLON} <strong>{topicrow.REPLIES}</strong></span><!-- ENDIF -->
+                            <!-- IF topicrow.REPLIES --><span class="responsive-show left-box" style="display: none;">{L_REPLIES}: <strong>{topicrow.REPLIES}</strong></span><!-- ENDIF -->
                         <!-- ENDIF -->
 						<div class="topic-poster responsive-hide left-box">
 							<!-- IF topicrow.S_HAS_POLL --><i class="icon fa-bar-chart fa-fw" aria-hidden="true"></i><!-- ENDIF -->
@@ -172,7 +172,7 @@
 							<!-- IF topicrow.S_POST_GLOBAL and FORUM_ID != topicrow.FORUM_ID --> &raquo; {L_IN} <a href="{topicrow.U_VIEW_FORUM}">{topicrow.FORUM_NAME}</a><!-- ENDIF -->
 						</div>
 
-                        <!-- IF topicrow.PAGINATION --><div class="pagination"><span>{topicrow.PAGINATION}</span></div><!-- ENDIF -->
+                        <!-- IF topicrow.PAGINATION --><div class="pagination"><span><i class="icon fa-clone fa-fw" aria-hidden="true"></i></span><ul>{topicrow.PAGINATION}</ul></div><!-- ENDIF -->
 					</div>
 					</dt>
 					<dd class="posts">{topicrow.REPLIES} <dfn>{L_REPLIES}</dfn></dd>
@@ -234,7 +234,7 @@
             <!-- IF not S_IS_BOT and U_MARK_TOPICS --><a href="{U_MARK_TOPICS}" class="mark" accesskey="m" data-ajax="mark_topics_read">{L_MARK_TOPICS_READ}</a> &bull; <!-- ENDIF -->
             <!-- IF TOTAL_TOPICS -->{TOTAL_TOPICS}<!-- ENDIF -->
             <!-- IF PAGE_NUMBER -->
-            <!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF -->
+            <!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <ul>{PAGINATION}</ul><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF -->
             <!-- ENDIF -->
         </div>
     </div>
