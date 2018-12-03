@@ -78,8 +78,8 @@ $lang = array_merge($lang, array(
 
 	'LOGIN_EXPLAIN_GROUP'	=> '您需要登录后才能查看组资料',
 
-	'NO_LEADERS'					=> '您不是任何群组的领导者',
-	'NOT_LEADER_OF_GROUP'			=> '您不是此群组的领导人，无法执行此操作。',
+	'NO_LEADERS'					=> '您不是任何群组的组长',
+	'NOT_LEADER_OF_GROUP'			=> '您不是此群组的组长，无法执行此操作。',
 	'NOT_MEMBER_OF_GROUP'			=> '您不是此群组的成员，无法执行此操作。',
 	'NOT_RESIGN_FROM_DEFAULT_GROUP'	=> '您不能退出您的默认群组。',
 	
@@ -88,9 +88,9 @@ $lang = array_merge($lang, array(
 	'REMOVE_SELECTED'		=> '删除选中',
 
 	'USER_GROUP_CHANGE'			=> '从群组 “%1$s” 到群组 “%2$s”',
-	'USER_GROUP_DEMOTE'			=> '辞去领导职务',
-	'USER_GROUP_DEMOTE_CONFIRM'	=> '您确定要辞去此群组的领导职务吗？',
-	'USER_GROUP_DEMOTED'		=> '您已成功辞去领导职务。',
+	'USER_GROUP_DEMOTE'			=> '辞去组长职务',
+	'USER_GROUP_DEMOTE_CONFIRM'	=> '您确定要辞去此群组的组长职务吗？',
+	'USER_GROUP_DEMOTED'		=> '您已成功辞去组长职务。',
 ));
 
 ?>

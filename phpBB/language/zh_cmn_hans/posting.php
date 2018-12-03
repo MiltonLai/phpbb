@@ -180,7 +180,7 @@ $lang = array_merge($lang, array(
 
     'REMOTE_UPLOAD_TIMEOUT'		=> '请求超时，文件上传失败。',
 	'SAVE'						=> '保存',
-	'SAVE_DATE'					=> '另存为',
+	'SAVE_DATE'					=> '保存时间',
 	'SAVE_DRAFT'				=> '保存草稿',
 	'SAVE_DRAFT_CONFIRM'		=> '请注意保存的草稿仅包含标题和正文，任何其他内容都将被忽略。您希望现在保存草稿吗?',
 	'SMILIES'					=> '表情',
