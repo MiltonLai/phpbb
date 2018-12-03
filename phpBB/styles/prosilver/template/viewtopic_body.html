@@ -88,7 +88,7 @@
 
 					<dl class="poll_total_votes<!-- IF not S_DISPLAY_RESULTS --> hidden<!-- ENDIF -->">
 						<dt>&nbsp;</dt>
-						<dd class="resultbar">{L_TOTAL_VOTES}{L_COLON} <span class="poll_total_vote_cnt">{TOTAL_VOTES}</span></dd>
+						<dd class="resultbar">{L_TOTAL_VOTES}: <span class="poll_total_vote_cnt">{TOTAL_VOTES}</span></dd>
 					</dl>
 
 					<!-- IF S_CAN_VOTE -->
@@ -261,7 +261,7 @@
                 <!-- IF postrow.EDITED_MESSAGE or postrow.EDIT_REASON -->
                 <div class="notice">
                     {postrow.EDITED_MESSAGE}
-                    <!-- IF postrow.EDIT_REASON --><br /><strong>{L_REASON}{L_COLON}</strong> <em>{postrow.EDIT_REASON}</em><!-- ENDIF -->
+                    <!-- IF postrow.EDIT_REASON --><br /><strong>{L_REASON}:</strong> <em>{postrow.EDIT_REASON}</em><!-- ENDIF -->
                 </div>
                 <!-- ENDIF -->
 

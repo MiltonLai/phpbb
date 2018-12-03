@@ -116,42 +116,52 @@ function dE(n, s, type)
 }
 
 /**
-* Alternate display of subPanels
-*/
-function subPanels(p)
-{
-	var i, e, t;
+ * Alternate display of subPanels
+ */
+jQuery(function($) {
+    'use strict';
 
-	if (typeof(p) == 'string')
-	{
-		show_panel = p;
-	}
+    $('.sub-panels').each(function() {
 
-	for (i = 0; i < panels.length; i++)
-	{
-		e = document.getElementById(panels[i]);
-		t = document.getElementById(panels[i] + '-tab');
+        var $childNodes = $('a[data-subpanel]', this),
+            panels = $childNodes.map(function () {
+                return this.getAttribute('data-subpanel');
+            }),
+            showPanel = this.getAttribute('data-show-panel');
 
-		if (e)
-		{
-			if (panels[i] == show_panel)
-			{
-				e.style.display = 'block';
-				if (t)
-				{
-					t.className = 'activetab';
-				}
-			}
-			else
-			{
-				e.style.display = 'none';
-				if (t)
-				{
-					t.className = '';
-				}
-			}
-		}
-	}
+        if (panels.length) {
+            activateSubPanel(showPanel, panels);
+            $childNodes.click(function () {
+                activateSubPanel(this.getAttribute('data-subpanel'), panels);
+                return false;
+            });
+        }
+    });
+});
+
+/**
+ * Activate specific subPanel
+ */
+function activateSubPanel(p, panels) {
+    'use strict';
+
+    var i, showPanel;
+
+    if (typeof p === 'string') {
+        showPanel = p;
+    }
+    $('input[name="show_panel"]').val(showPanel);
+
+    if (typeof panels === 'undefined') {
+        panels = jQuery('.sub-panels a[data-subpanel]').map(function() {
+            return this.getAttribute('data-subpanel');
+        });
+    }
+
+    for (i = 0; i < panels.length; i++) {
+        jQuery('#' + panels[i]).css('display', panels[i] === showPanel ? 'block' : 'none');
+        jQuery('#' + panels[i] + '-tab').toggleClass('activetab', panels[i] === showPanel);
+    }
 }
 
 /**
@@ -400,30 +410,26 @@ function submit_default_button(event, selector, class_name)
 */
 function apply_onkeypress_event()
 {
-	// jQuery code in case jQuery is used
-	if (jquery_present)
-	{
-		jQuery('form input[type=text], form input[type=password]').on('keypress', function (e)
-		{
-			var default_button = jQuery(this).parents('form').find('input[type=submit].default-submit-action');
-			
-			if (!default_button || default_button.length <= 0)
-				return true;
+    jQuery('form input[type=text], form input[type=password]').on('keypress', function (e)
+    {
+        var default_button = jQuery(this).parents('form').find('input[type=submit].default-submit-action');
 
-			if (phpbb_check_key(e))
-				return true;
+        if (!default_button || default_button.length <= 0)
+            return true;
 
-			if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13))
-			{
-				default_button.click();
-				return false;
-			}
+        if (phpbb_check_key(e))
+            return true;
 
-			return true;
-		});
-	
-		return;
-	}
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13))
+        {
+            default_button.click();
+            return false;
+        }
+
+        return true;
+    });
+
+    return;
 
 	var input_tags = document.getElementsByTagName('input');
 
@@ -437,7 +443,12 @@ function apply_onkeypress_event()
 	}
 }
 
+
 /**
-* Detect JQuery existance. We currently do not deliver it, but some styles do, so why not benefit from it. ;)
-*/
-var jquery_present = typeof jQuery == 'function';
+ * Run onload functions
+ */
+jQuery(function($) {
+    'use strict';
+
+});
+

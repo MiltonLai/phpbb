@@ -335,6 +335,7 @@ class ucp_main
 
 						$template->assign_block_vars('forumrow', array(
 							'FORUM_ID'				=> $forum_id,
+                            'FORUM_IMG_STYLE'		=> $folder_image,
 							'FORUM_FOLDER_IMG'		=> $user->img($folder_image, $folder_alt),
 							'FORUM_FOLDER_IMG_SRC'	=> $user->img($folder_image, $folder_alt, false, '', 'src'),
 							'FORUM_IMAGE'			=> ($row['forum_image']) ? '<img src="' . $phpbb_root_path . $row['forum_image'] . '" alt="' . $user->lang[$folder_alt] . '" />' : '',
@@ -348,6 +349,8 @@ class ucp_main
 							'LAST_POST_AUTHOR_COLOUR'	=> get_username_string('colour', $row['forum_last_poster_id'], $row['forum_last_poster_name'], $row['forum_last_poster_colour']),
 							'LAST_POST_AUTHOR_FULL'		=> get_username_string('full', $row['forum_last_poster_id'], $row['forum_last_poster_name'], $row['forum_last_poster_colour']),
 							'U_LAST_POST_AUTHOR'		=> get_username_string('profile', $row['forum_last_poster_id'], $row['forum_last_poster_name'], $row['forum_last_poster_colour']),
+
+                            'S_UNREAD_FORUM'		=> $unread_forum,
 
 							'U_LAST_POST'			=> $last_post_url,
 							'U_VIEWFORUM'			=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']))

@@ -113,49 +113,51 @@
 
 	<!-- INCLUDE posting_buttons.html -->
 
-	<div id="smiley-box">
-		<!-- IF S_SMILIES_ALLOWED and .smiley -->
-			<strong>{L_SMILIES}</strong><br />
-			<!-- BEGIN smiley -->
-				<a href="#" onclick="insert_text('{smiley.A_SMILEY_CODE}', true); return false;"><img src="{smiley.SMILEY_IMG}" width="{smiley.SMILEY_WIDTH}" height="{smiley.SMILEY_HEIGHT}" alt="{smiley.SMILEY_CODE}" title="{smiley.SMILEY_DESC}" /></a>
-			<!-- END smiley -->
-		<!-- ENDIF -->
-		<!-- IF S_SHOW_SMILEY_LINK and S_SMILIES_ALLOWED-->
-			<br /><a href="{U_MORE_SMILIES}" onclick="popup(this.href, 300, 350, '_phpbbsmilies'); return false;">{L_MORE_SMILIES}</a>
-		<!-- ENDIF -->
+    <div id="smiley-box" class="smiley-box">
+        <!-- IF S_SMILIES_ALLOWED and .smiley -->
+        <strong>{L_SMILIES}</strong><br />
+        <!-- BEGIN smiley -->
+        <a href="#" onclick="insert_text('{smiley.A_SMILEY_CODE}', true); return false;"><img src="{smiley.SMILEY_IMG}" width="{smiley.SMILEY_WIDTH}" height="{smiley.SMILEY_HEIGHT}" alt="{smiley.SMILEY_CODE}" title="{smiley.SMILEY_DESC}" /></a>
+        <!-- END smiley -->
+        <!-- ENDIF -->
+        <!-- IF S_SHOW_SMILEY_LINK and S_SMILIES_ALLOWED -->
+        <br /><a href="{U_MORE_SMILIES}" onclick="popup(this.href, 750, 350, '_phpbbsmilies'); return false;">{L_MORE_SMILIES}</a>
+        <!-- ENDIF -->
 
-		<!-- IF BBCODE_STATUS -->
-		<!-- IF .smiley --><hr /><!-- ENDIF -->
-		{BBCODE_STATUS}<br />
-		<!-- IF S_BBCODE_ALLOWED -->
-			{IMG_STATUS}<br />
-			{FLASH_STATUS}<br />
-			{URL_STATUS}<br />
-		<!-- ENDIF -->
-		{SMILIES_STATUS}
-		<!-- ENDIF -->
-		<!-- IF S_EDIT_DRAFT || S_DISPLAY_REVIEW -->
-			<!-- IF S_DISPLAY_REVIEW --><hr /><!-- ENDIF -->
-			<!-- IF S_EDIT_DRAFT --><strong><a href="{S_UCP_ACTION}">{L_BACK_TO_DRAFTS}</a></strong><!-- ENDIF -->
-			<!-- IF S_DISPLAY_REVIEW --><strong><a href="#review">{L_TOPIC_REVIEW}</a></strong><!-- ENDIF -->
-		<!-- ENDIF -->
-	</div>
+        <!-- IF BBCODE_STATUS -->
+        <div class="bbcode-status">
+            <!-- IF .smiley --><hr /><!-- ENDIF -->
+            {BBCODE_STATUS}<br />
+            <!-- IF S_BBCODE_ALLOWED -->
+            {IMG_STATUS}<br />
+            {FLASH_STATUS}<br />
+            {URL_STATUS}<br />
+            <!-- ENDIF -->
+            {SMILIES_STATUS}
+        </div>
+        <!-- ENDIF -->
+        <!-- IF S_EDIT_DRAFT || S_DISPLAY_REVIEW -->
+        <!-- IF S_DISPLAY_REVIEW --><hr /><!-- ENDIF -->
+        <!-- IF S_EDIT_DRAFT --><strong><a href="{S_UCP_ACTION}">{L_BACK_TO_DRAFTS}</a></strong><!-- ENDIF -->
+        <!-- IF S_DISPLAY_REVIEW --><strong><a href="#review">{L_TOPIC_REVIEW}</a></strong><!-- ENDIF -->
+        <!-- ENDIF -->
+    </div>
 
-	<div id="message-box">
-		<textarea <!-- IF S_UCP_ACTION and not S_PRIVMSGS and not S_EDIT_DRAFT -->name="signature" id="signature" style="height: 9em;"<!-- ELSE -->name="message" id="message"<!-- ENDIF --> rows="15" cols="76" tabindex="4" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" class="inputbox">{MESSAGE}{DRAFT_MESSAGE}{SIGNATURE}</textarea>
-	</div>
+    <div id="message-box" class="message-box">
+        <textarea <!-- IF S_UCP_ACTION and not S_PRIVMSGS and not S_EDIT_DRAFT -->name="signature" id="signature" style="height: 9em;"<!-- ELSE -->name="message" id="message"<!-- ENDIF --> rows="15" cols="76" tabindex="4" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" class="inputbox">{MESSAGE}{DRAFT_MESSAGE}{SIGNATURE}</textarea>
+    </div>
 </fieldset>
 
 <!-- IF $EXTRA_POSTING_OPTIONS eq 1 -->
 
 	<!-- IF not S_SHOW_DRAFTS -->
-		<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
 	<!-- ENDIF -->
 
 	<!-- IF S_HAS_ATTACHMENTS -->
-		<div class="panel bg2">
-			<div class="inner"><span class="corners-top"><span></span></span>
+        <div class="panel bg2">
+			<div class="inner">
 			<h3>{L_POSTED_ATTACHMENTS}</h3>
 
 			<fieldset class="fields2">
@@ -177,13 +179,13 @@
 
 			</fieldset>
 
-			<span class="corners-bottom"><span></span></span></div>
+			</div>
 		</div>
 	<!-- ENDIF -->
 
 	<!-- IF not S_SHOW_DRAFTS and not $SIG_EDIT eq 1 -->
 	<div class="panel bg2">
-		<div class="inner"><span class="corners-top"><span></span></span>
+		<div class="inner">
 		<fieldset class="submit-buttons">
 			{S_HIDDEN_ADDRESS_FIELD}
 			{S_HIDDEN_FIELDS}
@@ -194,23 +196,33 @@
 
 		</fieldset>
 
-		<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
 	<!-- ENDIF -->
 
 	<!-- IF not S_PRIVMSGS and not S_SHOW_DRAFTS and not $SIG_EDIT eq 1 -->
-		<div id="tabs">
+        <div id="tabs" class="tabs sub-panels" data-show-panel="options-panel" role="tablist">
 			<ul>
-				<li id="options-panel-tab" class="activetab"><a href="#tabs" onclick="subPanels('options-panel'); return false;"><span>{L_OPTIONS}</span></a></li>
-				<!-- IF S_SHOW_ATTACH_BOX --><li id="attach-panel-tab"><a href="#tabs" onclick="subPanels('attach-panel'); return false;"><span>{L_ADD_ATTACHMENT}</span></a></li><!-- ENDIF -->
-				<!-- IF S_SHOW_POLL_BOX || S_POLL_DELETE --><li id="poll-panel-tab"><a href="#tabs" onclick="subPanels('poll-panel'); return false;"><span>{L_ADD_POLL}</span></a></li><!-- ENDIF -->
+                <li id="options-panel-tab" class="tab activetab"><a href="#tabs" data-subpanel="options-panel" role="tab" aria-controls="options-panel"><span>{L_OPTIONS}</span></a></li>
+                <!-- IF S_SHOW_ATTACH_BOX -->
+                <li id="attach-panel-tab" class="tab">
+                    <a href="#tabs" data-subpanel="attach-panel" role="tab" aria-controls="attach-panel">
+                        {L_ATTACHMENTS} <strong id="file-total-progress" class="file-total-progress"><strong id="file-total-progress-bar" class="file-total-progress-bar"></strong></strong>
+                    </a>
+                </li>
+                <!-- ENDIF -->
+                <!-- IF S_SHOW_POLL_BOX || S_POLL_DELETE -->
+                <li id="poll-panel-tab" class="tab">
+                    <a href="#tabs" data-subpanel="poll-panel" role="tab" aria-controls="poll-panel">{L_ADD_POLL}</a>
+                </li>
+                <!-- ENDIF -->
 			</ul>
 		</div>
 	<!-- ENDIF -->
 
 	<!-- IF not S_SHOW_DRAFTS and not $SIG_EDIT eq 1 -->
 	<div class="panel bg3" id="options-panel">
-		<div class="inner"><span class="corners-top"><span></span></span>
+		<div class="inner">
 
 		<fieldset class="fields1">
 			<!-- IF S_BBCODE_ALLOWED -->
