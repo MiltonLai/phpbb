@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TAG='1.0.0-rc1'
+TAG='v1.0.0-rc1'
 BASE_DIR=$(cd $(dirname $0); cd ../; pwd)
 TARGET=${BASE_DIR}/phpBB
 echo '|| BASE_DIR: '${BASE_DIR}
@@ -60,5 +60,5 @@ else
 fi
 
 # Full package
-tar cjf ${BASE_DIR}/target/phpbbs-${TAG}.tar.bz2 phpBB
+tar cjf ${BASE_DIR}/target/phpbbc_${TAG}.tar.bz2 phpBB
 echo '   Package: Done'
