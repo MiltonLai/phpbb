@@ -11,18 +11,6 @@
 	/* Reset browsers default margin, padding and font sizes */
 	margin: 0;
 	padding: 0;
-	font-size: 100%;
-}
-
-body, div, p, th, td, li, dd {
-	font-size: x-small;
-	voice-family: "\"}\"";
-	voice-family: inherit;
-	font-size: small
-}
-
-html>body, html>div, html>p, html>th, html>td, html>li, html>dd {
-	font-size: small
 }
 
 html {
@@ -35,10 +23,10 @@ html {
 
 body {
 	/* Text-Sizing with ems: http://www.clagnut.com/blog/348/ */
-	font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+	font-family: "Lucida Grande", Verdana, Helvetica, Arial, "Microsoft YaHei", sans-serif;
 	color: #536482;
 	background: #DBD7D1;
-	font-size: 62.5%;	/* This sets the default font size to be equivalent to 10px */
+	font-size: 75%;	/* This sets the default font size to be equivalent to 10px */
 	margin: 10px 15px;
 }
 
@@ -48,7 +36,7 @@ img {
 
 h1 {
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	font-size: 1.70em;
+	font-size: 1.50em;
 	font-weight: normal;
 	color: #333333;
 }
@@ -77,7 +65,6 @@ h3, h4 {
 p {
 	margin-bottom: 0.7em;
 	line-height: 1.40em;
-	font-size: 0.90em;
 }
 
 ul {
@@ -144,7 +131,6 @@ li {
 	text-align: right;
 	background: url("../images/phpbb_logo.png") top left no-repeat;
 	height: 54px;
-	font-size: 0.85em;
 	margin-bottom: 10px;
 }
 
@@ -175,7 +161,6 @@ li {
 
 #page-footer {
 	clear: both;
-	font-size: 0.75em;
 	text-align: center;
 }
 
@@ -235,7 +220,6 @@ li {
 	display: inline;
 	margin: 0;
 	padding: 0;
-	font-size: 0.85em;
 	font-weight: bold;
 }
 
@@ -400,10 +384,6 @@ span.corners-bottom span {
 	border-left: 1px solid #CCCFD3;
 }
 
-#menu p {
-	font-size: 0.85em;
-}
-
 #menu ul {
 	list-style: none;
 	margin: 0;
@@ -414,7 +394,6 @@ span.corners-bottom span {
 #menu li {
 	padding: 0;
 	margin: 0;
-	font-size: 0.85em;
 	font-weight: bold;
 	display: inline;
 }
@@ -490,7 +469,6 @@ span.corners-bottom span {
 	padding: 4px 0 2px;
 	margin-top: 15px;
 	text-transform: uppercase;
-	font-size: 0.75em;
 }
 
 /* Table styles
@@ -510,13 +488,11 @@ th {
 	border-top: 1px solid #6DACD2;
 	border-bottom: 1px solid #327AA5;
 	text-align: left;
-	font-size: 0.75em;
 	text-transform: uppercase;
 }
 
 td {
 	text-align: left;
-	font-size: 0.85em;
 	padding: 4px;
 	line-height: 1.20em;
 }
@@ -567,7 +543,6 @@ table.type3 thead th {
 	text-align: center;
 	color: #115098;
 	padding: 0 3px;
-	font-size: 0.85em;
 	font-weight: normal;
 	text-transform: none;
 }
@@ -578,7 +553,6 @@ table.type3 tbody th {
 	text-transform: none;
 	padding: 0;
 	border: none;
-	font-size: 0.90em;
 	font-weight: normal;
 	width: 100%;
 }
@@ -656,14 +630,9 @@ fieldset {
 	padding: 0 10px 5px 10px;
 }
 
-fieldset p {
-	font-size: 0.85em;
-}
-
 legend {
 	padding: 1px 0;
 	font-family: Tahoma,arial,Verdana,Sans-serif;
-	font-size: .9em;
 	font-weight: bold;
 	color: #115098;
 	margin-top: -.4em;
@@ -677,7 +646,6 @@ legend {
 * html legend {
 	margin: 0 0 -10px -7px;
 	line-height: 1em;
-	font-size: .85em;
 }
 
 /* Holly hack, .rtl comes after html */
@@ -688,7 +656,6 @@ legend {
 
 input, textarea {
 	font-family: Verdana, Helvetica, Arial, sans-serif;
-	font-size: 0.90em;
 	font-weight: normal;
 	cursor: text;
 	vertical-align: middle;
@@ -722,7 +689,6 @@ input.langvalue, textarea.langvalue {
 
 optgroup, select {
 	font-family: Verdana, Helvetica, Arial, sans-serif;
-	font-size: 0.85em;
 	font-weight: normal;
 	font-style: normal;
 	cursor: pointer;
@@ -768,14 +734,12 @@ option.disabled-option {
 
 textarea {
 	font-family: Verdana, Helvetica, Arial, sans-serif;
-	font-size: 0.85em;
 	width: 60%;
 	padding: 2px;
 }
 
 label {
 	cursor: pointer;
-	font-size: 0.85em;
 	padding: 0 5px 0 0;
 }
 
@@ -833,7 +797,7 @@ fieldset.display-options {
 	border: none;
 	background-color: transparent;
 	text-align: center;
-	font-size: 0.75em;
+	font-size: 1em;
 }
 
 fieldset.display-options select, fieldset.display-options input, fieldset.display-options label {
@@ -921,7 +885,6 @@ dd textarea {
 
 fieldset dl {
 	margin-bottom: 10px;
-	font-size: 0.85em;
 }
 
 fieldset dt {
@@ -1039,7 +1002,7 @@ a.button2, input.button2 {
 	padding: 1px 3px 0 3px;
 	font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
 	color: #000;
-	font-size: 0.85em;
+	font-size: 1em;
 	background: #EFEFEF url("../images/bg_button.gif") repeat-x top;
 	cursor: pointer;
 }
@@ -1173,7 +1136,7 @@ input.button1:focus, input.button2:focus, input.button3:focus {
 
 .successbox p, .errorbox p {
 	color: #FFFFFF;
-	font-size: 0.85em;
+	font-size: 1em;
 	margin-bottom: 0;
 }
 
