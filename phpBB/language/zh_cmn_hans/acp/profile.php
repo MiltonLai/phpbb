@@ -62,8 +62,8 @@ $lang = array_merge($lang, array(
 	'DEFAULT_VALUE'					=> '默认值',
 	'DELETE_PROFILE_FIELD'			=> '删除资料栏目',
 	'DELETE_PROFILE_FIELD_CONFIRM'	=> '您确认删除这个资料栏目吗?',
-	'DISPLAY_AT_PROFILE'			=> '在用户的控制面板中显示',
-	'DISPLAY_AT_PROFILE_EXPLAIN'	=> '用户可以在用户控制面板中更改这个资料栏.',
+	'DISPLAY_AT_PROFILE'			=> '在用户面板中显示',
+	'DISPLAY_AT_PROFILE_EXPLAIN'	=> '用户可以在用户面板中更改这个资料栏.',
 	'DISPLAY_AT_REGISTER'			=> '注册时显示',
 	'DISPLAY_AT_REGISTER_EXPLAIN'	=> '启用这个选项后, 用户注册时会显示此栏目.',
 	'DISPLAY_ON_VT'					=> '于主题阅读页面显示',
@@ -97,7 +97,7 @@ $lang = array_merge($lang, array(
 	'FIRST_OPTION'				=> '第一选项',
 
 	'HIDE_PROFILE_FIELD'			=> '隐藏资料栏目',
-	'HIDE_PROFILE_FIELD_EXPLAIN'	=> '只有管理员和版主和用户本人可以查看/填写这个栏目. 如果显示在用户控制面板的选项未启用, 用户将无法看到这个栏目, 并且只能由管理员来修改.',
+	'HIDE_PROFILE_FIELD_EXPLAIN'	=> '只有管理员和版主和用户本人可以查看/填写这个栏目. 如果显示在用户面板的选项未启用, 用户将无法看到这个栏目, 并且只能由管理员来修改.',
 
 	'INVALID_CHARS_FIELD_IDENT'	=> '栏目定义只能包含小写 a-z 和 _',
 	'INVALID_FIELD_IDENT_LEN'	=> '栏目定义字符长度不能超过17',
@@ -126,7 +126,7 @@ $lang = array_merge($lang, array(
 	'RADIO_BUTTONS'				=> '单选框',
 	'REMOVED_PROFILE_FIELD'		=> '资料栏目删除完成.',
 	'REQUIRED_FIELD'			=> '必填栏目',
-	'REQUIRED_FIELD_EXPLAIN'	=> '强制用户填写的栏目. 这将在注册过程和用户控制面板中显示这个栏目, 如果设置为注册过程中不显示, 那么在用户编辑资料时会被要求填写.',
+	'REQUIRED_FIELD_EXPLAIN'	=> '强制用户填写的栏目. 这将在注册过程和用户面板中显示这个栏目, 如果设置为注册过程中不显示, 那么在用户编辑资料时会被要求填写.',
 	'ROWS'						=> '行',
 
 	'SAVE'							=> '保存',

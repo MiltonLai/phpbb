@@ -36,7 +36,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'ACP_MODULE_MANAGEMENT_EXPLAIN'	=> '这里您可以管理各种模块. 请注意管理员控制面板使用的是三层菜单结构 (分类 -> 分类 -> 模块) 而其他使用的是两层菜单结构 (分类 -> 模块) . 请同样注意的是您有可能会把自己给锁在模块外面, 如果您删除或禁用了涉及模块自身管理的模块.',
+	'ACP_MODULE_MANAGEMENT_EXPLAIN'	=> '这里您可以管理各种模块. 请注意管理后台使用的是三层菜单结构 (分类 -> 分类 -> 模块) 而其他使用的是两层菜单结构 (分类 -> 模块) . 请同样注意的是您有可能会把自己给锁在模块外面, 如果您删除或禁用了涉及模块自身管理的模块.',
 	'ADD_MODULE'					=> '添加模块',
 	'ADD_MODULE_CONFIRM'			=> '您确认用选中的模式添加选中的模块吗?',
 	'ADD_MODULE_TITLE'				=> '添加模块',

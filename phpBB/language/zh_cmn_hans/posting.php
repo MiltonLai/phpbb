@@ -44,7 +44,7 @@ $lang = array_merge($lang, array(
 	'ALREADY_DELETED'			=> '对不起，此内容已经被删除。',
 	'ATTACH_DISK_FULL'			=> '硬盘剩余空间不足, 无法上传附件.',
 	'ATTACH_QUOTA_REACHED'		=> '对不起，您的附件限额已经用完了。',
-	'ATTACH_SIG'				=> '添加签名（签名可以在用户控制面板修改）',
+	'ATTACH_SIG'				=> '添加签名（签名可以在用户面板修改）',
 
 	'BBCODE_A_HELP'				=> '行内显示附件: [attachment=]filename.ext[/attachment]',
 	'BBCODE_B_HELP'				=> '粗体：[b]text[/b]',
@@ -115,7 +115,7 @@ $lang = array_merge($lang, array(
 
 	'LOAD'						=> '导入',
 	'LOAD_DRAFT'				=> '导入草稿',
-	'LOAD_DRAFT_EXPLAIN'		=> '在这里，您可以选择草稿继续编辑。您现在编写的帖子将被取消，所有的当前内容将会丢失。您可以在用户控制面板内查看、编辑和删除草稿。',
+	'LOAD_DRAFT_EXPLAIN'		=> '在这里，您可以选择草稿继续编辑。您现在编写的帖子将被取消，所有的当前内容将会丢失。您可以在用户面板内查看、编辑和删除草稿。',
 	'LOGIN_EXPLAIN_BUMP'		=> '您需要登录后才能在这个版面顶帖。',
 	'LOGIN_EXPLAIN_DELETE'		=> '您需要登录后才能在这个版面删除帖子。',
 	'LOGIN_EXPLAIN_POST'		=> '您需要登录后才能在这个版面发表帖子。',

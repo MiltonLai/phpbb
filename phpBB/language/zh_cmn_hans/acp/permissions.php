@@ -81,7 +81,7 @@ $lang = array_merge($lang, array(
 	'ACL_VIEW_EXPLAIN'		=> '这里您可以看到用户和群组拥有的有效权限. 红色方形表示用户/组没有该权限, 绿色方形表示用户/组拥有该权限.',
 	'ACL_YES'				=> '是',
 
-    'ACP_ADMINISTRATORS_EXPLAIN'				=> '这里您可以赋于用户/组更高的管理权限. 所有拥有高级管理权限的用户都能看到管理员控制面板.',
+    'ACP_ADMINISTRATORS_EXPLAIN'				=> '这里您可以赋于用户/组更高的管理权限. 所有拥有高级管理权限的用户都能看到管理后台.',
     'ACP_FORUM_MODERATORS_EXPLAIN'				=> '这里您可以将用户/组任命为版主. 请使用其他的页面设置用户访问版面的权限和设置全局版主, 管理员..',
     'ACP_FORUM_PERMISSIONS_EXPLAIN'				=> '这里您可以更改哪些用户/组可以访问哪些版面. 任命版主和管理员请使用其他的页面.',
     'ACP_FORUM_PERMISSIONS_COPY_EXPLAIN'		=> '这里您可以将一个版面的权限复制到其他版面.',

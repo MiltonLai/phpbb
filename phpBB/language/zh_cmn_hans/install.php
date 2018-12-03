@@ -194,7 +194,7 @@ $lang = array_merge($lang, array(
 		<h2>转换一个已经存在的论坛到 phpBB3</h2>
 		<p>phpBB 统一转换框架支持从 phpBB 2.0.x 和其他论坛软件到 phpBB3 的转换. 如果您有一个旧的论坛需要转换, 请 <a href="%2$s">运行转换程序</a>.</p>
 		<h2>使用您的 phpBB3!</h2>
-		<p>点击下面的链接将带您到管理员控制面板 (ACP)下提交统计数据的界面. 花一些时间检查设置选项是否可用. 记住可以使用在线帮助文档位于 <a href="https://www.phpbb.com/support/documentation/3.0/">文档</a> 和 <a href="https://www.phpbb.com/community/viewforum.php?f=46">技术支持版面</a>, 查看 <a href="%3$s">README</a> 以得到更多的信息.</p><p><strong>请在使用论坛前删除, 移动或重命名install文件夹. 如果这个文件夹存在, 只有管理员控制面板才可以访问.</strong></p>',
+		<p>点击下面的链接将带您到管理后台 (ACP)下提交统计数据的界面. 花一些时间检查设置选项是否可用. 记住可以使用在线帮助文档位于 <a href="https://www.phpbb.com/support/documentation/3.0/">文档</a> 和 <a href="https://www.phpbb.com/community/viewforum.php?f=46">技术支持版面</a>, 查看 <a href="%3$s">README</a> 以得到更多的信息.</p><p><strong>请在使用论坛前删除, 移动或重命名install文件夹. 如果这个文件夹存在, 只有管理后台才可以访问.</strong></p>',
 	'INSTALL_INTRO'				=> '欢迎安装！',
 
 	'INSTALL_INTRO_BODY'		=> '使用这个选项, 应该可以在您的服务器上安装 phpBB.</p><p>为了继续安装, 您需要知道您的数据库设置. 如果您不清楚这些, 请联络您的web空间提供者. 没有这些信息安装将不能继续. 您需要:</p>
@@ -285,7 +285,7 @@ $lang = array_merge($lang, array(
 	'NOT_UNDERSTAND'			=> '无法理解 %s #%d，表格 %s (“%s”)',
 	'NO_CONVERTORS'				=> '没有可用的转换程序',
 	'NO_CONVERT_SPECIFIED'		=> '没有指定转换程序',
-	'NO_LOCATION'				=> '无法确定位置。如果您确定 Imagemagick 已经安装，请于论坛安装完成之后，在管理员控制面板中指定它的位置。',
+	'NO_LOCATION'				=> '无法确定位置。如果您确定 Imagemagick 已经安装，请于论坛安装完成之后，在管理后台中指定它的位置。',
 	'NO_TABLES_FOUND'			=> '没有找到任何表格',
 
 	'OVERVIEW_BODY'					=> '欢迎安装 phpBB3!<br /><br />phpBB® 是世界上使用最为广泛的开源论坛软件. phpBB3 是自2000年以来这一系列的最新产品. 与之前的版本相比, phpBB3 具有更丰富的功能, 更友好的操作界面, 并拥有phpBB团队的完整技术支持. phpBB3大幅提升了phpBB2受人欢迎的功能, 并且添加了众多用户迫切需要的新特性. 我们希望phpBB3能满足您的期待.<br /><br />安装模块将引导您安装的全过程, 并且指导您升级或转换不同的论坛(包括phpBB2)到phpBB3. 要获取更多的信息, 我们推荐您阅读 <a href="../docs/INSTALL.html">安装指南</a>.<br /><br />从侧面的菜单中选取不同的内容, 阅读phpBB3授权协议以了解支持和我们对此的要求. 继续下一步操作, 请从上方选择相应的页面.',
@@ -324,12 +324,12 @@ $lang = array_merge($lang, array(
 	'SELECT_LANG'				=> '选择语言',
 	'SERVER_CONFIG'				=> '服务器设置',
 	'SEARCH_INDEX_UNCONVERTED'	=> '搜索索引没有转换',
-	'SEARCH_INDEX_UNCONVERTED_EXPLAIN'	=> '您的旧搜索索引没有转换. 搜索将总是得到空结果. 如果需要创建一个新索引, 请到管理员控制面板, 选择维护, 然后从子菜单中选择搜索索引.',
+	'SEARCH_INDEX_UNCONVERTED_EXPLAIN'	=> '您的旧搜索索引没有转换. 搜索将总是得到空结果. 如果需要创建一个新索引, 请到管理后台, 选择维护, 然后从子菜单中选择搜索索引.',
 	'SOFTWARE'					=> '论坛软件',
 	'SPECIFY_OPTIONS'			=> '设置转换选项',
 	'STAGE_ADMINISTRATOR'		=> '管理员信息',
 	'STAGE_ADVANCED'			=> '高级设置',
-	'STAGE_ADVANCED_EXPLAIN'	=> '只有您确定需要一些非默认设置时，您才有必要更改此页的内容。如果您不确定，请继续至下一页，因为这些设置可以随时在管理员控制面板中更改。',
+	'STAGE_ADVANCED_EXPLAIN'	=> '只有您确定需要一些非默认设置时，您才有必要更改此页的内容。如果您不确定，请继续至下一页，因为这些设置可以随时在管理后台中更改。',
 	'STAGE_CONFIG_FILE'			=> '配置文件',
 	'STAGE_CREATE_TABLE'		=> '创建数据表',
 	'STAGE_CREATE_TABLE_EXPLAIN'	=> 'phpBB 3.0 所使用的数据库表格已经被创建并被填入一些初始数据，请继续至下一步以完成安装。',
@@ -363,7 +363,7 @@ $lang = array_merge($lang, array(
 	'UNAVAILABLE'				=> '不可用',
 	'UNWRITABLE'				=> '不可写',
 	'UPDATE_TOPICS_POSTED'		=> '正在生成主题发布信息',
-	'UPDATE_TOPICS_POSTED_ERR'	=> '在生成主题信息时发生错误. 您可以在转换结束后在管理员控制面板中重试这个操作.',
+	'UPDATE_TOPICS_POSTED_ERR'	=> '在生成主题信息时发生错误. 您可以在转换结束后在管理后台中重试这个操作.',
 	'VERIFY_OPTIONS'			=> '检测转换选项',
 	'VERSION'					=> '版本',
 

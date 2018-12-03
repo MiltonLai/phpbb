@@ -105,7 +105,7 @@ $lang = array_merge($lang, array(
 	'ACP_ICONS_SMILIES'			=> '主题图标/表情',
 	'ACP_IMAGESETS'				=> '图片组',
 	'ACP_INACTIVE_USERS'		=> '冻结的用户',
-	'ACP_INDEX'					=> '管理员控制面板首页',
+	'ACP_INDEX'					=> '管理后台首页',
 
 	'ACP_JABBER_SETTINGS'		=> 'Jabber设置',
 
@@ -114,7 +114,7 @@ $lang = array_merge($lang, array(
 	'ACP_LOAD_SETTINGS'			=> '负载设置',
 	'ACP_LOGGING'				=> '记录',
 
-	'ACP_MAIN'					=> '管理员控制面板首页',
+	'ACP_MAIN'					=> '管理后台首页',
 	'ACP_MANAGE_EXTENSIONS'		=> '管理扩展名',
 	'ACP_MANAGE_FORUMS'			=> '管理版面',
 	'ACP_MANAGE_RANKS'			=> '管理等级',
@@ -206,11 +206,11 @@ $lang = array_merge($lang, array(
 	'ACTIVATE'				=> '激活',
 	'ADD'					=> '添加',
 	'ADMIN'					=> '管理',
-	'ADMIN_INDEX'			=> '管理首页',
-	'ADMIN_PANEL'			=> '管理员控制面板',
+	'ADMIN_INDEX'			=> '后台首页',
+	'ADMIN_PANEL'			=> '管理后台',
 
-	'ADM_LOGOUT'			=> '退出控制面板',
-	'ADM_LOGGED_OUT'		=> '成功退出管理员控制面板',
+	'ADM_LOGOUT'			=> '退出管理后台',
+	'ADM_LOGGED_OUT'		=> '成功退出管理后台',
 
 	'BACK'					=> '后退',
 
@@ -242,8 +242,8 @@ $lang = array_merge($lang, array(
 
 	'LOGGED_IN_AS'			=> '您登录的身份为:',
 	'LOGIN_ADMIN'			=> '您必须是已授权的用户才能管理论坛.',
-	'LOGIN_ADMIN_CONFIRM'	=> '您需要再次登录才能进入管理面板.',
-	'LOGIN_ADMIN_SUCCESS'	=> '您已经成功登录, 稍后将进入管理员控制面板',
+	'LOGIN_ADMIN_CONFIRM'	=> '您需要再次登录才能进入管理后台.',
+	'LOGIN_ADMIN_SUCCESS'	=> '您已经成功登录, 稍后将进入管理后台',
 	'LOOK_UP_FORUM'			=> '选择一个版面',
 	'LOOK_UP_FORUMS_EXPLAIN'=> '您可以选择一个或多个版面.',
 
@@ -257,7 +257,7 @@ $lang = array_merge($lang, array(
 	'NOTIFY'				=> '通知',
 	'NO_ADMIN'				=> '您未被授权管理这个论坛.',
 	'NO_EMAILS_DEFINED'		=> '没有发现可用的email地址',
-	'NO_PASSWORD_SUPPLIED'	=> '您需要输入您的密码后才能访问管理员控制面板.',	
+	'NO_PASSWORD_SUPPLIED'	=> '您需要输入您的密码后才能访问管理后台。',
 
 	'OFF'					=> '关',
 	'ON'					=> '开',
@@ -266,8 +266,8 @@ $lang = array_merge($lang, array(
 	'PARSE_SMILIES'						=> '解析表情图标',
 	'PARSE_URLS'						=> '解析链接格式',
 	'PERMISSIONS_TRANSFERRED'			=> '权限已经传递',
-	'PERMISSIONS_TRANSFERRED_EXPLAIN'	=> '您现在使用来自于 %1$s 的权限. 您可以以这个用户的权限浏览版面但是不能访问管理员控制面板因为管理员权限没有被传递. 您可以随时 <a href="%2$s"><strong>恢复您的权限设置</strong></a>.',
-	'PROCEED_TO_ACP'					=> '%s 进入管理员控制面板%s',
+	'PERMISSIONS_TRANSFERRED_EXPLAIN'	=> '您现在使用来自于 %1$s 的权限. 您可以以这个用户的权限浏览版面但是不能访问管理后台，因为管理员权限没有被加载. 您可以随时 <a href="%2$s"><strong>恢复您的权限</strong></a>.',
+	'PROCEED_TO_ACP'					=> '%s 进入管理后台%s',
 
 	'REMIND'							=> '提醒',
 	'RESYNC'							=> '重新同步',
@@ -283,9 +283,9 @@ $lang = array_merge($lang, array(
 	
 	'SHOW_ALL_OPERATIONS'	=> '显示所有操作',
 
-	'UCP'					=> '用户控制面板',
+	'UCP'					=> '用户面板',
 	'USERNAMES_EXPLAIN'		=> '在同一行上分开排列用户名',
-	'USER_CONTROL_PANEL'	=> '用户控制面板',
+	'USER_CONTROL_PANEL'	=> '用户面板',
 
 	'WARNING'				=> '警告',
 ));
@@ -423,8 +423,8 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
 	'EXPLAIN_SEND_STATISTICS'	=> '请发送您的服务器和论坛设置信息至phpBB官方以便于进行统计分析. 此信息不会包含任何与您或您的论坛的隐私数据. 所有数据都是完全<strong>匿名</strong>的. 我们会在今后的phpBB版本开发中参考收集到的信息. 统计的结果会向公众公开, 并提供给PHP语言项目的开发团队.',
 	'EXPLAIN_SHOW_STATISTICS'	=> '使用下面的按钮您可以查看发送的内容.',
-	'DONT_SEND_STATISTICS'		=> '返回管理员控制面板, 如果您不希望发送统计信息给phpBB.',
-	'GO_ACP_MAIN'				=> '前往管理员控制面板首页',
+	'DONT_SEND_STATISTICS'		=> '返回管理后台, 如果您不希望发送统计信息给phpBB.',
+	'GO_ACP_MAIN'				=> '前往管理后台首页',
 	'HIDE_STATISTICS'			=> '隐藏细节',
 	'SEND_STATISTICS'			=> '发送统计信息',
 	'SHOW_STATISTICS'			=> '显示细节',

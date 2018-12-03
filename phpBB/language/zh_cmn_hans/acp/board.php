@@ -51,7 +51,7 @@ $lang = array_merge($lang, array(
 	'SITE_NAME'						=> '站点名称',
 	'SYSTEM_DST'					=> '启用夏令时',
 	'SYSTEM_TIMEZONE'               => '访客时区',
-	'SYSTEM_TIMEZONE_EXPLAIN'       => '为未登录的用户(搜索爬虫, 游客)设置的时区. 用户会在注册过程中选择时区, 并且可以在用户控制面板中修改.',
+	'SYSTEM_TIMEZONE_EXPLAIN'       => '为未登录的用户(搜索爬虫, 游客)设置的时区. 用户会在注册过程中选择时区, 并且可以在用户面板中修改.',
 	'WARNINGS_EXPIRE'				=> '警告失效时间',
 	'WARNINGS_EXPIRE_EXPLAIN'		=> '用户警告自动消失所需要的天数, 0为一直警告',
 ));
@@ -93,7 +93,7 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
 	'ACP_AVATAR_SETTINGS_EXPLAIN'	=> '头像是用户用于展示自己的一幅小图片. 根据界面有所不同, 不过它们通常显示在用户发布的帖子旁边. 这里您可以决定用户是否能和如何定义他们的头像. 请注意如果允许用户上传头像, 您必须建立下面的目录并保证这个目录对于web服务器是可写的. 同时也要注意这个文件大小只对头像上传有效, 对于链接的头像是没有限制的.',
 	'ALLOW_AVATARS'					=> '启用头像',
-	'ALLOW_AVATARS_EXPLAIN'			=> '允许使用头像;<br />如果您禁用了头像功能, 论坛将不再显示用户头像, 但是用户在用户控制面板中仍可以查看和下载自己的头像.',
+	'ALLOW_AVATARS_EXPLAIN'			=> '允许使用头像;<br />如果您禁用了头像功能, 论坛将不再显示用户头像, 但是用户在用户面板中仍可以查看和下载自己的头像.',
 
 	'ALLOW_LOCAL'					=> '运行使用头像册',
 	'ALLOW_REMOTE'					=> '允许使用外部头像',
@@ -356,7 +356,7 @@ $lang = array_merge($lang, array(
 	'LOAD_CPF_VIEWPROFILE'			=> '在用户资料中显示自定义资料',
 	'LOAD_CPF_VIEWTOPIC'			=> '在帖子查看中显示自定义用户资料',
 	'LOAD_USER_ACTIVITY'			=> '显示用户活跃统计',
-	'LOAD_USER_ACTIVITY_EXPLAIN'	=> '在用户资料和用户控制面板中显示活跃版面和主题. 在帖子数超过百万的论坛上建议关闭此功能.',
+	'LOAD_USER_ACTIVITY_EXPLAIN'	=> '在用户资料和用户面板中显示活跃版面和主题. 在帖子数超过百万的论坛上建议关闭此功能.',
 	'RECOMPILE_STYLES'				=> '重新编译旧的风格组件',
 	'RECOMPILE_STYLES_EXPLAIN'		=> '检查文件系统中更新风格组件并重新编译.',
 	'YES_ANON_READ_MARKING'			=> '允许游客标记主题',
