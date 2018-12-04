@@ -1211,7 +1211,7 @@ function mcp_fork_topic($topic_ids)
 							'in_message'		=> 0,
 							'is_orphan'			=> (int) $attach_row['is_orphan'],
 							'poster_id'			=> (int) $attach_row['poster_id'],
-							'physical_filename'	=> (string) utf8_basename($attach_row['physical_filename']),
+                            'physical_filename'	=> (string) ($attach_row['physical_filename']),
 							'real_filename'		=> (string) utf8_basename($attach_row['real_filename']),
 							'download_count'	=> (int) $attach_row['download_count'],
 							'attach_comment'	=> (string) $attach_row['attach_comment'],
