@@ -411,6 +411,7 @@ $lang = array_merge($lang, array(
 
 	'TIMEZONE'					=> '时区',
 	'TO'						=> '收件人',
+    'TO_ADD_MASS'				=> '批量添加收件人(每行一个用户名)',
 	'TOO_MANY_RECIPIENTS'		=> '收件人过多',
 	'TOO_MANY_REGISTERS'		=> '在这次对话中您已经超过注册的最大尝试次数。请稍后再尝试。',
 
