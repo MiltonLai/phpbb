@@ -451,12 +451,13 @@ function upload_attachment($form_name, $forum_id, $local = false, $local_storage
 		$file->upload->set_max_filesize($allowed_filesize);
 	}
 
-	$file->clean_filename('unique', $user->data['user_id'] . '_');
+    $file->clean_filename('real', $user->data['user_id'] . '_');
 
 	// Are we uploading an image *and* this image being within the image category? Only then perform additional image checks.
 	$no_image = ($cat_id == ATTACHMENT_CATEGORY_IMAGE) ? false : true;
 
-	$file->move_file($config['upload_path'], false, $no_image);
+    $sub_path = date_path_gen();
+    $file->move_file($config['upload_path'] . '/' . $sub_path, false, $no_image);
 
 	if (sizeof($file->error))
 	{
@@ -480,7 +481,7 @@ function upload_attachment($form_name, $forum_id, $local = false, $local_storage
 	$filedata['filesize'] = $file->get('filesize');
 	$filedata['mimetype'] = $file->get('mimetype');
 	$filedata['extension'] = $file->get('extension');
-	$filedata['physical_filename'] = $file->get('realname');
+    $filedata['physical_filename'] = $sub_path. '/' . $file->get('realname');
 	$filedata['real_filename'] = $file->get('uploadname');
 	$filedata['filetime'] = time();
 
@@ -2209,7 +2210,7 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 			else
 			{
 				// insert attachment into db
-				if (!@file_exists($phpbb_root_path . $config['upload_path'] . '/' . utf8_basename($orphan_rows[$attach_row['attach_id']]['physical_filename'])))
+                if (!@file_exists($phpbb_root_path . $config['upload_path'] . '/' . $orphan_rows[$attach_row['attach_id']]['physical_filename']))
 				{
 					continue;
 				}

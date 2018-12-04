@@ -259,6 +259,7 @@ if (!$attachment)
 	trigger_error('ERROR_NO_ATTACHMENT');
 }
 
+$attachment['physical_foldername'] = dirname($attachment['physical_filename']);
 $attachment['physical_filename'] = utf8_basename($attachment['physical_filename']);
 $display_cat = $extensions[$attachment['extension']]['display_cat'];
 
@@ -302,7 +303,7 @@ else
 			trigger_error($user->lang['PHYSICAL_DOWNLOAD_NOT_POSSIBLE']);
 		}
 
-		redirect($phpbb_root_path . $config['upload_path'] . '/' . $attachment['physical_filename']);
+        redirect($phpbb_root_path . $config['upload_path'] . '/' . $attachment['physical_foldername'] . '/' . $attachment['physical_filename']);
 		file_gc();
 	}
 	else
@@ -419,7 +420,7 @@ function send_file_to_browser($attachment, $upload_dir, $category)
 {
 	global $user, $db, $config, $phpbb_root_path;
 
-	$filename = $phpbb_root_path . $upload_dir . '/' . $attachment['physical_filename'];
+    $filename = $phpbb_root_path . $upload_dir . '/' . $attachment['physical_foldername'] . '/' . $attachment['physical_filename'];
 
 	if (!@file_exists($filename))
 	{

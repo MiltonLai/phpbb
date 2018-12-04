@@ -894,8 +894,8 @@ function parse_attachments($forum_id, &$message, &$attachments, &$update_count, 
 
 		// Some basics...
 		$attachment['extension'] = strtolower(trim($attachment['extension']));
-		$filename = $phpbb_root_path . $config['upload_path'] . '/' . utf8_basename($attachment['physical_filename']);
-		$thumbnail_filename = $phpbb_root_path . $config['upload_path'] . '/thumb_' . utf8_basename($attachment['physical_filename']);
+        $filename = $phpbb_root_path . $config['upload_path'] . '/' . dirname($attachment['physical_filename']) . '/' . utf8_basename($attachment['physical_filename']);
+        $thumbnail_filename = $phpbb_root_path . $config['upload_path'] . '/' . dirname($attachment['physical_filename']) . '/thumb_' . utf8_basename($attachment['physical_filename']);
 
 		$upload_icon = '';
 

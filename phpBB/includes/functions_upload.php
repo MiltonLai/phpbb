@@ -105,6 +105,7 @@ class filespec
 				{
 					$this->realname = substr($this->realname, 0, strpos($this->realname, '.'));
 				}
+                $this->realname = $this->realname . '_' . substr(unique_id(), 0, 5);
 
 				// Replace any chars which may cause us problems with _
 				$bad_chars = array("'", "\\", ' ', '/', ':', '*', '?', '"', '<', '>', '|');
@@ -283,6 +284,10 @@ class filespec
 		$this->destination_path = $phpbb_root_path . $destination;
 
 		// Check if the destination path exist...
+        if(!is_dir($this->destination_path)) {
+            mkdeepdir($this->destination_path);
+            @fclose(fopen($this->destination_path.'/index.html', 'w'));
+        }
 		if (!file_exists($this->destination_path))
 		{
 			@unlink($this->filename);
