@@ -473,7 +473,7 @@ $lang = array_merge($lang, array(
 	'POST_SUBJECT'			=> '帖子标题 ',
 	'POST_TIME'				=> '发表时间',
 	'POST_TOPIC'			=> '发表主题',
-	'POST_UNAPPROVED'		=> '这篇帖子正在等待批阅',
+	'POST_UNAPPROVED'		=> '这篇帖子正在等待审核',
 	'POWERED_BY'			=> '由 %s 提供支持',
 	'PREVIEW'				=> '预览',
 	'PREVIOUS'				=> '上一页', 		// Used in pagination
@@ -704,7 +704,6 @@ $lang = array_merge($lang, array(
 	'USERS'					=> '用户',
 	'USE_PERMISSIONS'		=> '检查用户的权限',
 	'USER_NEW_PERMISSION_DISALLOWED'	=> '很抱歉您还不能使用此功能. 作为新注册的用户您需要更多的参与后才能使用这些功能.',
-	'USER_NEW_PERMISSION_DISALLOWED'	=> '很抱歉!您没有权限使用这个功能。您只是刚在本站注册，您需要有更多的参与，才可使用这个功能。',
 
 	'VARIANT_DATE_SEPARATOR'	=> ' / ',	// Used in date format dropdown, eg: "Today, 13:37 / 01 Jan 2007, 13:37" ... to join a relative date with calendar date
 	'VIEWED'					=> '已读',

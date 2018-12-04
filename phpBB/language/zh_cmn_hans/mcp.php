@@ -182,16 +182,16 @@ $lang = array_merge($lang, array(
 	
 	'MCP_PM_REPORTS'				=> '消息举报',
 	'MCP_PM_REPORT_DETAILS'			=> '举报明细',
-	'MCP_PM_REPORTS_CLOSED'			=> '已处理举报',
-	'MCP_PM_REPORTS_CLOSED_EXPLAIN'	=> '这是已经处理过的消息举报列表.',
-	'MCP_PM_REPORTS_OPEN'			=> '未处理举报',
+	'MCP_PM_REPORTS_CLOSED'			=> '已处理消息举报',
+	'MCP_PM_REPORTS_CLOSED_EXPLAIN'	=> '这是已处理过的消息举报列表.',
+	'MCP_PM_REPORTS_OPEN'			=> '未处理消息举报',
 	'MCP_PM_REPORTS_OPEN_EXPLAIN'	=> '这是等待处理的消息举报列表.',
 
 	'MCP_REPORTS'					=> '查看举报',
 	'MCP_REPORT_DETAILS'			=> '举报详细内容',
-	'MCP_REPORTS_CLOSED'			=> '已经关闭的举报',
+	'MCP_REPORTS_CLOSED'			=> '已处理帖子举报',
 	'MCP_REPORTS_CLOSED_EXPLAIN'	=> '这是已经处理过的帖子举报列表',
-	'MCP_REPORTS_OPEN'				=> '等待审核的举报',
+	'MCP_REPORTS_OPEN'				=> '待处理帖子举报',
 	'MCP_REPORTS_OPEN_EXPLAIN'		=> '这是等待处理的帖子举报列表',
 
 	'MCP_QUEUE'								=> '审核列表',
