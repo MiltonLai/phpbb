@@ -604,6 +604,7 @@ $lang = array_merge($lang, array(
 	
 	'TOO_LARGE'                     => '您输入的值太大了.',
 	'TOO_LARGE_MAX_RECIPIENTS'      => '您输入的<strong>每个站内消息的最大收件人数目</strong> 太大.',
+
 	'TOO_LONG'						=> '您输入的值太长了.',
 
 	'TOO_LONG_AIM'					=> '您输入的AIM名字太长了。',
@@ -703,7 +704,8 @@ $lang = array_merge($lang, array(
 	'USER_POSTS'			=> '%d 篇帖子',
 	'USERS'					=> '用户',
 	'USE_PERMISSIONS'		=> '检查用户的权限',
-	'USER_NEW_PERMISSION_DISALLOWED'	=> '很抱歉您还不能使用此功能. 作为新注册的用户您需要更多的参与后才能使用这些功能.',
+
+    'USER_NEW_PERMISSION_DISALLOWED'	=> '很抱歉您还不能使用此功能. 作为新注册的用户您需要更多的参与后才能使用这些功能.',
 
 	'VARIANT_DATE_SEPARATOR'	=> ' / ',	// Used in date format dropdown, eg: "Today, 13:37 / 01 Jan 2007, 13:37" ... to join a relative date with calendar date
 	'VIEWED'					=> '已读',

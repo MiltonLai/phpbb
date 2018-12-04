@@ -268,7 +268,7 @@ $template->assign_vars(array(
 	'S_REPORT_POST'		=> ($pm_id) ? false : true,
 	'REPORT_TEXT'		=> $report_text,
 	'S_REPORT_ACTION'	=> append_sid("{$phpbb_root_path}report.$phpEx", 'f=' . $forum_id . '&amp;p=' . $post_id . '&amp;pm=' . $pm_id),
-	'S_HIDDEN_FIELDS'	=> (sizeof($s_hidden_fields)) ? $s_hidden_fields : null,
+	'S_HIDDEN_FIELDS'	=> (is_array($s_hidden_fields) && sizeof($s_hidden_fields)) ? $s_hidden_fields : null,
 
 	'S_NOTIFY'			=> $user_notify,
 	'S_CAN_NOTIFY'		=> ($user->data['is_registered']) ? true : false)
