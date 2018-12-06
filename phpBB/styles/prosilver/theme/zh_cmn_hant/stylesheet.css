@@ -1,0 +1,75 @@
+/* Font sizes */
+body {
+    font-size: 11px;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", sans-serif;
+}
+li.header dt, li.header dd {
+    font-size: 1.1em;
+}
+h3 {
+    font-size: 1.1em;
+}
+.footer-row {
+    font-size: 12px;
+}
+.action-bar .button {
+    font-size: 15px;
+}
+.action-bar .search-box .inputbox {
+    height: 27px;
+}
+.action-bar .pagination li a.button {
+    font-weight: unset;
+    font-size: 12px;
+}
+a.forumtitle, a.topictitle, a.lastsubject {
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", sans-serif;
+}
+a.forumtitle, a.topictitle {
+    font-size: 1.18em;
+}
+fieldset {
+    font-family: Verdana, Helvetica, Arial, "Microsoft YaHei", sans-serif;
+}
+.postbody h3 {
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", sans-serif;
+    font-size: 1.3em;
+    font-weight: unset;
+}
+.postbody h3.first {
+    font-size: 1.4em;
+}
+.postbody .content {
+    font-family: Verdana, Helvetica, Arial, "Microsoft YaHei", sans-serif;
+    font-size: 1.3em;
+    line-height: 1.6em;
+}
+.postlink {
+    border-bottom: none;
+}
+dl.faq {
+    font-family: "Lucida Grande", Verdana, Helvetica, Arial, "Microsoft YaHei", sans-serif;
+    font-size: 1.3em;
+}
+.action-bar {
+    font-size: 12px;
+}
+.postprofile dd, .postprofile dt {
+    font-size: 1.1em;
+}
+.tabs .tab, .minitabs .tab {
+    font-size: 1.1em;
+}
+input.button1, input.button2 {
+    font-size: 1.1em;
+}
+.navigation a {
+    font-size: 1.1em;
+}
+.message-box textarea {
+    font-family: "Trebuchet MS", Verdana, Helvetica, Arial, "Microsoft YaHei", sans-serif;
+    font-size: 1.1em;
+    line-height: 1.5em;
+}
+/* Online image */
+.online { background-image: url("./icon_user_online.gif"); }
