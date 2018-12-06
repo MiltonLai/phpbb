@@ -1103,14 +1103,14 @@ function topic_review($topic_id, $forum_id, $mode = 'topic_review', $cur_post_id
 		if ($show_quote_button && $auth->acl_get('f_reply', $forum_id))
 		{
 			$decoded_message = $message;
-			decode_message($decoded_message, $row['bbcode_uid']);
+			generic_decode_message($decoded_message);
 
 			$decoded_message = bbcode_nl2br($decoded_message);
 		}
 
 		if ($row['bbcode_bitfield'])
 		{
-			$bbcode->bbcode_second_pass($message, $row['bbcode_uid'], $row['bbcode_bitfield']);
+			$bbcode->bbcode_second_pass($message, $row['bbcode_bitfield']);
 		}
 
 		$message = bbcode_nl2br($message);
@@ -1742,7 +1742,6 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 				'post_checksum'		=> $data['message_md5'],
 				'post_attachment'	=> (!empty($data['attachment_data'])) ? 1 : 0,
 				'bbcode_bitfield'	=> $data['bbcode_bitfield'],
-				'bbcode_uid'		=> $data['bbcode_uid'],
 				'post_postcount'	=> ($auth->acl_get('f_postcount', $data['forum_id'])) ? 1 : 0,
 				'post_edit_locked'	=> $data['post_edit_locked']
 			);
@@ -1807,7 +1806,6 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
 				'post_checksum'		=> $data['message_md5'],
 				'post_attachment'	=> (!empty($data['attachment_data'])) ? 1 : 0,
 				'bbcode_bitfield'	=> $data['bbcode_bitfield'],
-				'bbcode_uid'		=> $data['bbcode_uid'],
 				'post_edit_locked'	=> $data['post_edit_locked'])
 			);
 

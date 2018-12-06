@@ -106,7 +106,7 @@ while ($row = $feed->get_item())
 		'title'			=> censor_text($title),
 		'category'		=> ($config['feed_item_statistics'] && !empty($row['forum_id'])) ? $board_url . '/viewforum.' . $phpEx . '?f=' . $row['forum_id'] : '',
 		'category_name'	=> ($config['feed_item_statistics'] && isset($row['forum_name'])) ? $row['forum_name'] : '',
-		'description'	=> censor_text(feed_generate_content($row[$feed->get('text')], $row[$feed->get('bbcode_uid')], $row[$feed->get('bitfield')], $options)),
+		'description'	=> censor_text(feed_generate_content($row[$feed->get('text')], $row[$feed->get('bitfield')], $options)),
 		'statistics'	=> '',
 	);
 
@@ -273,7 +273,7 @@ function feed_format_date($time)
 /**
 * Generate text content
 **/
-function feed_generate_content($content, $uid, $bitfield, $options)
+function feed_generate_content($content, $bitfield, $options)
 {
 	global $user, $config, $phpbb_root_path, $phpEx, $board_url;
 
@@ -283,9 +283,9 @@ function feed_generate_content($content, $uid, $bitfield, $options)
 	}
 
 	// Prepare some bbcodes for better parsing
-	$content	= preg_replace("#\[quote(=&quot;.*?&quot;)?:$uid\]\s*(.*?)\s*\[/quote:$uid\]#si", "[quote$1:$uid]<br />$2<br />[/quote:$uid]", $content);
+	$content	= preg_replace("#\[quote(=&quot;.*?&quot;)?:s\]\s*(.*?)\s*\[/quote:e\]#si", "[quote$1:s]<br />$2<br />[/quote:e]", $content);
 
-	$content = generate_text_for_display($content, $uid, $bitfield, $options);
+	$content = generate_text_for_display($content, $bitfield, $options);
 
 	// Add newlines
 	$content = str_replace('<br />', '<br />' . "\n", $content);

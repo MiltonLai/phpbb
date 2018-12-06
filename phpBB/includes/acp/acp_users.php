@@ -437,7 +437,6 @@ class acp_users
 
 							$sql_ary = array(
 								'user_sig'					=> '',
-								'user_sig_bbcode_uid'		=> '',
 								'user_sig_bbcode_bitfield'	=> ''
 							);
 
@@ -1852,7 +1851,6 @@ class acp_users
 						$sql_ary = array(
 							'user_sig'					=> (string) $message_parser->message,
 							'user_options'				=> $user_row['user_options'],
-							'user_sig_bbcode_uid'		=> (string) $message_parser->bbcode_uid,
 							'user_sig_bbcode_bitfield'	=> (string) $message_parser->bbcode_bitfield
 						);
 
@@ -1877,7 +1875,7 @@ class acp_users
 					unset($message_parser);
 				}
 
-				decode_message($signature, $user_row['user_sig_bbcode_uid']);
+				generic_decode_message($signature);
 
 				$template->assign_vars(array(
 					'S_SIGNATURE'		=> true,

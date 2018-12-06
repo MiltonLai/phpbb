@@ -101,7 +101,7 @@ function mcp_forum_view($id, $mode, $action, $forum_info)
 	$template->assign_vars(array(
 		'ACTION'				=> $action,
 		'FORUM_NAME'			=> $forum_info['forum_name'],
-		'FORUM_DESCRIPTION'		=> generate_text_for_display($forum_info['forum_desc'], $forum_info['forum_desc_uid'], $forum_info['forum_desc_bitfield'], $forum_info['forum_desc_options']),
+		'FORUM_DESCRIPTION'		=> generate_text_for_display($forum_info['forum_desc'], $forum_info['forum_desc_bitfield'], $forum_info['forum_desc_options']),
 
 		'REPORTED_IMG'			=> $user->img('icon_topic_reported', 'TOPIC_REPORTED'),
 		'UNAPPROVED_IMG'		=> $user->img('icon_topic_unapproved', 'TOPIC_UNAPPROVED'),

@@ -296,7 +296,7 @@ class mcp_warn
 			include_once($phpbb_root_path . 'includes/bbcode.' . $phpEx);
 
 			$bbcode = new bbcode($user_row['bbcode_bitfield']);
-			$bbcode->bbcode_second_pass($message, $user_row['bbcode_uid'], $user_row['bbcode_bitfield']);
+			$bbcode->bbcode_second_pass($message, $user_row['bbcode_bitfield']);
 		}
 
 		$message = bbcode_nl2br($message);

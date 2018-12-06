@@ -318,7 +318,7 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 				'S_IS_CAT'				=> true,
 				'FORUM_ID'				=> $row['forum_id'],
 				'FORUM_NAME'			=> $row['forum_name'],
-				'FORUM_DESC'			=> generate_text_for_display($row['forum_desc'], $row['forum_desc_uid'], $row['forum_desc_bitfield'], $row['forum_desc_options']),
+				'FORUM_DESC'			=> generate_text_for_display($row['forum_desc'], $row['forum_desc_bitfield'], $row['forum_desc_options']),
 				'FORUM_FOLDER_IMG'		=> '',
 				'FORUM_FOLDER_IMG_SRC'	=> '',
 				'FORUM_IMAGE'			=> ($row['forum_image']) ? '<img src="' . $phpbb_root_path . $row['forum_image'] . '" alt="' . $user->lang['FORUM_CAT'] . '" />' : '',
@@ -473,7 +473,7 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 
 			'FORUM_ID'				=> $row['forum_id'],
 			'FORUM_NAME'			=> $row['forum_name'],
-			'FORUM_DESC'			=> generate_text_for_display($row['forum_desc'], $row['forum_desc_uid'], $row['forum_desc_bitfield'], $row['forum_desc_options']),
+			'FORUM_DESC'			=> generate_text_for_display($row['forum_desc'], $row['forum_desc_bitfield'], $row['forum_desc_options']),
 			'TOPICS'				=> $row['forum_topics'],
 			$l_post_click_count		=> $post_click_count,
             'FORUM_IMG_STYLE'		=> $folder_image,
@@ -542,7 +542,7 @@ function generate_forum_rules(&$forum_data)
 
 	if ($forum_data['forum_rules'])
 	{
-		$forum_data['forum_rules'] = generate_text_for_display($forum_data['forum_rules'], $forum_data['forum_rules_uid'], $forum_data['forum_rules_bitfield'], $forum_data['forum_rules_options']);
+		$forum_data['forum_rules'] = generate_text_for_display($forum_data['forum_rules'], $forum_data['forum_rules_bitfield'], $forum_data['forum_rules_options']);
 	}
 
 	$template->assign_vars(array(
@@ -605,7 +605,7 @@ function generate_forum_nav(&$forum_data)
 	$template->assign_vars(array(
 		'FORUM_ID' 		=> $forum_data['forum_id'],
 		'FORUM_NAME'	=> $forum_data['forum_name'],
-		'FORUM_DESC'	=> generate_text_for_display($forum_data['forum_desc'], $forum_data['forum_desc_uid'], $forum_data['forum_desc_bitfield'], $forum_data['forum_desc_options']),
+		'FORUM_DESC'	=> generate_text_for_display($forum_data['forum_desc'], $forum_data['forum_desc_bitfield'], $forum_data['forum_desc_options']),
 
 		'S_ENABLE_FEEDS_FORUM'	=> ($config['feed_forum'] && $forum_data['forum_type'] == FORUM_POST && !phpbb_optionget(FORUM_OPTION_FEED_EXCLUDE, $forum_data['forum_options'])) ? true : false,
 	));

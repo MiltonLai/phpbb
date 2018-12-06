@@ -1174,7 +1174,6 @@ function mcp_fork_topic($topic_ids)
 					'post_checksum'		=> (string) $row['post_checksum'],
 					'post_attachment'	=> (int) $row['post_attachment'],
 					'bbcode_bitfield'	=> $row['bbcode_bitfield'],
-					'bbcode_uid'		=> (string) $row['bbcode_uid'],
 					'post_edit_time'	=> (int) $row['post_edit_time'],
 					'post_edit_count'	=> (int) $row['post_edit_count'],
 					'post_edit_locked'	=> (int) $row['post_edit_locked'],

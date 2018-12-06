@@ -637,7 +637,7 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 			}
 			$db->sql_freeresult($result);
 
-			$sql = 'SELECT p.*, f.forum_id, f.forum_name, t.*, u.username, u.username_clean, u.user_sig, u.user_sig_bbcode_uid, u.user_colour
+			$sql = 'SELECT p.*, f.forum_id, f.forum_name, t.*, u.username, u.username_clean, u.user_sig, u.user_colour
 				FROM ' . POSTS_TABLE . ' p
 					LEFT JOIN ' . TOPICS_TABLE . ' t ON (p.topic_id = t.topic_id)
 					LEFT JOIN ' . FORUMS_TABLE . ' f ON (p.forum_id = f.forum_id)
@@ -765,12 +765,9 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 
 				$text_only_message = $row['post_text'];
 				// make list items visible as such
-				if ($row['bbcode_uid'])
-				{
-					$text_only_message = str_replace('[*:' . $row['bbcode_uid'] . ']', '&sdot;&nbsp;', $text_only_message);
-					// no BBCode in text only message
-					strip_bbcode($text_only_message, $row['bbcode_uid']);
-				}
+                $text_only_message = str_replace('[*:s]', '&sdot;&nbsp;', $text_only_message);
+                // no BBCode in text only message
+                strip_bbcode($text_only_message);
 
 				if ($return_chars == -1 || utf8_strlen($text_only_message) < ($return_chars + 3))
 				{
@@ -976,7 +973,7 @@ if ($keywords || $author || $author_id || $search_id || $submit)
 					// Second parse bbcode here
 					if ($row['bbcode_bitfield'])
 					{
-						$bbcode->bbcode_second_pass($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield']);
+						$bbcode->bbcode_second_pass($row['post_text'], $row['bbcode_bitfield']);
 					}
 
 					$row['post_text'] = bbcode_nl2br($row['post_text']);

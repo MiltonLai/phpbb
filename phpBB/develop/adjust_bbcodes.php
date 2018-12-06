@@ -28,16 +28,16 @@ $message_parser = new parse_message();
 $message_parser->mode = 'sig';
 $message_parser->bbcode_init();
 
-$sql = 'SELECT user_id, user_sig, user_sig_bbcode_uid, user_sig_bbcode_bitfield
+$sql = 'SELECT user_id, user_sig, user_sig_bbcode_bitfield
 	FROM ' . USERS_TABLE;
 $result = $db->sql_query($sql);
 
 while ($row = $db->sql_fetchrow($result))
 {
 	// Convert bbcodes back to their normal form
-	if ($row['user_sig_bbcode_uid'] && $row['user_sig'])
+	if ($row['user_sig'])
 	{
-		decode_message($row['user_sig'], $row['user_sig_bbcode_uid']);
+		generic_decode_message($row['user_sig']);
 
 		$message_parser->message = $row['user_sig'];
 
@@ -78,7 +78,7 @@ $message_parser->mode = 'post';
 $message_parser->bbcode_init();
 
 // Update posts
-$sql = 'SELECT post_id, post_text, bbcode_uid, enable_bbcode, enable_smilies, enable_sig
+$sql = 'SELECT post_id, post_text, enable_bbcode, enable_smilies, enable_sig
 	FROM ' . POSTS_TABLE;
 $result = $db->sql_query($sql);
 
@@ -87,7 +87,7 @@ while ($row = $db->sql_fetchrow($result))
 	// Convert bbcodes back to their normal form
 	if ($row['enable_bbcode'])
 	{
-		decode_message($row['post_text'], $row['bbcode_uid']);
+		generic_decode_message($row['post_text']);
 
 		$message_parser->message = $row['post_text'];
 
@@ -126,7 +126,7 @@ $message_parser->mode = 'post';
 $message_parser->bbcode_init();
 
 // Update pms
-$sql = 'SELECT msg_id, message_text, bbcode_uid, enable_bbcode
+$sql = 'SELECT msg_id, message_text, enable_bbcode
 	FROM ' . PRIVMSGS_TABLE;
 $result = $db->sql_query($sql);
 
@@ -135,7 +135,7 @@ while ($row = $db->sql_fetchrow($result))
 	// Convert bbcodes back to their normal form
 	if ($row['enable_bbcode'])
 	{
-		decode_message($row['message_text'], $row['bbcode_uid']);
+		generic_decode_message($row['message_text']);
 
 		$message_parser->message = $row['message_text'];
 

@@ -30,20 +30,20 @@ if (php_sapi_name() != 'cli')
 	header('Content-Type: text/plain');
 }
 
-check_table_flash_bbcodes(POSTS_TABLE, 'post_id', 'post_text', 'bbcode_uid', 'bbcode_bitfield');
-check_table_flash_bbcodes(PRIVMSGS_TABLE, 'msg_id', 'message_text', 'bbcode_uid', 'bbcode_bitfield');
-check_table_flash_bbcodes(USERS_TABLE, 'user_id', 'user_sig', 'user_sig_bbcode_uid', 'user_sig_bbcode_bitfield');
-check_table_flash_bbcodes(FORUMS_TABLE, 'forum_id', 'forum_desc', 'forum_desc_uid', 'forum_desc_bitfield');
-check_table_flash_bbcodes(FORUMS_TABLE, 'forum_id', 'forum_rules', 'forum_rules_uid', 'forum_rules_bitfield');
-check_table_flash_bbcodes(GROUPS_TABLE, 'group_id', 'group_desc', 'group_desc_uid', 'group_desc_bitfield');
+check_table_flash_bbcodes(POSTS_TABLE, 'post_id', 'post_text', 'bbcode_bitfield');
+check_table_flash_bbcodes(PRIVMSGS_TABLE, 'msg_id', 'message_text', 'bbcode_bitfield');
+check_table_flash_bbcodes(USERS_TABLE, 'user_id', 'user_sig', 'user_sig_bbcode_bitfield');
+check_table_flash_bbcodes(FORUMS_TABLE, 'forum_id', 'forum_desc', 'forum_desc_bitfield');
+check_table_flash_bbcodes(FORUMS_TABLE, 'forum_id', 'forum_rules', 'forum_rules_bitfield');
+check_table_flash_bbcodes(GROUPS_TABLE, 'group_id', 'group_desc', 'group_desc_bitfield');
 
 echo "If potentially dangerous flash bbcodes were found, please reparse the posts using the Support Toolkit (http://www.phpbb.com/support/stk/) and/or file a ticket in the Incident Tracker (http://www.phpbb.com/incidents/).\n";
 
-function check_table_flash_bbcodes($table_name, $id_field, $content_field, $uid_field, $bitfield_field)
+function check_table_flash_bbcodes($table_name, $id_field, $content_field, $bitfield_field)
 {
 	echo "Checking $content_field on $table_name\n";
 
-	$ids = get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $uid_field, $bitfield_field);
+	$ids = get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $bitfield_field);
 
 	$size = sizeof($ids);
 	if ($size)
@@ -59,13 +59,13 @@ function check_table_flash_bbcodes($table_name, $id_field, $content_field, $uid_
 	echo "\n";
 }
 
-function get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $uid_field, $bitfield_field)
+function get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $bitfield_field)
 {
 	global $db;
 
 	$ids = array();
 
-	$sql = "SELECT $id_field, $content_field, $uid_field, $bitfield_field
+	$sql = "SELECT $id_field, $content_field, $bitfield_field
 		FROM $table_name
 		WHERE $content_field LIKE '%[/flash:%'
 			AND $bitfield_field <> ''";
@@ -73,8 +73,6 @@ function get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $u
 	$result = $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
 	{
-		$uid = $row[$uid_field];
-
 		// thanks support toolkit
 		$content = html_entity_decode_utf8($row[$content_field]);
 		set_var($content, $content, 'string', true);
@@ -82,7 +80,7 @@ function get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $u
 
 		$bitfield_data = $row[$bitfield_field];
 
-		if (!is_valid_flash_bbcode($content, $uid) && has_flash_enabled($bitfield_data))
+		if (!is_valid_flash_bbcode($content) && has_flash_enabled($bitfield_data))
 		{
 			$ids[] = (int) $row[$id_field];
 		}
@@ -94,14 +92,14 @@ function get_table_flash_bbcode_pkids($table_name, $id_field, $content_field, $u
 
 function get_flash_regex($uid)
 {
-	return "#\[flash=([0-9]+),([0-9]+):$uid\](.*?)\[/flash:$uid\]#";
+	return "#\[flash=([0-9]+),([0-9]+):s\](.*?)\[/flash:e\]#";
 }
 
 // extract all valid flash bbcodes
 // check if the bbcode content is a valid URL for each match
-function is_valid_flash_bbcode($cleaned_content, $uid)
+function is_valid_flash_bbcode($cleaned_content)
 {
-	$regex = get_flash_regex($uid);
+	$regex = get_flash_regex();
 
 	$url_regex = get_preg_expression('url');
 	$www_url_regex = get_preg_expression('www_url');

@@ -22,7 +22,6 @@ if (!defined('IN_PHPBB'))
 */
 class bbcode
 {
-	var $bbcode_uid = '';
 	var $bbcode_bitfield = '';
 	var $bbcode_cache = array();
 	var $bbcode_template = array();
@@ -47,13 +46,8 @@ class bbcode
 	/**
 	* Second pass bbcodes
 	*/
-	function bbcode_second_pass(&$message, $bbcode_uid = '', $bbcode_bitfield = false)
+	function bbcode_second_pass(&$message, $bbcode_bitfield = false)
 	{
-		if ($bbcode_uid)
-		{
-			$this->bbcode_uid = $bbcode_uid;
-		}
-
 		if ($bbcode_bitfield !== false)
 		{
 			$this->bbcode_bitfield = $bbcode_bitfield;
@@ -64,12 +58,6 @@ class bbcode
 
 		if (!$this->bbcode_bitfield)
 		{
-			// Remove the uid from tags that have not been transformed into HTML
-			if ($this->bbcode_uid)
-			{
-				$message = str_replace(':' . $this->bbcode_uid, '', $message);
-			}
-
 			return;
 		}
 
@@ -89,7 +77,7 @@ class bbcode
 				{
 					foreach ($array as $search => $replace)
 					{
-						${$type}['search'][] = str_replace('$uid', $this->bbcode_uid, $search);
+						${$type}['search'][] = $search;
 						${$type}['replace'][] = $replace;
 					}
 
@@ -129,10 +117,10 @@ class bbcode
 					}
 				}
 			}
-		}
+		}//exit;
 
-		// Remove the uid from tags that have not been transformed into HTML
-		$message = str_replace(':' . $this->bbcode_uid, '', $message);
+        // Remove the uid from tags that have not been transformed into HTML
+        $message = str_replace(array(':s]', ':e]'), array(']', ']'), $message);
 	}
 
 	/**
@@ -220,10 +208,10 @@ class bbcode
 				case 0:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'str' => array(
-							'[/quote:$uid]'	=> $this->bbcode_tpl('quote_close', $bbcode_id)
+							'[/quote:e]'	=> $this->bbcode_tpl('quote_close', $bbcode_id)
 						),
 						'callback' => array(
-							'#\[quote(?:=&quot;(.*?)&quot;)?:$uid\]((?!\[quote(?:=&quot;.*?&quot;)?:$uid\]).)?#is'	=> function($matches){if(empty($matches[2])){$quote = '';}else{$quote = $matches[2];}return $this->bbcode_second_pass_quote($matches[1], $quote);}
+							'#\[quote(?:=&quot;(.*?)&quot;)?:s\]((?!\[quote(?:=&quot;.*?&quot;)?:s\]).)?#is'	=> function($matches){if(empty($matches[2])){$quote = '';}else{$quote = $matches[2];}return $this->bbcode_second_pass_quote($matches[1], $quote);}
 						)
 					);
 				break;
@@ -231,8 +219,8 @@ class bbcode
 				case 1:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'str' => array(
-							'[b:$uid]'	=> $this->bbcode_tpl('b_open', $bbcode_id),
-							'[/b:$uid]'	=> $this->bbcode_tpl('b_close', $bbcode_id),
+							'[b:s]'	=> $this->bbcode_tpl('b_open', $bbcode_id),
+							'[/b:e]'	=> $this->bbcode_tpl('b_close', $bbcode_id),
 						)
 					);
 				break;
@@ -240,8 +228,8 @@ class bbcode
 				case 2:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'str' => array(
-							'[i:$uid]'	=> $this->bbcode_tpl('i_open', $bbcode_id),
-							'[/i:$uid]'	=> $this->bbcode_tpl('i_close', $bbcode_id),
+							'[i:s]'	=> $this->bbcode_tpl('i_open', $bbcode_id),
+							'[/i:e]'	=> $this->bbcode_tpl('i_close', $bbcode_id),
 						)
 					);
 				break;
@@ -249,8 +237,8 @@ class bbcode
 				case 3:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'preg' => array(
-							'#\[url:$uid\]((.*?))\[/url:$uid\]#s'			=> $this->bbcode_tpl('url', $bbcode_id),
-							'#\[url=([^\[]+?):$uid\](.*?)\[/url:$uid\]#s'	=> $this->bbcode_tpl('url', $bbcode_id),
+							'#\[url:s\]((.*?))\[/url:e\]#s'			=> $this->bbcode_tpl('url', $bbcode_id),
+							'#\[url=([^\[]+?):s\](.*?)\[/url:e\]#s'	=> $this->bbcode_tpl('url', $bbcode_id),
 						)
 					);
 				break;
@@ -260,7 +248,7 @@ class bbcode
 					{
 						$this->bbcode_cache[$bbcode_id] = array(
 							'preg' => array(
-								'#\[img:$uid\](.*?)\[/img:$uid\]#s'		=> $this->bbcode_tpl('img', $bbcode_id),
+								'#\[img:s\](.*?)\[/img:e\]#s'		=> $this->bbcode_tpl('img', $bbcode_id),
 							)
 						);
 					}
@@ -268,7 +256,7 @@ class bbcode
 					{
 						$this->bbcode_cache[$bbcode_id] = array(
 							'preg' => array(
-								'#\[img:$uid\](.*?)\[/img:$uid\]#s'		=> str_replace('$2', '[ img ]', $this->bbcode_tpl('url', $bbcode_id, true)),
+								'#\[img:s\](.*?)\[/img:e\]#s'		=> str_replace('$2', '[ img ]', $this->bbcode_tpl('url', $bbcode_id, true)),
 							)
 						);
 					}
@@ -277,7 +265,7 @@ class bbcode
 				case 5:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'preg' => array(
-							'#\[size=([\-\+]?\d+):$uid\](.*?)\[/size:$uid\]#s'	=> $this->bbcode_tpl('size', $bbcode_id),
+							'#\[size=([\-\+]?\d+):s\](.*?)\[/size:e\]#s'	=> $this->bbcode_tpl('size', $bbcode_id),
 						)
 					);
 				break;
@@ -285,7 +273,7 @@ class bbcode
 				case 6:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'preg' => array(
-							'!\[color=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+):$uid\](.*?)\[/color:$uid\]!is'	=> $this->bbcode_tpl('color', $bbcode_id),
+							'!\[color=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+):s\](.*?)\[/color:e\]!is'	=> $this->bbcode_tpl('color', $bbcode_id),
 						)
 					);
 				break;
@@ -293,8 +281,8 @@ class bbcode
 				case 7:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'str' => array(
-							'[u:$uid]'	=> $this->bbcode_tpl('u_open', $bbcode_id),
-							'[/u:$uid]'	=> $this->bbcode_tpl('u_close', $bbcode_id),
+							'[u:s]'	=> $this->bbcode_tpl('u_open', $bbcode_id),
+							'[/u:e]'	=> $this->bbcode_tpl('u_close', $bbcode_id),
 						)
 					);
 				break;
@@ -302,7 +290,7 @@ class bbcode
 				case 8:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'callback' => array(
-							'#\[code(?:=([a-z]+))?:$uid\](.*?)\[/code:$uid\]#is' => function($matches){return $this->bbcode_second_pass_code($matches[1], $matches[2]);},
+							'#\[code(?:=([a-z]+))?:s\](.*?)\[/code:e\]#is' => function($matches){return $this->bbcode_second_pass_code($matches[1], $matches[2]);},
 						)
 					);
 				break;
@@ -310,19 +298,20 @@ class bbcode
 				case 9:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'preg' => array(
-							'#(\[\/?(list|\*):[mou]?:?$uid\])[\n]{1}#'	=> "\$1",
-							'#(\[list=([^\[]+):$uid\])[\n]{1}#'			=> "\$1",
+							'#(\[\/?(list|\*):[mou]?:s\])[\n]{1}#'	=> "\$1",
+							'#(\[list=([^\[]+):s\])[\n]{1}#'			=> "\$1",
 						),
 						'callback' => array(
-							'#\[list=([^\[]+):$uid\]#' => function($matches){return $this->bbcode_list($matches[1]);},
+							'#\[list=([^\[]+):s\]#' => function($matches){return $this->bbcode_list($matches[1]);},
 						),
 						'str' => array(
-							'[list:$uid]'		=> $this->bbcode_tpl('ulist_open_default', $bbcode_id),
-							'[/list:u:$uid]'	=> $this->bbcode_tpl('ulist_close', $bbcode_id),
-							'[/list:o:$uid]'	=> $this->bbcode_tpl('olist_close', $bbcode_id),
-							'[*:$uid]'			=> $this->bbcode_tpl('listitem', $bbcode_id),
-							'[/*:$uid]'			=> $this->bbcode_tpl('listitem_close', $bbcode_id),
-							'[/*:m:$uid]'		=> $this->bbcode_tpl('listitem_close', $bbcode_id)
+							'[list:s]'          => $this->bbcode_tpl('ulist_open_default', $bbcode_id),
+                            '[/list:u:e]'       => $this->bbcode_tpl('ulist_close', $bbcode_id),
+							'[/list:o:e]'       => $this->bbcode_tpl('olist_close', $bbcode_id),
+							'[/olist]'          => $this->bbcode_tpl('olist_close', $bbcode_id),
+							'[*:s]'             => $this->bbcode_tpl('listitem', $bbcode_id),
+							'[/*:e]'            => $this->bbcode_tpl('listitem_close', $bbcode_id),
+							'[/*:m:e]'          => $this->bbcode_tpl('listitem_close', $bbcode_id)
 						),
 					);
 				break;
@@ -330,8 +319,8 @@ class bbcode
 				case 10:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'preg' => array(
-							'#\[email:$uid\]((.*?))\[/email:$uid\]#is'			=> $this->bbcode_tpl('email', $bbcode_id),
-							'#\[email=([^\[]+):$uid\](.*?)\[/email:$uid\]#is'	=> $this->bbcode_tpl('email', $bbcode_id)
+							'#\[email:s\]((.*?))\[/email:e\]#is'			=> $this->bbcode_tpl('email', $bbcode_id),
+							'#\[email=([^\[]+):s\](.*?)\[/email:e\]#is'	=> $this->bbcode_tpl('email', $bbcode_id)
 						)
 					);
 				break;
@@ -341,7 +330,7 @@ class bbcode
 					{
 						$this->bbcode_cache[$bbcode_id] = array(
 							'preg' => array(
-								'#\[flash=([0-9]+),([0-9]+):$uid\](.*?)\[/flash:$uid\]#'	=> $this->bbcode_tpl('flash', $bbcode_id),
+								'#\[flash=([0-9]+),([0-9]+):s\](.*?)\[/flash:e\]#'	=> $this->bbcode_tpl('flash', $bbcode_id),
 							)
 						);
 					}
@@ -349,7 +338,7 @@ class bbcode
 					{
 						$this->bbcode_cache[$bbcode_id] = array(
 							'preg' => array(
-								'#\[flash=([0-9]+),([0-9]+):$uid\](.*?)\[/flash:$uid\]#'	=> str_replace('$1', '$3', str_replace('$2', '[ flash ]', $this->bbcode_tpl('url', $bbcode_id, true)))
+								'#\[flash=([0-9]+),([0-9]+):s\](.*?)\[/flash:e\]#'	=> str_replace('$1', '$3', str_replace('$2', '[ flash ]', $this->bbcode_tpl('url', $bbcode_id, true)))
 							)
 						);
 					}
@@ -358,10 +347,10 @@ class bbcode
 				case 12:
 					$this->bbcode_cache[$bbcode_id] = array(
 						'str'	=> array(
-							'[/attachment:$uid]'	=> $this->bbcode_tpl('inline_attachment_close', $bbcode_id)
+							'[/attachment:e]'	=> $this->bbcode_tpl('inline_attachment_close', $bbcode_id)
 						),
 						'preg'	=> array(
-							'#\[attachment=([0-9]+):$uid\]#'	=> $this->bbcode_tpl('inline_attachment_open', $bbcode_id)
+							'#\[attachment=([0-9]+):s\]#'	=> $this->bbcode_tpl('inline_attachment_open', $bbcode_id)
 						)
 					);
 				break;

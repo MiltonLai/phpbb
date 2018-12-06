@@ -1611,7 +1611,6 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 				'message_text'		=> $data['message'],
 				'message_attachment'=> (!empty($data['attachment_data'])) ? 1 : 0,
 				'bbcode_bitfield'	=> $data['bbcode_bitfield'],
-				'bbcode_uid'		=> $data['bbcode_uid'],
 				'to_address'		=> implode(':', $to),
 				'bcc_address'		=> implode(':', $bcc),
 				'message_reported'	=> 0,
@@ -1629,8 +1628,7 @@ function submit_pm($mode, $subject, &$data, $put_in_outbox = true)
 				'message_subject'	=> $subject,
 				'message_text'		=> $data['message'],
 				'message_attachment'=> (!empty($data['attachment_data'])) ? 1 : 0,
-				'bbcode_bitfield'	=> $data['bbcode_bitfield'],
-				'bbcode_uid'		=> $data['bbcode_uid']
+				'bbcode_bitfield'	=> $data['bbcode_bitfield']
 			);
 		break;
 	}
@@ -2009,14 +2007,14 @@ function message_history($msg_id, $user_id, $message_row, $folder, $in_post_mode
 		if ($in_post_mode && $auth->acl_get('u_sendpm') && $author_id != ANONYMOUS)
 		{
 			$decoded_message = $message;
-			decode_message($decoded_message, $row['bbcode_uid']);
+			generic_decode_message($decoded_message);
 
 			$decoded_message = bbcode_nl2br($decoded_message);
 		}
 
 		if ($row['bbcode_bitfield'])
 		{
-			$bbcode->bbcode_second_pass($message, $row['bbcode_uid'], $row['bbcode_bitfield']);
+			$bbcode->bbcode_second_pass($message, $row['bbcode_bitfield']);
 		}
 
 		$message = bbcode_nl2br($message);

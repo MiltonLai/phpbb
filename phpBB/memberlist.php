@@ -536,7 +536,7 @@ switch ($mode)
 			{
 				include_once($phpbb_root_path . 'includes/bbcode.' . $phpEx);
 				$bbcode = new bbcode();
-				$bbcode->bbcode_second_pass($member['user_sig'], $member['user_sig_bbcode_uid'], $member['user_sig_bbcode_bitfield']);
+				$bbcode->bbcode_second_pass($member['user_sig'], $member['user_sig_bbcode_bitfield']);
 			}
 
 			$member['user_sig'] = bbcode_nl2br($member['user_sig']);
@@ -1229,7 +1229,7 @@ switch ($mode)
 			}
 
 			$template->assign_vars(array(
-				'GROUP_DESC'	=> generate_text_for_display($group_row['group_desc'], $group_row['group_desc_uid'], $group_row['group_desc_bitfield'], $group_row['group_desc_options']),
+				'GROUP_DESC'	=> generate_text_for_display($group_row['group_desc'], $group_row['group_desc_bitfield'], $group_row['group_desc_options']),
 				'GROUP_NAME'	=> ($group_row['group_type'] == GROUP_SPECIAL) ? $user->lang['G_' . $group_row['group_name']] : $group_row['group_name'],
 				'GROUP_COLOR'	=> $group_row['group_colour'],
 				'GROUP_TYPE'	=> $user->lang['GROUP_IS_' . $group_row['l_group_type']],

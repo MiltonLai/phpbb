@@ -164,7 +164,7 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 
 			if ($action == 'quotepost')
 			{
-				$sql = 'SELECT p.post_id as msg_id, p.forum_id, p.post_text as message_text, p.poster_id as author_id, p.post_time as message_time, p.bbcode_bitfield, p.bbcode_uid, p.enable_sig, p.enable_smilies, p.enable_magic_url, t.topic_title as message_subject, u.username as quote_username
+				$sql = 'SELECT p.post_id as msg_id, p.forum_id, p.post_text as message_text, p.poster_id as author_id, p.post_time as message_time, p.bbcode_bitfield, p.enable_sig, p.enable_smilies, p.enable_magic_url, t.topic_title as message_subject, u.username as quote_username
 					FROM ' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . ' t, ' . USERS_TABLE . " u
 					WHERE p.post_id = $msg_id
 						AND t.topic_id = p.topic_id
@@ -297,7 +297,7 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 		if ($action == 'quotepost')
 		{
 			// Decode text for message display
-			decode_message($message_text, $post['bbcode_uid']);
+			generic_decode_message($message_text);
 		}
 
 		if ($action != 'delete')
@@ -308,7 +308,6 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 			$message_attachment = (isset($post['message_attachment'])) ? $post['message_attachment'] : 0;
 			$message_subject = $post['message_subject'];
 			$message_time = $post['message_time'];
-			$bbcode_uid = $post['bbcode_uid'];
 
 			$quote_username = (isset($post['quote_username'])) ? $post['quote_username'] : '';
 			$icon_id = (isset($post['icon_id'])) ? $post['icon_id'] : 0;
@@ -535,11 +534,6 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 		}
 	}
 
-	if ($action == 'edit')
-	{
-		$message_parser->bbcode_uid = $bbcode_uid;
-	}
-
 	$bbcode_status	= ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && $auth->acl_get('u_pm_bbcode')) ? true : false;
 	$smilies_status	= ($config['allow_smilies'] && $config['auth_smilies_pm'] && $auth->acl_get('u_pm_smilies')) ? true : false;
 	$img_status		= ($config['auth_img_pm'] && $auth->acl_get('u_pm_img')) ? true : false;
@@ -728,7 +722,6 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 				'enable_smilies'		=> (bool) $enable_smilies,
 				'enable_urls'			=> (bool) $enable_urls,
 				'bbcode_bitfield'		=> $message_parser->bbcode_bitfield,
-				'bbcode_uid'			=> $message_parser->bbcode_uid,
 				'message'				=> $message_parser->message,
 				'attachment_data'		=> $message_parser->attachment_data,
 				'filename_data'			=> $message_parser->filename_data,
@@ -776,14 +769,12 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 		$preview_message = $message_parser->format_display($enable_bbcode, $enable_urls, $enable_smilies, false);
 
 		$preview_signature = $user->data['user_sig'];
-		$preview_signature_uid = $user->data['user_sig_bbcode_uid'];
 		$preview_signature_bitfield = $user->data['user_sig_bbcode_bitfield'];
 
 		// Signature
 		if ($enable_sig && $config['allow_sig'] && $preview_signature)
 		{
 			$parse_sig = new parse_message($preview_signature);
-			$parse_sig->bbcode_uid = $preview_signature_uid;
 			$parse_sig->bbcode_bitfield = $preview_signature_bitfield;
 
 			$parse_sig->format_display($config['allow_sig_bbcode'], $config['allow_sig_links'], $config['allow_sig_smilies']);
@@ -830,9 +821,7 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 	}
 
 	// Decode text for message display
-	$bbcode_uid = (($action == 'quote' || $action == 'forward') && !$preview && !$refresh && (!sizeof($error) || (sizeof($error) && !$submit))) ? $bbcode_uid : $message_parser->bbcode_uid;
-
-	$message_parser->decode_message($bbcode_uid);
+	$message_parser->decode_message();
 
 	if (($action == 'quote' || $action == 'quotepost') && !$preview && !$refresh && !$submit)
 	{

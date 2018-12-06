@@ -71,6 +71,7 @@ class bbcode_firstpass extends bbcode
 						// custom BBcode?
 						if (is_array($replacement))
 						{
+						    // TODO: remove the support for custom bbcode
 							// eval() sucks, but we must use preg_replace_callback() to support
 							// PHP 7.0, and custom BBcode replacement function is stored as a string
 							$this->message = preg_replace_callback($regexp, function($matches) use($replacement) {eval('$str=' . $replacement[1]); return $str;}, $this->message);
@@ -144,37 +145,6 @@ class bbcode_firstpass extends bbcode
 		{
 			$this->parsed_items[$tag] = 0;
 		}
-
-		if (!$allow_custom_bbcode)
-		{
-			return;
-		}
-
-		if (!is_array($rowset))
-		{
-			global $db;
-			$rowset = array();
-
-			$sql = 'SELECT *
-				FROM ' . BBCODES_TABLE;
-			$result = $db->sql_query($sql);
-
-			while ($row = $db->sql_fetchrow($result))
-			{
-				$rowset[] = $row;
-			}
-			$db->sql_freeresult($result);
-		}
-
-		foreach ($rowset as $row)
-		{
-			$this->bbcodes[$row['bbcode_tag']] = array(
-				'bbcode_id'	=> (int) $row['bbcode_id'],
-				'regexp'	=> array(
-					$row['first_pass_match'] => array(true, str_replace('$uid', $this->bbcode_uid, $row['first_pass_replace']) . ';'),
-				),
-			);
-		}
 	}
 
 	/**
@@ -233,7 +203,7 @@ class bbcode_firstpass extends bbcode
 			return '[size=' . $stx . ']' . $in . '[/size]';
 		}
 
-		return '[size=' . $stx . ':' . $this->bbcode_uid . ']' . $in . '[/size:' . $this->bbcode_uid . ']';
+		return '[size=' . $stx . ':s]' . $in . '[/size:e]';
 	}
 
 	/**
@@ -246,7 +216,7 @@ class bbcode_firstpass extends bbcode
 			return $in;
 		}
 
-		return '[color=' . $stx . ':' . $this->bbcode_uid . ']' . $in . '[/color:' . $this->bbcode_uid . ']';
+		return '[color=' . $stx . ':s]' . $in . '[/color:e]';
 	}
 
 	/**
@@ -259,7 +229,7 @@ class bbcode_firstpass extends bbcode
 			return $in;
 		}
 
-		return '[u:' . $this->bbcode_uid . ']' . $in . '[/u:' . $this->bbcode_uid . ']';
+		return '[u:s]' . $in . '[/u:e]';
 	}
 
 	/**
@@ -272,7 +242,7 @@ class bbcode_firstpass extends bbcode
 			return $in;
 		}
 
-		return '[b:' . $this->bbcode_uid . ']' . $in . '[/b:' . $this->bbcode_uid . ']';
+		return '[b:s]' . $in . '[/b:e]';
 	}
 
 	/**
@@ -285,7 +255,7 @@ class bbcode_firstpass extends bbcode
 			return $in;
 		}
 
-		return '[i:' . $this->bbcode_uid . ']' . $in . '[/i:' . $this->bbcode_uid . ']';
+		return '[i:s]' . $in . '[/i:e]';
 	}
 
 	/**
@@ -317,37 +287,12 @@ class bbcode_firstpass extends bbcode
 			$in = 'http://' . $in;
 		}
 
-		if ($config['max_' . $this->mode . '_img_height'] || $config['max_' . $this->mode . '_img_width'])
-		{
-			$stats = @getimagesize(htmlspecialchars_decode($in));
-
-			if ($stats === false)
-			{
-				$error = true;
-				$this->warn_msg[] = $user->lang['UNABLE_GET_IMAGE_SIZE'];
-			}
-			else
-			{
-				if ($config['max_' . $this->mode . '_img_height'] && $config['max_' . $this->mode . '_img_height'] < $stats[1])
-				{
-					$error = true;
-					$this->warn_msg[] = sprintf($user->lang['MAX_IMG_HEIGHT_EXCEEDED'], $config['max_' . $this->mode . '_img_height']);
-				}
-
-				if ($config['max_' . $this->mode . '_img_width'] && $config['max_' . $this->mode . '_img_width'] < $stats[0])
-				{
-					$error = true;
-					$this->warn_msg[] = sprintf($user->lang['MAX_IMG_WIDTH_EXCEEDED'], $config['max_' . $this->mode . '_img_width']);
-				}
-			}
-		}
-
-		if ($error || $this->path_in_domain($in))
+		if ($this->path_in_domain($in))
 		{
 			return '[img]' . $in . '[/img]';
 		}
 
-		return '[img:' . $this->bbcode_uid . ']' . $this->bbcode_specialchars($in) . '[/img:' . $this->bbcode_uid . ']';
+		return '[img:s]' . $this->bbcode_specialchars($in) . '[/img:e]';
 	}
 
 	/**
@@ -401,7 +346,7 @@ class bbcode_firstpass extends bbcode
 			return '[flash=' . $width . ',' . $height . ']' . $in . '[/flash]';
 		}
 
-		return '[flash=' . $width . ',' . $height . ':' . $this->bbcode_uid . ']' . $this->bbcode_specialchars($in) . '[/flash:' . $this->bbcode_uid . ']';
+		return '[flash=' . $width . ',' . $height . ':s]' . $this->bbcode_specialchars($in) . '[/flash:e]';
 	}
 
 	/**
@@ -414,7 +359,7 @@ class bbcode_firstpass extends bbcode
 			return $in;
 		}
 
-		return '[attachment=' . $stx . ':' . $this->bbcode_uid . ']<!-- ia' . $stx . ' -->' . trim($in) . '<!-- ia' . $stx . ' -->[/attachment:' . $this->bbcode_uid . ']';
+		return '[attachment=' . $stx . ':s]<!-- ia' . $stx . ' -->' . trim($in) . '<!-- ia' . $stx . ' -->[/attachment:e]';
 	}
 
 	/**
@@ -477,11 +422,11 @@ class bbcode_firstpass extends bbcode
 					$code = substr($code, 0, -1);
 				}
 
-				return "[code=$stx:" . $this->bbcode_uid . ']' . $code . '[/code:' . $this->bbcode_uid . ']';
+				return '[code=' . $stx . ':s]' . $code . '[/code:e]';
 			break;
 
 			default:
-				return '[code:' . $this->bbcode_uid . ']' . $this->bbcode_specialchars($code) . '[/code:' . $this->bbcode_uid . ']';
+				return '[code:s]' . $this->bbcode_specialchars($code) . '[/code:e]';
 			break;
 		}
 	}
@@ -634,16 +579,19 @@ class bbcode_firstpass extends bbcode
 				}
 				else if (preg_match('#^list(=[0-9a-z]+)?$#i', $buffer, $m))
 				{
-					// sub-list, add a closing tag
-					if (empty($m[1]) || preg_match('/^=(?:disc|square|circle)$/i', $m[1]))
-					{
-						array_push($list_end_tags, '/list:u:' . $this->bbcode_uid);
-					}
-					else
-					{
-						array_push($list_end_tags, '/list:o:' . $this->bbcode_uid);
-					}
-					$out .= 'list' . substr($buffer, 4) . ':' . $this->bbcode_uid . ']';
+					// sub-list, add a closing tag						//print_r($search);
+						echo "\n";
+						//print_r($replace);
+                        echo "\n";
+                    if (empty($m[1]) || preg_match('/^=(?:disc|square|circle)$/i', $m[1]))
+                    {
+                        array_push($list_end_tags, '/list:u:e');
+                    }
+                    else
+                    {
+                        array_push($list_end_tags, '/list:o:e');
+                    }
+					$out .= 'list' . substr($buffer, 4) . ':s]';
 					$tok = '[';
 				}
 				else
@@ -661,24 +609,24 @@ class bbcode_firstpass extends bbcode
 							if (preg_match('/\n\[$/', $out, $m))
 							{
 								$out = preg_replace('/\n\[$/', '[', $out);
-								$buffer = array_pop($item_end_tags) . "]\n[*:" . $this->bbcode_uid;
+								$buffer = array_pop($item_end_tags) . "][*:s";
 							}
 							else
 							{
-								$buffer = array_pop($item_end_tags) . '][*:' . $this->bbcode_uid;
+								$buffer = array_pop($item_end_tags) . '][*:s';
 							}
 						}
 						else
 						{
-							$buffer = '*:' . $this->bbcode_uid;
+							$buffer = '*:s';
 						}
 
-						$item_end_tags[] = '/*:m:' . $this->bbcode_uid;
+						$item_end_tags[] = '/*:m:e';
 					}
 					else if ($buffer == '/*')
 					{
 						array_pop($item_end_tags);
-						$buffer = '/*:' . $this->bbcode_uid;
+						$buffer = '/*:e';
 					}
 
 					$out .= $buffer . $tok;
@@ -793,7 +741,7 @@ class bbcode_firstpass extends bbcode
 						continue;
 					}
 
-					array_push($close_tags, '/quote:' . $this->bbcode_uid);
+					array_push($close_tags, '/quote:e');
 
 					if (isset($m[1]) && $m[1])
 					{
@@ -822,11 +770,11 @@ class bbcode_firstpass extends bbcode
 							$username = $m[1];
 						}
 
-						$out .= 'quote=&quot;' . $username . '&quot;:' . $this->bbcode_uid . ']';
+						$out .= 'quote=&quot;' . $username . '&quot;:s]';
 					}
 					else
 					{
-						$out .= 'quote:' . $this->bbcode_uid . ']';
+						$out .= 'quote:s]';
 					}
 
 					$tok = '[';
@@ -929,11 +877,11 @@ class bbcode_firstpass extends bbcode
 
 		if ($var1)
 		{
-			$retval = '[email=' . $this->bbcode_specialchars($email) . ':' . $this->bbcode_uid . ']' . $txt . '[/email:' . $this->bbcode_uid . ']';
+			$retval = '[email=' . $this->bbcode_specialchars($email) . ':s]' . $txt . '[/email:e]';
 		}
 		else
 		{
-			$retval = '[email:' . $this->bbcode_uid . ']' . $this->bbcode_specialchars($email) . '[/email:' . $this->bbcode_uid . ']';
+			$retval = '[email:s]' . $this->bbcode_specialchars($email) . '[/email:e]';
 		}
 
 		return $retval;
@@ -994,7 +942,7 @@ class bbcode_firstpass extends bbcode
 				$url = append_sid($url);
 			}
 
-			return ($var1) ? '[url=' . $this->bbcode_specialchars($url) . ':' . $this->bbcode_uid . ']' . $var2 . '[/url:' . $this->bbcode_uid . ']' : '[url:' . $this->bbcode_uid . ']' . $this->bbcode_specialchars($url) . '[/url:' . $this->bbcode_uid . ']';
+			return ($var1) ? '[url=' . $this->bbcode_specialchars($url) . ':s]' . $var2 . '[/url:e]' : '[url:s]' . $this->bbcode_specialchars($url) . '[/url:e]';
 		}
 
 		return '[url' . (($var1) ? '=' . $var1 : '') . ']' . $var2 . '[/url]';
@@ -1078,8 +1026,6 @@ class parse_message extends bbcode_firstpass
 	*/
 	function __construct($message = '')
 	{
-		// Init BBCode UID
-		$this->bbcode_uid = substr(base_convert(unique_id(), 16, 36), 0, BBCODE_UID_LEN);
 		$this->message = $message;
 	}
 
@@ -1238,7 +1184,7 @@ class parse_message extends bbcode_firstpass
 			$this->bbcode_cache_init();
 
 			// We are giving those parameters to be able to use the bbcode class on its own
-			$this->bbcode_second_pass($this->message, $this->bbcode_uid);
+			$this->bbcode_second_pass($this->message);
 		}
 
 		$this->message = bbcode_nl2br($this->message);
@@ -1258,7 +1204,7 @@ class parse_message extends bbcode_firstpass
 	/**
 	* Decode message to be placed back into form box
 	*/
-	function decode_message($custom_bbcode_uid = '', $update_this_message = true)
+	function decode_message($update_this_message = true)
 	{
 		// If false, then the parsed message get returned but internal message not processed.
 		if (!$update_this_message)
@@ -1267,7 +1213,7 @@ class parse_message extends bbcode_firstpass
 			$return_message = &$this->message;
 		}
 
-		($custom_bbcode_uid) ? decode_message($this->message, $custom_bbcode_uid) : decode_message($this->message, $this->bbcode_uid);
+		generic_decode_message($this->message);
 
 		if (!$update_this_message)
 		{

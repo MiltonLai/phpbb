@@ -1410,8 +1410,6 @@ class acp_profile
 
 					case FIELD_TEXT:
 						$sql .= "TEXT";
-		//						ADD {$field_ident}_bbcode_uid VARCHAR(5) NOT NULL,
-		//						ADD {$field_ident}_bbcode_bitfield INT(11) UNSIGNED";
 					break;
 
 					case FIELD_BOOL:
@@ -1443,8 +1441,6 @@ class acp_profile
 
 					case FIELD_TEXT:
 						$type = "TEXT(65535)";
-		//						ADD {$field_ident}_bbcode_uid VARCHAR(5) NOT NULL,
-		//						ADD {$field_ident}_bbcode_bitfield INT(11) UNSIGNED";
 					break;
 
 					case FIELD_BOOL:
@@ -1528,8 +1524,6 @@ class acp_profile
 
 					case FIELD_TEXT:
 						$sql .= "[TEXT]";
-		//						ADD {$field_ident}_bbcode_uid [VARCHAR] (5) NOT NULL,
-		//						ADD {$field_ident}_bbcode_bitfield [INT] UNSIGNED";
 					break;
 
 					case FIELD_BOOL:
@@ -1561,8 +1555,6 @@ class acp_profile
 
 					case FIELD_TEXT:
 						$sql .= "TEXT";
-		//						ADD {$field_ident}_bbcode_uid VARCHAR(5) NOT NULL,
-		//						ADD {$field_ident}_bbcode_bitfield INT4 UNSIGNED";
 					break;
 
 					case FIELD_BOOL:
@@ -1597,8 +1589,6 @@ class acp_profile
 
 					case FIELD_TEXT:
 						$sql .= "BLOB SUB_TYPE TEXT";
-		//						ADD {$field_ident}_bbcode_uid VARCHAR(5) NOT NULL,
-		//						ADD {$field_ident}_bbcode_bitfield INTEGER UNSIGNED";
 					break;
 
 					case FIELD_BOOL:
@@ -1630,8 +1620,6 @@ class acp_profile
 
 					case FIELD_TEXT:
 						$sql .= "CLOB";
-		//						ADD {$field_ident}_bbcode_uid VARCHAR2(5) NOT NULL,
-		//						ADD {$field_ident}_bbcode_bitfield NUMBER(11) UNSIGNED";
 					break;
 
 					case FIELD_BOOL:

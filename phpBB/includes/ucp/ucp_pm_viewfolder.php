@@ -223,7 +223,7 @@ function view_folder($id, $mode, $folder_id, $folder)
 
 				include_once($phpbb_root_path . 'includes/functions_posting.' . $phpEx);
 
-				$sql = 'SELECT p.message_text, p.bbcode_uid
+				$sql = 'SELECT p.message_text
 					FROM ' . PRIVMSGS_TO_TABLE . ' t, ' . PRIVMSGS_TABLE . ' p, ' . USERS_TABLE . ' u
 					WHERE t.user_id = ' . $user->data['user_id'] . "
 						AND p.author_id = u.user_id
@@ -278,7 +278,7 @@ function view_folder($id, $mode, $folder_id, $folder)
 					$address[$message_id]['u']['to'][] = $user->lang['UNDISCLOSED_RECIPIENT'];
 				}
 
-				decode_message($message_row['message_text'], $message_row['bbcode_uid']);
+				generic_decode_message($message_row['message_text']);
 				
 				$data[] = array(
 					'subject'	=> censor_text($row['message_subject']),

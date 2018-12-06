@@ -616,7 +616,7 @@ if (!empty($_EXTRA_URL))
 $template->assign_vars(array(
 	'FORUM_ID' 		=> $forum_id,
 	'FORUM_NAME' 	=> $topic_data['forum_name'],
-	'FORUM_DESC'	=> generate_text_for_display($topic_data['forum_desc'], $topic_data['forum_desc_uid'], $topic_data['forum_desc_bitfield'], $topic_data['forum_desc_options']),
+	'FORUM_DESC'	=> generate_text_for_display($topic_data['forum_desc'], $topic_data['forum_desc_bitfield'], $topic_data['forum_desc_options']),
 	'TOPIC_ID' 		=> $topic_id,
 	'TOPIC_TITLE' 	=> $topic_data['topic_title'],
 	'TOPIC_POSTER'	=> $topic_data['topic_poster'],
@@ -863,7 +863,7 @@ if (!empty($topic_data['poll_start']))
 
 		if ($poll_bbcode !== false)
 		{
-			$poll_bbcode->bbcode_second_pass($poll_info[$i]['poll_option_text'], $poll_info[$i]['bbcode_uid'], $poll_option['bbcode_bitfield']);
+			$poll_bbcode->bbcode_second_pass($poll_info[$i]['poll_option_text'], $poll_option['bbcode_bitfield']);
 		}
 
 		$poll_info[$i]['poll_option_text'] = bbcode_nl2br($poll_info[$i]['poll_option_text']);
@@ -874,7 +874,7 @@ if (!empty($topic_data['poll_start']))
 
 	if ($poll_bbcode !== false)
 	{
-		$poll_bbcode->bbcode_second_pass($topic_data['poll_title'], $poll_info[0]['bbcode_uid'], $poll_info[0]['bbcode_bitfield']);
+		$poll_bbcode->bbcode_second_pass($topic_data['poll_title'], $poll_info[0]['bbcode_bitfield']);
 	}
 
 	$topic_data['poll_title'] = bbcode_nl2br($topic_data['poll_title']);
@@ -1378,7 +1378,7 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 
 		if ($user_cache[$poster_id]['sig_bbcode_bitfield'])
 		{
-			$bbcode->bbcode_second_pass($user_cache[$poster_id]['sig'], $user_cache[$poster_id]['sig_bbcode_uid'], $user_cache[$poster_id]['sig_bbcode_bitfield']);
+			$bbcode->bbcode_second_pass($user_cache[$poster_id]['sig'], $user_cache[$poster_id]['sig_bbcode_bitfield']);
 		}
 
 		$user_cache[$poster_id]['sig'] = bbcode_nl2br($user_cache[$poster_id]['sig']);
@@ -1392,7 +1392,7 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 	// Second parse bbcode here
 	if ($row['bbcode_bitfield'])
 	{
-		$bbcode->bbcode_second_pass($message, $row['bbcode_uid'], $row['bbcode_bitfield']);
+		$bbcode->bbcode_second_pass($message, $row['bbcode_bitfield']);
 	}
 
 	$message = bbcode_nl2br($message);

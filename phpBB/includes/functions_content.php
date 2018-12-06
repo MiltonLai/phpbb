@@ -384,20 +384,10 @@ function phpbb_clean_search_string($search_string)
 * Decode text whereby text is coming from the db and expected to be pre-parsed content
 * We are placing this outside of the message parser because we are often in need of it...
 */
-function decode_message(&$message, $bbcode_uid = '')
+function generic_decode_message(&$message)
 {
-	global $config;
-
-	if ($bbcode_uid)
-	{
-		$match = array('<br />', "[/*:m:$bbcode_uid]", ":u:$bbcode_uid", ":o:$bbcode_uid", ":$bbcode_uid");
-		$replace = array("\n", '', '', '', '');
-	}
-	else
-	{
-		$match = array('<br />');
-		$replace = array("\n");
-	}
+    $match = array('<br />', "[/*:m:e]", ":u:e", ":o:e", ":s", ":e");
+    $replace = array("\n", "\n", '', '', '', '', '');
 
 	$message = str_replace($match, $replace, $message);
 
@@ -410,14 +400,9 @@ function decode_message(&$message, $bbcode_uid = '')
 /**
 * Strips all bbcode from a text and returns the plain content
 */
-function strip_bbcode(&$text, $uid = '')
+function strip_bbcode(&$text)
 {
-	if (!$uid)
-	{
-		$uid = '[0-9a-z]{5,}';
-	}
-
-	$text = preg_replace("#\[\/?[a-z0-9\*\+\-]+(?:=(?:&quot;.*&quot;|[^\]]*))?(?::[a-z])?(\:$uid)\]#", ' ', $text);
+	$text = preg_replace("#\[\/?[a-z0-9\*\+\-]+(?:=(?:&quot;.*&quot;|[^\]]*))?(?::[a-z])?(\:[se])\]#", ' ', $text);
 
 	$match = get_preg_expression('bbcode_htm');
 	$replace = array('\1', '\1', '\2', '\1', '', '');
@@ -429,7 +414,7 @@ function strip_bbcode(&$text, $uid = '')
 * For display of custom parsed text on user-facing pages
 * Expects $text to be the value directly from the database (stored value)
 */
-function generate_text_for_display($text, $uid, $bitfield, $flags)
+function generate_text_for_display($text, $bitfield, $flags)
 {
 	static $bbcode;
 
@@ -441,7 +426,7 @@ function generate_text_for_display($text, $uid, $bitfield, $flags)
 	$text = censor_text($text);
 
 	// Parse bbcode if bbcode uid stored and bbcode enabled
-	if ($uid && ($flags & OPTION_FLAG_BBCODE))
+	if ($flags & OPTION_FLAG_BBCODE)
 	{
 		if (!class_exists('bbcode'))
 		{
@@ -458,7 +443,7 @@ function generate_text_for_display($text, $uid, $bitfield, $flags)
 			$bbcode->__construct($bitfield);
 		}
 
-		$bbcode->bbcode_second_pass($text, $uid);
+		$bbcode->bbcode_second_pass($text);
 	}
 
 	$text = bbcode_nl2br($text);
@@ -472,11 +457,11 @@ function generate_text_for_display($text, $uid, $bitfield, $flags)
 * This function additionally returns the uid and bitfield that needs to be stored.
 * Expects $text to be the value directly from request_var() and in it's non-parsed form
 */
-function generate_text_for_storage(&$text, &$uid, &$bitfield, &$flags, $allow_bbcode = false, $allow_urls = false, $allow_smilies = false)
+function generate_text_for_storage(&$text, &$bitfield, &$flags, $allow_bbcode = false, $allow_urls = false, $allow_smilies = false)
 {
 	global $phpbb_root_path, $phpEx;
 
-	$uid = $bitfield = '';
+	$bitfield = '';
 	$flags = (($allow_bbcode) ? OPTION_FLAG_BBCODE : 0) + (($allow_smilies) ? OPTION_FLAG_SMILIES : 0) + (($allow_urls) ? OPTION_FLAG_LINKS : 0);
 
 	if ($text === '')
@@ -493,13 +478,6 @@ function generate_text_for_storage(&$text, &$uid, &$bitfield, &$flags, $allow_bb
 	$message_parser->parse($allow_bbcode, $allow_urls, $allow_smilies);
 
 	$text = $message_parser->message;
-	$uid = $message_parser->bbcode_uid;
-
-	// If the bbcode_bitfield is empty, there is no need for the uid to be stored.
-	if (!$message_parser->bbcode_bitfield)
-	{
-		$uid = '';
-	}
 
 	$bitfield = $message_parser->bbcode_bitfield;
 
@@ -510,11 +488,9 @@ function generate_text_for_storage(&$text, &$uid, &$bitfield, &$flags, $allow_bb
 * For decoding custom parsed text for edits as well as extracting the flags
 * Expects $text to be the value directly from the database (pre-parsed content)
 */
-function generate_text_for_edit($text, $uid, $flags)
+function generate_text_for_edit($text, $flags)
 {
-	global $phpbb_root_path, $phpEx;
-
-	decode_message($text, $uid);
+	generic_decode_message($text);
 
 	return array(
 		'allow_bbcode'	=> ($flags & OPTION_FLAG_BBCODE) ? 1 : 0,

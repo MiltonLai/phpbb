@@ -111,7 +111,7 @@ switch ($mode)
 
 		$forum_id = (!$f_id) ? $forum_id : $f_id;
 
-		$sql = 'SELECT f.*, t.*, p.*, u.username, u.username_clean, u.user_sig, u.user_sig_bbcode_uid, u.user_sig_bbcode_bitfield
+		$sql = 'SELECT f.*, t.*, p.*, u.username, u.username_clean, u.user_sig, u.user_sig_bbcode_bitfield
 			FROM ' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . ' t, ' . FORUMS_TABLE . ' f, ' . USERS_TABLE . " u
 			WHERE p.post_id = $post_id
 				AND t.topic_id = p.topic_id
@@ -481,11 +481,6 @@ if ($mode != 'post' && $config['allow_topic_notify'] && $user->data['is_register
 	$db->sql_freeresult($result);
 }
 
-// Do we want to edit our post ?
-if ($mode == 'edit' && $post_data['bbcode_uid'])
-{
-	$message_parser->bbcode_uid = $post_data['bbcode_uid'];
-}
 
 // HTML, BBCode, Smilies, Images and Flash status
 $bbcode_status	= ($config['allow_bbcode'] && $auth->acl_get('f_bbcode', $forum_id)) ? true : false;
@@ -773,7 +768,7 @@ if ($submit || $preview || $refresh)
 	}
 
 	// Check checksum ... don't re-parse message if the same
-	$update_message = ($mode != 'edit' || $message_md5 != $post_data['post_checksum'] || $status_switch || strlen($post_data['bbcode_uid']) < BBCODE_UID_LEN) ? true : false;
+	$update_message = ($mode != 'edit' || $message_md5 != $post_data['post_checksum'] || $status_switch) ? true : false;
 
 	// Also check if subject got updated...
 	$update_subject = $mode != 'edit' || ($post_data['post_subject_md5'] && $post_data['post_subject_md5'] != md5($post_data['post_subject']));
@@ -1116,7 +1111,6 @@ if ($submit || $preview || $refresh)
 				'poster_ip'				=> (isset($post_data['poster_ip'])) ? $post_data['poster_ip'] : $user->ip,
 				'post_edit_locked'		=> (int) $post_data['post_edit_locked'],
 				'bbcode_bitfield'		=> $message_parser->bbcode_bitfield,
-				'bbcode_uid'			=> $message_parser->bbcode_uid,
 				'message'				=> $message_parser->message,
 				'attachment_data'		=> $message_parser->attachment_data,
 				'filename_data'			=> $message_parser->filename_data,
@@ -1175,14 +1169,12 @@ if (!sizeof($error) && $preview)
 	$preview_message = $message_parser->format_display($post_data['enable_bbcode'], $post_data['enable_urls'], $post_data['enable_smilies'], false);
 
 	$preview_signature = ($mode == 'edit') ? $post_data['user_sig'] : $user->data['user_sig'];
-	$preview_signature_uid = ($mode == 'edit') ? $post_data['user_sig_bbcode_uid'] : $user->data['user_sig_bbcode_uid'];
 	$preview_signature_bitfield = ($mode == 'edit') ? $post_data['user_sig_bbcode_bitfield'] : $user->data['user_sig_bbcode_bitfield'];
 
 	// Signature
 	if ($post_data['enable_sig'] && $config['allow_sig'] && $preview_signature && $auth->acl_get('f_sigs', $forum_id))
 	{
 		$parse_sig = new parse_message($preview_signature);
-		$parse_sig->bbcode_uid = $preview_signature_uid;
 		$parse_sig->bbcode_bitfield = $preview_signature_bitfield;
 
 		// Not sure about parameters for bbcode/smilies/urls... in signatures
@@ -1202,7 +1194,6 @@ if (!sizeof($error) && $preview)
 	&& $auth->acl_get('f_poll', $forum_id))
 	{
 		$parse_poll = new parse_message($post_data['poll_title']);
-		$parse_poll->bbcode_uid = $message_parser->bbcode_uid;
 		$parse_poll->bbcode_bitfield = $message_parser->bbcode_bitfield;
 
 		$parse_poll->format_display($post_data['enable_bbcode'], $post_data['enable_urls'], $post_data['enable_smilies']);
@@ -1273,8 +1264,7 @@ if (!sizeof($error) && $preview)
 }
 
 // Decode text for message display
-$post_data['bbcode_uid'] = ($mode == 'quote' && !$preview && !$refresh && !sizeof($error)) ? $post_data['bbcode_uid'] : $message_parser->bbcode_uid;
-$message_parser->decode_message($post_data['bbcode_uid']);
+$message_parser->decode_message();
 
 if ($mode == 'quote' && !$submit && !$preview && !$refresh)
 {
@@ -1312,7 +1302,6 @@ $post_data['post_text'] = $message_parser->message;
 if (sizeof($post_data['poll_options']) || !empty($post_data['poll_title']))
 {
 	$message_parser->message = $post_data['poll_title'];
-	$message_parser->bbcode_uid = $post_data['bbcode_uid'];
 
 	$message_parser->decode_message();
 	$post_data['poll_title'] = $message_parser->message;
@@ -1429,7 +1418,7 @@ $template->assign_vars(array(
 	'L_MESSAGE_BODY_EXPLAIN'	=> (intval($config['max_post_chars'])) ? sprintf($user->lang['MESSAGE_BODY_EXPLAIN'], intval($config['max_post_chars'])) : '',
 
 	'FORUM_NAME'			=> $post_data['forum_name'],
-	'FORUM_DESC'			=> ($post_data['forum_desc']) ? generate_text_for_display($post_data['forum_desc'], $post_data['forum_desc_uid'], $post_data['forum_desc_bitfield'], $post_data['forum_desc_options']) : '',
+	'FORUM_DESC'			=> ($post_data['forum_desc']) ? generate_text_for_display($post_data['forum_desc'], $post_data['forum_desc_bitfield'], $post_data['forum_desc_options']) : '',
 	'TOPIC_TITLE'			=> censor_text($post_data['topic_title']),
 	'MODERATORS'			=> (sizeof($moderators)) ? implode(', ', $moderators[$forum_id]) : '',
 	'USERNAME'				=> ((!$preview && $mode != 'quote') || $preview) ? $post_data['username'] : '',

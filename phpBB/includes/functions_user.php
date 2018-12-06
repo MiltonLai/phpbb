@@ -222,7 +222,6 @@ function user_add($user_row, $cp_data = false)
 		'user_allow_massemail'	=> 1,
 
 		'user_sig'					=> '',
-		'user_sig_bbcode_uid'		=> '',
 		'user_sig_bbcode_bitfield'	=> '',
 
 		'user_form_salt'			=> unique_id(),
@@ -2492,7 +2491,6 @@ function group_create(&$group_id, $type, $name, $desc, $group_attributes, $allow
 		$sql_ary = array(
 			'group_name'			=> (string) $name,
 			'group_desc'			=> (string) $desc,
-			'group_desc_uid'		=> '',
 			'group_desc_bitfield'	=> '',
 			'group_type'			=> (int) $type,
 		);
@@ -2500,7 +2498,7 @@ function group_create(&$group_id, $type, $name, $desc, $group_attributes, $allow
 		// Parse description
 		if ($desc)
 		{
-			generate_text_for_storage($sql_ary['group_desc'], $sql_ary['group_desc_uid'], $sql_ary['group_desc_bitfield'], $sql_ary['group_desc_options'], $allow_desc_bbcode, $allow_desc_urls, $allow_desc_smilies);
+			generate_text_for_storage($sql_ary['group_desc'], $sql_ary['group_desc_bitfield'], $sql_ary['group_desc_options'], $allow_desc_bbcode, $allow_desc_urls, $allow_desc_smilies);
 		}
 
 		if (sizeof($group_attributes))

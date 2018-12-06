@@ -341,7 +341,7 @@ class ucp_main
 							'FORUM_IMAGE'			=> ($row['forum_image']) ? '<img src="' . $phpbb_root_path . $row['forum_image'] . '" alt="' . $user->lang[$folder_alt] . '" />' : '',
 							'FORUM_IMAGE_SRC'		=> ($row['forum_image']) ? $phpbb_root_path . $row['forum_image'] : '',
 							'FORUM_NAME'			=> $row['forum_name'],
-							'FORUM_DESC'			=> generate_text_for_display($row['forum_desc'], $row['forum_desc_uid'], $row['forum_desc_bitfield'], $row['forum_desc_options']),
+							'FORUM_DESC'			=> generate_text_for_display($row['forum_desc'], $row['forum_desc_bitfield'], $row['forum_desc_options']),
 							'LAST_POST_SUBJECT'		=> $row['forum_last_post_subject'],
 							'LAST_POST_TIME'		=> $last_post_time,
 
