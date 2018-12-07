@@ -464,11 +464,11 @@ class acp_forums
 				// Parse rules if specified
 				if ($forum_data['forum_rules'])
 				{
-                    // Before we are able to display the preview and plane text, we need to parse our request_var()'d value...
-                    $forum_data['forum_rules_bitfield'] = '';
-                    $forum_data['forum_rules_options'] = 0;
-
-                    generate_text_for_storage($forum_data['forum_rules'], $forum_data['forum_rules_bitfield'], $forum_data['forum_rules_options'], request_var('rules_allow_bbcode', false), request_var('rules_allow_urls', false), request_var('rules_allow_smilies', false));
+                    if (!isset($forum_data['forum_rules_bitfield']))
+                    {
+                        // Before we are able to display the preview and plane text, we need to parse our request_var()'d value...
+                        generate_text_for_storage($forum_data['forum_rules'], $forum_data['forum_rules_bitfield'], $forum_data['forum_rules_options'], request_var('rules_allow_bbcode', false), request_var('rules_allow_urls', false), request_var('rules_allow_smilies', false));
+                    }
 
 					// Generate preview content
 					$forum_rules_preview = generate_text_for_display($forum_data['forum_rules'], $forum_data['forum_rules_bitfield'], $forum_data['forum_rules_options']);
@@ -480,11 +480,11 @@ class acp_forums
 				// Parse desciption if specified
 				if ($forum_data['forum_desc'])
 				{
-                    // Before we are able to display the preview and plane text, we need to parse our request_var()'d value...
-                    $forum_data['forum_desc_bitfield'] = '';
-                    $forum_data['forum_desc_options'] = 0;
-
-                    generate_text_for_storage($forum_data['forum_desc'], $forum_data['forum_desc_bitfield'], $forum_data['forum_desc_options'], request_var('desc_allow_bbcode', false), request_var('desc_allow_urls', false), request_var('desc_allow_smilies', false));
+                    if (!isset($forum_data['forum_desc_bitfield']))
+                    {
+                        // Before we are able to display the preview and plane text, we need to parse our request_var()'d value...
+                        generate_text_for_storage($forum_data['forum_desc'], $forum_data['forum_desc_bitfield'], $forum_data['forum_desc_options'], request_var('desc_allow_bbcode', false), request_var('desc_allow_urls', false), request_var('desc_allow_smilies', false));
+                    }
 
 					// decode...
 					$forum_desc_data = generate_text_for_edit($forum_data['forum_desc'], $forum_data['forum_desc_options']);
