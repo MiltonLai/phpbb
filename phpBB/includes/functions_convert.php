@@ -1744,7 +1744,6 @@ function add_default_groups()
 		$sql_ary[] = array(
 			'group_name'			=> (string) $name,
 			'group_desc'			=> '',
-			'group_desc_uid'		=> '',
 			'group_desc_bitfield'	=> '',
 			'group_type'			=> GROUP_SPECIAL,
 			'group_colour'			=> (string) $data[0],

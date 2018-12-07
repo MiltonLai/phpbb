@@ -644,9 +644,7 @@ if (!$get_info)
 				array('post_edit_reason',		'',									''),
 				array('post_edit_user',			'',									'phpbb_post_edit_user'),
 
-				array('bbcode_uid',				'posts.post_time',					'make_uid'),
 				array('post_text',				'posts_text.post_text',				'phpbb_prepare_message'),
-				array('',						'posts_text.bbcode_uid AS old_bbcode_uid',			''),
 				array('bbcode_bitfield',		'',									'get_bbcode_bitfield'),
 				array('post_checksum',			'',									''),
 

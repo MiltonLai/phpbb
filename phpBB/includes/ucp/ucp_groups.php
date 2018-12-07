@@ -343,7 +343,7 @@ class ucp_groups
 				// Hide hidden groups unless user is an admin with group privileges
 				$sql_and = ($auth->acl_gets('a_group', 'a_groupadd', 'a_groupdel')) ? '<> ' . GROUP_SPECIAL : 'NOT IN (' . GROUP_SPECIAL . ', ' . GROUP_HIDDEN . ')';
 
-				$sql = 'SELECT group_id, group_name, group_colour, group_desc, group_desc_uid, group_desc_bitfield, group_desc_options, group_type, group_founder_manage
+				$sql = 'SELECT group_id, group_name, group_colour, group_desc, group_desc_bitfield, group_desc_options, group_type, group_founder_manage
 					FROM ' . GROUPS_TABLE . '
 					WHERE ' . ((sizeof($group_id_ary)) ? $db->sql_in_set('group_id', $group_id_ary, true) . ' AND ' : '') . "
 						group_type $sql_and
@@ -1085,7 +1085,7 @@ class ucp_groups
 					default:
 						$user->add_lang('acp/common');
 
-						$sql = 'SELECT g.group_id, g.group_name, g.group_colour, g.group_desc, g.group_desc_uid, g.group_desc_bitfield, g.group_desc_options, g.group_type, ug.group_leader
+						$sql = 'SELECT g.group_id, g.group_name, g.group_colour, g.group_desc, g.group_desc_bitfield, g.group_desc_options, g.group_type, ug.group_leader
 							FROM ' . GROUPS_TABLE . ' g, ' . USER_GROUP_TABLE . ' ug
 							WHERE ug.user_id = ' . $user->data['user_id'] . '
 								AND g.group_id = ug.group_id

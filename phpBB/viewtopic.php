@@ -695,7 +695,7 @@ $template->assign_vars(array(
 // Does this topic contain a poll?
 if (!empty($topic_data['poll_start']))
 {
-	$sql = 'SELECT o.*, p.bbcode_bitfield, p.bbcode_uid
+	$sql = 'SELECT o.*, p.bbcode_bitfield
 		FROM ' . POLL_OPTIONS_TABLE . ' o, ' . POSTS_TABLE . " p
 		WHERE o.topic_id = $topic_id
 			AND p.post_id = {$topic_data['topic_first_post_id']}
@@ -1070,7 +1070,6 @@ while ($row = $db->sql_fetchrow($result))
 		'post_reported'		=> $row['post_reported'],
 		'post_username'		=> $row['post_username'],
 		'post_text'			=> $row['post_text'],
-		'bbcode_uid'		=> $row['bbcode_uid'],
 		'bbcode_bitfield'	=> $row['bbcode_bitfield'],
 		'enable_smilies'	=> $row['enable_smilies'],
 		'enable_sig'		=> $row['enable_sig'],
@@ -1099,7 +1098,6 @@ while ($row = $db->sql_fetchrow($result))
 				'from'			=> '',
 
 				'sig'					=> '',
-				'sig_bbcode_uid'		=> '',
 				'sig_bbcode_bitfield'	=> '',
 
 				'online'			=> false,
@@ -1149,7 +1147,6 @@ while ($row = $db->sql_fetchrow($result))
 				'from'			=> (!empty($row['user_from'])) ? $row['user_from'] : '',
 
 				'sig'					=> $user_sig,
-				'sig_bbcode_uid'		=> (!empty($row['user_sig_bbcode_uid'])) ? $row['user_sig_bbcode_uid'] : '',
 				'sig_bbcode_bitfield'	=> (!empty($row['user_sig_bbcode_bitfield'])) ? $row['user_sig_bbcode_bitfield'] : '',
 
 				'viewonline'	=> $row['user_allow_viewonline'],

@@ -471,7 +471,6 @@ function add_warning($user_row, $warning, $send_pm = true, $post_id = 0)
 			'enable_urls'			=> false,
 			'icon_id'				=> 0,
 			'bbcode_bitfield'		=> $message_parser->bbcode_bitfield,
-			'bbcode_uid'			=> $message_parser->bbcode_uid,
 			'message'				=> $message_parser->message,
 			'address_list'			=> array('u' => array($user_row['user_id'] => 'to')),
 		);

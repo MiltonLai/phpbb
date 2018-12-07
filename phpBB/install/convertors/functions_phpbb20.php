@@ -233,7 +233,6 @@ function phpbb_insert_forums()
 			// Default values
 			'forum_desc_bitfield'		=> '',
 			'forum_desc_options'		=> 7,
-			'forum_desc_uid'			=> '',
 			'forum_link'				=> '',
 			'forum_password'			=> '',
 			'forum_style'				=> 0,
