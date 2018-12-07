@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TAG='v1.0.0-rc1'
+TAG='v1.0.0-rc2'
 BASE_DIR=$(cd $(dirname $0); cd ../; pwd)
 TARGET=${BASE_DIR}/phpBB
 echo '|| BASE_DIR: '${BASE_DIR}
