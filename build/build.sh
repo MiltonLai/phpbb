@@ -60,5 +60,5 @@ else
 fi
 
 # Full package
-tar cjf ${BASE_DIR}/target/phpbbc_${TAG}.tar.bz2 phpBB
+tar cjf ${BASE_DIR}/target/phpbb3c_${TAG}.tar.bz2 phpBB
 echo '   Package: Done'

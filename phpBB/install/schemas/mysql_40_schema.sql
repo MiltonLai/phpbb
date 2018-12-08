@@ -235,7 +235,6 @@ CREATE TABLE phpbb_forums (
 	forum_rules_link blob NOT NULL,
 	forum_rules_bitfield varbinary(255) DEFAULT '' NOT NULL,
 	forum_rules_options int(11) UNSIGNED DEFAULT '7' NOT NULL,
-	forum_rules_uid varbinary(8) DEFAULT NULL,
 	forum_topics_per_page tinyint(4) DEFAULT '0' NOT NULL,
 	forum_type tinyint(4) DEFAULT '0' NOT NULL,
 	forum_status tinyint(4) DEFAULT '0' NOT NULL,
