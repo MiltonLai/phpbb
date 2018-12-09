@@ -76,6 +76,7 @@ function view_message($id, $mode, $folder_id, $msg_id, $folder, $message_row)
 	// Always process smilies after parsing bbcodes
 	$message = bbcode_nl2br($message);
 	$message = smiley_text($message);
+    $message = make_clickable($message);
 
 	// Replace naughty words such as farty pants
 	$message_row['message_subject'] = censor_text($message_row['message_subject']);

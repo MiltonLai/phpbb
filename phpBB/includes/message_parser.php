@@ -1111,24 +1111,10 @@ class parse_message extends bbcode_firstpass
 			$this->smilies($config['max_' . $mode . '_smilies']);
 		}
 
-		$num_urls = 0;
-
 		// Parse BBCode
 		if ($allow_bbcode && strpos($this->message, '[') !== false)
 		{
 			$this->parse_bbcode();
-			$num_urls += $this->parsed_items['url'];
-		}
-
-		// Parse URL's
-		if ($allow_magic_url)
-		{
-			$this->magic_url(generate_board_url());
-
-			if ($config['max_' . $mode . '_urls'])
-			{
-				$num_urls += preg_match_all('#\<!-- ([lmwe]) --\>.*?\<!-- \1 --\>#', $this->message, $matches);
-			}
 		}
 
 		// Check for "empty" message. We do not check here for maximum length, because bbcode, smilies, etc. can add to the length.
@@ -1136,13 +1122,6 @@ class parse_message extends bbcode_firstpass
 		if ($mode === 'post' && utf8_clean_string($this->message) === '')
 		{
 			$this->warn_msg[] = $user->lang['TOO_FEW_CHARS'];
-			return (!$update_this_message) ? $return_message : $this->warn_msg;
-		}
-
-		// Check number of links
-		if ($config['max_' . $mode . '_urls'] && $num_urls > $config['max_' . $mode . '_urls'])
-		{
-			$this->warn_msg[] = sprintf($user->lang['TOO_MANY_URLS'], $config['max_' . $mode . '_urls']);
 			return (!$update_this_message) ? $return_message : $this->warn_msg;
 		}
 
@@ -1189,6 +1168,9 @@ class parse_message extends bbcode_firstpass
 
 		$this->message = bbcode_nl2br($this->message);
 		$this->message = smiley_text($this->message, !$allow_smilies);
+		if ($allow_magic_url) {
+            $this->message = make_clickable($this->message);
+        }
 
 		if (!$update_this_message)
 		{
@@ -1224,17 +1206,6 @@ class parse_message extends bbcode_firstpass
 
 		$this->message_status = 'plain';
 		return false;
-	}
-
-	/**
-	* Replace magic urls of form http://xxx.xxx., www.xxx. and xxx@xxx.xxx.
-	* Cuts down displayed size of link if over 50 chars, turns absolute links
-	* into relative versions when the server/script path matches the link
-	*/
-	function magic_url($server_url)
-	{
-		// We use the global make_clickable function
-		$this->message = make_clickable($this->message, $server_url);
 	}
 
 	/**

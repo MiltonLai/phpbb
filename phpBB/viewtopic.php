@@ -1105,7 +1105,6 @@ while ($row = $db->sql_fetchrow($result))
 				'rank_title'		=> '',
 				'rank_image'		=> '',
 				'rank_image_src'	=> '',
-				'sig'				=> '',
 				'profile'			=> '',
 				'pm'				=> '',
 				'email'				=> '',
@@ -1394,6 +1393,7 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 
 	$message = bbcode_nl2br($message);
 	$message = smiley_text($message);
+    $message = make_clickable($message, generate_board_url());
 
 	if (!empty($attachments[$row['post_id']]))
 	{
