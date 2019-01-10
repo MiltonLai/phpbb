@@ -241,7 +241,6 @@ function phpbb_insert_forums()
 			'forum_rules_link'			=> '',
 			'forum_rules_bitfield'		=> '',
 			'forum_rules_options'		=> 7,
-			'forum_rules_uid'			=> '',
 			'forum_topics_per_page'		=> 0,
 			'forum_posts'				=> 0,
 			'forum_topics'				=> 0,

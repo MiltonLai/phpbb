@@ -548,7 +548,6 @@ function get_schema_struct()
 			'forum_rules_link'		=> array('VCHAR_UNI', ''),
 			'forum_rules_bitfield'	=> array('VCHAR:255', ''),
 			'forum_rules_options'	=> array('UINT:11', 7),
-			'forum_rules_uid'		=> array('VCHAR:8', ''),
 			'forum_topics_per_page'	=> array('TINT:4', 0),
 			'forum_type'			=> array('TINT:4', 0),
 			'forum_status'			=> array('TINT:4', 0),

@@ -423,7 +423,6 @@ CREATE TABLE [phpbb_forums] (
 	[forum_rules_link] [varchar] (255) DEFAULT ('') NOT NULL ,
 	[forum_rules_bitfield] [varchar] (255) DEFAULT ('') NOT NULL ,
 	[forum_rules_options] [int] DEFAULT (7) NOT NULL ,
-	[forum_rules_uid] [varchar] (8) DEFAULT ('') NOT NULL ,
 	[forum_topics_per_page] [int] DEFAULT (0) NOT NULL ,
 	[forum_type] [int] DEFAULT (0) NOT NULL ,
 	[forum_status] [int] DEFAULT (0) NOT NULL ,

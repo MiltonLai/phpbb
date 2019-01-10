@@ -228,7 +228,6 @@ CREATE TABLE phpbb_forums (
 	forum_rules_link varchar(255) NOT NULL DEFAULT '',
 	forum_rules_bitfield varchar(255) NOT NULL DEFAULT '',
 	forum_rules_options INTEGER UNSIGNED NOT NULL DEFAULT '7',
-	forum_rules_uid varchar(8) NOT NULL DEFAULT '',
 	forum_topics_per_page tinyint(4) NOT NULL DEFAULT '0',
 	forum_type tinyint(4) NOT NULL DEFAULT '0',
 	forum_status tinyint(4) NOT NULL DEFAULT '0',

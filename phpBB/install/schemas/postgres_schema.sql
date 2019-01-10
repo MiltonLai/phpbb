@@ -369,7 +369,6 @@ CREATE TABLE phpbb_forums (
 	forum_rules_link varchar(255) DEFAULT '' NOT NULL,
 	forum_rules_bitfield varchar(255) DEFAULT '' NOT NULL,
 	forum_rules_options INT4 DEFAULT '7' NOT NULL CHECK (forum_rules_options >= 0),
-	forum_rules_uid varchar(8) DEFAULT '' NOT NULL,
 	forum_topics_per_page INT2 DEFAULT '0' NOT NULL,
 	forum_type INT2 DEFAULT '0' NOT NULL,
 	forum_status INT2 DEFAULT '0' NOT NULL,
