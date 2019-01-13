@@ -150,8 +150,16 @@ $template->set_filenames(array(
 
 make_jumpbox(append_sid("{$phpbb_root_path}viewforum.$phpEx"), $forum_id);
 
+if ($global_seo == 1)
+{
+    $url = append_sid($phpbb_root_path . 'f' . $forum_id . (($start == 0) ? '' : '-'.$start).'.html');
+}
+else
+{
+    $url = append_sid("{$phpbb_root_path}viewforum.$phpEx", "f=$forum_id" . (($start == 0) ? '' : "&amp;start=$start"));
+}
 $template->assign_vars(array(
-	'U_VIEW_FORUM'			=> append_sid("{$phpbb_root_path}viewforum.$phpEx", "f=$forum_id" . (($start == 0) ? '' : "&amp;start=$start")),
+	'U_VIEW_FORUM'			=> $url,
 ));
 
 // Not postable forum or showing active topics?
@@ -282,6 +290,15 @@ if (!empty($_EXTRA_URL))
 	}
 }
 
+if ($global_seo == 1)
+{
+    $s_forum_action = append_sid($phpbb_root_path . 'f' . $forum_id . (($start == 0) ? '' : '-'. $start) . '.html');
+}
+else
+{
+    $s_forum_action = append_sid("{$phpbb_root_path}viewforum.$phpEx", "f=$forum_id" . (($start == 0) ? '' : "&amp;start=$start"));
+}
+
 $template->assign_vars(array(
 	'MODERATORS'	=> (!empty($moderators[$forum_id])) ? implode(', ', $moderators[$forum_id]) : '',
 
@@ -317,7 +334,7 @@ $template->assign_vars(array(
 	'S_WATCH_FORUM_LINK'	=> $s_watching_forum['link'],
 	'S_WATCH_FORUM_TITLE'	=> $s_watching_forum['title'],
 	'S_WATCHING_FORUM'		=> $s_watching_forum['is_watching'],
-	'S_FORUM_ACTION'		=> append_sid("{$phpbb_root_path}viewforum.$phpEx", "f=$forum_id" . (($start == 0) ? '' : "&amp;start=$start")),
+	'S_FORUM_ACTION'		=> $s_forum_action,
 	'S_DISPLAY_SEARCHBOX'	=> ($auth->acl_get('u_search') && $auth->acl_get('f_search', $forum_id) && $config['load_search']) ? true : false,
 	'S_SEARCHBOX_ACTION'	=> append_sid("{$phpbb_root_path}search.$phpEx"),
 	'S_SEARCH_LOCAL_HIDDEN_FIELDS'	=> build_hidden_fields($s_search_hidden_fields),
@@ -327,7 +344,9 @@ $template->assign_vars(array(
 
 	'U_MCP'				=> ($auth->acl_get('m_', $forum_id)) ? append_sid("{$phpbb_root_path}mcp.$phpEx", "f=$forum_id&amp;i=main&amp;mode=forum_view", true, $user->session_id) : '',
 	'U_POST_NEW_TOPIC'	=> ($auth->acl_get('f_post', $forum_id) || $user->data['user_id'] == ANONYMOUS) ? append_sid("{$phpbb_root_path}posting.$phpEx", 'mode=post&amp;f=' . $forum_id) : '',
-	'U_VIEW_FORUM'		=> append_sid("{$phpbb_root_path}viewforum.$phpEx", "f=$forum_id" . ((strlen($u_sort_param)) ? "&amp;$u_sort_param" : '') . (($start == 0) ? '' : "&amp;start=$start")),
+	'U_VIEW_FORUM'		=> ($global_seo == 1)?
+        append_sid($phpbb_root_path . 'f' . $forum_id . (($start == 0) ? '' : '-' . $start) . '.html', ((strlen($u_sort_param)) ? "$u_sort_param" : ''))
+        : append_sid("{$phpbb_root_path}viewforum.$phpEx", "f=$forum_id" . ((strlen($u_sort_param)) ? "&amp;$u_sort_param" : '') . (($start == 0) ? '' : "&amp;start=$start")),
 	'U_MARK_TOPICS'		=> ($user->data['is_registered'] || $config['load_anon_lastread']) ? append_sid("{$phpbb_root_path}viewforum.$phpEx", 'hash=' . generate_link_hash('global') . "&amp;f=$forum_id&amp;mark=topics") : '',
 ));
 
@@ -550,9 +569,16 @@ if ($s_display_active)
 
 // We need to readd the local announcements to the forums total topic count, otherwise the number is different from the one on the forum list
 $total_topic_count = $topics_count + sizeof($announcement_list) - sizeof($global_announce_list);
-
+if ($global_seo == 1)
+{
+    $pagination = generate_seo_pagination($phpbb_root_path . 'f'. $forum_id, '.html', ((strlen($u_sort_param)) ? "$u_sort_param" : ''), $topics_count, $config['topics_per_page'], $start);
+}
+else
+{
+    $pagination = generate_pagination(append_sid("{$phpbb_root_path}viewforum.$phpEx", "f=$forum_id" . ((strlen($u_sort_param)) ? "&amp;$u_sort_param" : '')), $topics_count, $config['topics_per_page'], $start);
+}
 $template->assign_vars(array(
-	'PAGINATION'	=> generate_pagination(append_sid("{$phpbb_root_path}viewforum.$phpEx", "f=$forum_id" . ((strlen($u_sort_param)) ? "&amp;$u_sort_param" : '')), $topics_count, $config['topics_per_page'], $start),
+	'PAGINATION'	=> $pagination,
 	'PAGE_NUMBER'	=> on_page($topics_count, $config['topics_per_page'], $start),
 	'TOTAL_TOPICS'	=> ($s_display_active) ? false : (($total_topic_count == 1) ? $user->lang['VIEW_FORUM_TOPIC'] : sprintf($user->lang['VIEW_FORUM_TOPICS'], $total_topic_count)))
 );
@@ -642,13 +668,27 @@ if (sizeof($topic_list))
 		topic_status($row, $replies, $unread_topic, $folder_img, $folder_alt, $topic_type);
 
 		// Generate all the URIs ...
-		$view_topic_url_params = 'f=' . $topic_forum_id . '&amp;t=' . $topic_id;
-		$view_topic_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", $view_topic_url_params);
-
+        $view_topic_url_params = 'f=' . $topic_forum_id . '&amp;t=' . $topic_id;
+        if ($global_seo == 1)
+        {
+            $view_topic_url = append_sid($phpbb_root_path . 'f' . $topic_forum_id . '-t' . $topic_id . '.html');
+        }
+        else
+        {
+            $view_topic_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", $view_topic_url_params);
+        }
 		$topic_unapproved = (!$row['topic_approved'] && $auth->acl_get('m_approve', $topic_forum_id)) ? true : false;
 		$posts_unapproved = ($row['topic_approved'] && $row['topic_replies'] < $row['topic_replies_real'] && $auth->acl_get('m_approve', $topic_forum_id)) ? true : false;
 		$u_mcp_queue = ($topic_unapproved || $posts_unapproved) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=queue&amp;mode=' . (($topic_unapproved) ? 'approve_details' : 'unapproved_posts') . "&amp;t=$topic_id", true, $user->session_id) : '';
 
+		if ($global_seo == 1)
+        {
+            $topic_pagination = topic_generate_seo_pagination($replies, $phpbb_root_path . 'f' . $topic_forum_id . '-t' . $topic_id, '.html');
+        }
+        else
+        {
+            $topic_pagination = topic_generate_pagination($replies, $view_topic_url);
+        }
 		// Send vars to template
 		$template->assign_block_vars('topicrow', array(
 			'FORUM_ID'					=> $topic_forum_id,
@@ -664,7 +704,7 @@ if (sizeof($topic_list))
 			'LAST_POST_AUTHOR_COLOUR'	=> get_username_string('colour', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
 			'LAST_POST_AUTHOR_FULL'		=> get_username_string('full', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
 
-			'PAGINATION'		=> topic_generate_pagination($replies, $view_topic_url),
+			'PAGINATION'		=> $topic_pagination,
 			'REPLIES'			=> $replies,
 			'VIEWS'				=> $row['topic_views'],
 			'TOPIC_TITLE'		=> censor_text($row['topic_title']),

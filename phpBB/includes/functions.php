@@ -2255,6 +2255,100 @@ function generate_pagination($base_url, $num_items, $per_page, $start_item, $add
 }
 
 /**
+ * Pagination routine, generates page number sequence
+ * tpl_prefix is for using different pagination blocks at one page
+ */
+function generate_seo_pagination($base_url, $extension, $extra_params, $num_items, $per_page, $start_item, $add_prevnext_text = false, $tpl_prefix = '')
+{
+    global $template, $user;
+
+    // Make sure $per_page is a valid value
+    $per_page = ($per_page <= 0) ? 1 : $per_page;
+
+    $seperator = "\n";
+    $total_pages = ceil($num_items / $per_page);
+
+    if ($total_pages == 1 || !$num_items)
+    {
+        return false;
+    }
+
+    if (strlen($extra_params))
+    {
+        $extra_params = '?' . $extra_params;
+    }
+
+    $on_page = floor($start_item / $per_page) + 1;
+
+    $page_string = ($on_page == 1) ? '<li class="active"><span>1</span></li>' : '<li><a class="button" role="button" href="' . $base_url . $extension . $extra_params . '">1</a></li>';
+
+    if ($total_pages > 5)
+    {
+        $start_cnt = min(max(1, $on_page - 4), $total_pages - 5);
+        $end_cnt = max(min($total_pages, $on_page + 4), 6);
+
+        $page_string .= ($start_cnt > 1) ? '<li class="ellipsis" role="separator"><span>…</span></li>' : $seperator;
+
+        for ($i = $start_cnt + 1; $i < $end_cnt; $i++)
+        {
+            $page_string .= ($i == $on_page) ?
+                '<li class="active"><span>' . $i . '</span></li>' :
+                '<li><a class="button" role="button" href="' . $base_url . '-' . (($i - 1) * $per_page) . $extension . $extra_params . '">' . $i . '</a></li>';
+            if ($i < $end_cnt - 1)
+            {
+                $page_string .= $seperator;
+            }
+        }
+
+        $page_string .= ($end_cnt < $total_pages) ? '<li class="ellipsis" role="separator"><span>…</span></li>' : $seperator;
+    }
+    else
+    {
+        $page_string .= $seperator;
+
+        for ($i = 2; $i < $total_pages; $i++)
+        {
+            $page_string .= ($i == $on_page) ?
+                '<li class="active"><span>' . $i . '</span></li>' :
+                '<li><a class="button" role="button" href="' . $base_url . '-' . (($i - 1) * $per_page) . $extension . $extra_params . '">' . $i . '</a></li>';
+            if ($i < $total_pages)
+            {
+                $page_string .= $seperator;
+            }
+        }
+    }
+
+    $page_string .= ($on_page == $total_pages) ?
+        '<li class="active"><span>' . $total_pages . '</span></li>' :
+        '<li><a class="button" role="button" href="' . $base_url . '-' . (($total_pages - 1) * $per_page) . $extension . $extra_params . '">' . $total_pages . '</a></li>';
+
+    if ($add_prevnext_text)
+    {
+        if ($on_page != 1)
+        {
+            $page_string = '<li><a class="button" role="button" href="' . $base_url . '-' . (($on_page - 2) * $per_page) . $extension . $extra_params . '">' . $user->lang['PREVIOUS'] . '</a></li>&nbsp;&nbsp;' . $page_string;
+        }
+
+        if ($on_page != $total_pages)
+        {
+            $page_string .= '&nbsp;&nbsp;<li class="arrow next"><a class="button button-icon-only" rel="next" role="button" href="' . $base_url . '-' . ($on_page * $per_page) . $extension . $extra_params . '"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">' . $user->lang['NEXT'] . '</span></a></li>';
+        }
+    }
+
+    $template->assign_vars(array(
+        $tpl_prefix . 'BASE_URL'		=> $base_url . $extension . $extra_params,
+        'A_' . $tpl_prefix . 'BASE_URL'	=> addslashes($base_url . $extension . $extra_params),
+        $tpl_prefix . 'PER_PAGE'		=> $per_page,
+
+        $tpl_prefix . 'PREVIOUS_PAGE'	=> ($on_page == 1) ? '' : $base_url . '-' . (($on_page - 2) * $per_page) . $extension . $extra_params,
+        $tpl_prefix . 'NEXT_PAGE'		=> ($on_page == $total_pages) ? '' : $base_url . '-' . ($on_page * $per_page) . $extension . $extra_params,
+        $tpl_prefix . 'TOTAL_PAGES'		=> $total_pages,
+    ));
+
+    return $page_string;
+}
+
+/**
 * Return current page (pagination)
 */
 function on_page($num_items, $per_page, $start)
@@ -4673,7 +4767,7 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 		'U_MEMBERLIST'			=> append_sid("{$phpbb_root_path}memberlist.$phpEx"),
 		'U_VIEWONLINE'			=> ($auth->acl_gets('u_viewprofile', 'a_user', 'a_useradd', 'a_userdel')) ? append_sid("{$phpbb_root_path}viewonline.$phpEx") : '',
 		'U_LOGIN_LOGOUT'		=> $u_login_logout,
-		'U_INDEX'				=> append_sid("{$phpbb_root_path}index.$phpEx"),
+		'U_INDEX'				=> append_sid($phpbb_root_path),
 		'U_SEARCH'				=> append_sid("{$phpbb_root_path}search.$phpEx"),
 		'U_REGISTER'			=> append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=register'),
 		'U_PROFILE'				=> append_sid("{$phpbb_root_path}ucp.$phpEx"),

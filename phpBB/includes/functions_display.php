@@ -21,7 +21,7 @@ if (!defined('IN_PHPBB'))
 */
 function display_forums($root_data = '', $display_moderators = true, $return_moderators = false)
 {
-	global $db, $auth, $user, $template;
+	global $db, $auth, $user, $template, $global_seo;
 	global $phpbb_root_path, $phpEx, $config;
 
 	$forum_rows = $subforums = $forum_ids = $forum_ids_moderator = $forum_moderators = $active_forum_ary = array();
@@ -323,7 +323,9 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 				'FORUM_FOLDER_IMG_SRC'	=> '',
 				'FORUM_IMAGE'			=> ($row['forum_image']) ? '<img src="' . $phpbb_root_path . $row['forum_image'] . '" alt="' . $user->lang['FORUM_CAT'] . '" />' : '',
 				'FORUM_IMAGE_SRC'		=> ($row['forum_image']) ? $phpbb_root_path . $row['forum_image'] : '',
-				'U_VIEWFORUM'			=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']))
+				'U_VIEWFORUM'			=> ($global_seo == 1)?
+                    append_sid($phpbb_root_path . 'f' . $row['forum_id'] . '.html')
+                    : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']))
 			);
 
 			continue;
@@ -366,7 +368,9 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 				if ($subforum_row['display'] && $subforum_row['name'])
 				{
 					$subforums_list[] = array(
-						'link'		=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $subforum_id),
+						'link'		=> ($global_seo == 1)?
+                            append_sid($phpbb_root_path . 'f' . $subforum_id . '.html')
+                            : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $subforum_id),
 						'name'		=> $subforum_row['name'],
 						'unread'	=> $subforum_unread,
 					);
@@ -416,7 +420,14 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 		{
 			$last_post_subject = $row['forum_last_post_subject'];
 			$last_post_time = $user->format_date($row['forum_last_post_time']);
-			$last_post_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $row['forum_id_last_post'] . '&amp;p=' . $row['forum_last_post_id']) . '#p' . $row['forum_last_post_id'];
+			if ($global_seo == 1)
+            {
+                $last_post_url = append_sid($phpbb_root_path . 'f' . $row['forum_id_last_post'] . '-p' . $row['forum_last_post_id']) . '.html' . '#p' . $row['forum_last_post_id'];
+            }
+            else
+            {
+                $last_post_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $row['forum_id_last_post'] . '&amp;p=' . $row['forum_last_post_id']) . '#p' . $row['forum_last_post_id'];
+            }
 		}
 		else
 		{
@@ -442,9 +453,18 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 		$s_subforums_list = (string) implode(', ', $s_subforums_list);
 		$catless = ($row['parent_id'] == $root_data['forum_id']) ? true : false;
 
+		if ($global_seo == 1)
+		{
+            $u_viewforum = append_sid($phpbb_root_path . 'f' . $row['forum_id'] . '.html');
+        }
+        else
+        {
+            $u_viewforum = append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']);
+        }
+
 		if ($row['forum_type'] != FORUM_LINK)
 		{
-			$u_viewforum = append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']);
+            // do nothing
 		}
 		else
 		{
@@ -452,7 +472,7 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 			// If the forum is having a password or no read access we do not expose the link, but instead handle it in viewforum
 			if (($row['forum_flags'] & FORUM_FLAG_LINK_TRACK) || $row['forum_password'] || !$auth->acl_get('f_read', $forum_id))
 			{
-				$u_viewforum = append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']);
+                // do nothing
 			}
 			else
 			{
@@ -558,7 +578,7 @@ function generate_forum_rules(&$forum_data)
 */
 function generate_forum_nav(&$forum_data)
 {
-	global $db, $user, $template, $auth, $config;
+	global $db, $user, $template, $auth, $config, $global_seo;
 	global $phpEx, $phpbb_root_path;
 
 	if (!$auth->acl_get('f_list', $forum_data['forum_id']))
@@ -588,7 +608,9 @@ function generate_forum_nav(&$forum_data)
 				'S_IS_POST'		=> ($parent_type == FORUM_POST) ? true : false,
 				'FORUM_NAME'	=> $parent_name,
 				'FORUM_ID'		=> $parent_forum_id,
-				'U_VIEW_FORUM'	=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $parent_forum_id))
+				'U_VIEW_FORUM'	=> ($global_seo == 1)?
+                    append_sid($phpbb_root_path. 'f' . $parent_forum_id . '.html')
+                    : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $parent_forum_id))
 			);
 		}
 	}
@@ -599,7 +621,9 @@ function generate_forum_nav(&$forum_data)
 		'S_IS_POST'		=> ($forum_data['forum_type'] == FORUM_POST) ? true : false,
 		'FORUM_NAME'	=> $forum_data['forum_name'],
 		'FORUM_ID'		=> $forum_data['forum_id'],
-		'U_VIEW_FORUM'	=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_data['forum_id']))
+		'U_VIEW_FORUM'	=> ($global_seo == 1)?
+            append_sid($phpbb_root_path. 'f' . $forum_data['forum_id'] . '.html')
+            : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_data['forum_id']))
 	);
 
 	$template->assign_vars(array(
@@ -660,7 +684,7 @@ function get_forum_parents(&$forum_data)
 */
 function topic_generate_pagination($replies, $url)
 {
-	global $config, $user;
+	global $config;
 
 	// Make sure $per_page is a valid value
 	$per_page = ($config['posts_per_page'] <= 0) ? 1 : $config['posts_per_page'];
@@ -695,6 +719,48 @@ function topic_generate_pagination($replies, $url)
 	}
 
 	return $pagination;
+}
+
+/**
+ * Generate topic pagination
+ */
+function topic_generate_seo_pagination($replies, $url, $extension)
+{
+    global $config;
+
+    // Make sure $per_page is a valid value
+    $per_page = ($config['posts_per_page'] <= 0) ? 1 : $config['posts_per_page'];
+
+    if (($replies + 1) > $per_page)
+    {
+        $total_pages = ceil(($replies + 1) / $per_page);
+        $pagination = '';
+
+        $times = 1;
+        for ($j = 0; $j < $replies + 1; $j += $per_page)
+        {
+            $pagination .= '<li><a class="button" href="' . $url . ($j == 0 ? '' : '-' . $j) . $extension . '">' . $times . '</a></li>';
+            if ($times == 1 && $total_pages > 5)
+            {
+                $pagination .= '<li><span class="page-dots">…</span></li>';
+
+                // Display the last three pages
+                $times = $total_pages - 3;
+                $j += ($total_pages - 4) * $per_page;
+            }
+            else if ($times < $total_pages)
+            {
+                $pagination .= "\n";
+            }
+            $times++;
+        }
+    }
+    else
+    {
+        $pagination = '';
+    }
+
+    return $pagination;
 }
 
 /**
