@@ -485,7 +485,7 @@ if ($start < 0 || $start >= $total_posts)
 }
 
 // General Viewtopic URL for return links
-if ($global_seo == 1)
+if ($config['enable_seo_url'] == 1)
 {
     $viewtopic_url = append_sid($phpbb_root_path . 'f' . $forum_id . '-t' . $topic_id . (($start == 0) ? '' : '-' .$start) . '.html', ((strlen($u_sort_param)) ? $u_sort_param : '') . (($highlight_match) ? "&amp;hilit=$highlight" : ''));
 }
@@ -581,7 +581,7 @@ $topic_mod .= ($allow_change_type && $auth->acl_get('f_announce', $forum_id) && 
 $topic_mod .= ($auth->acl_get('m_', $forum_id)) ? '<option value="topic_logs">' . $user->lang['VIEW_TOPIC_LOGS'] . '</option>' : '';
 
 // If we've got a hightlight set pass it on to pagination.
-if ($global_seo == 1)
+if ($config['enable_seo_url'] == 1)
 {
     $pagination = generate_seo_pagination(
         $phpbb_root_path . 'f'. $forum_id . '-t' . $topic_id,
@@ -678,7 +678,7 @@ $template->assign_vars(array(
 	'S_SELECT_SORT_KEY' 	=> $s_sort_key,
 	'S_SELECT_SORT_DAYS' 	=> $s_limit_days,
 	'S_SINGLE_MODERATOR'	=> (!empty($forum_moderators[$forum_id]) && sizeof($forum_moderators[$forum_id]) > 1) ? false : true,
-	'S_TOPIC_ACTION' 		=> ($global_seo == 1)?
+	'S_TOPIC_ACTION' 		=> ($config['enable_seo_url'] == 1)?
         append_sid($phpbb_root_path . 'f' . $forum_id . '-t' . $topic_id . (($start == 0) ? '' : '-' . $start) . '.html')
         : append_sid("{$phpbb_root_path}viewtopic.$phpEx", "f=$forum_id&amp;t=$topic_id" . (($start == 0) ? '' : "&amp;start=$start")),
 	'S_TOPIC_MOD' 			=> ($topic_mod != '') ? '<select name="action" id="quick-mod-select">' . $topic_mod . '</select>' : '',
@@ -694,27 +694,27 @@ $template->assign_vars(array(
 	'S_DISPLAY_REPLY_INFO'	=> ($topic_data['forum_type'] == FORUM_POST && ($auth->acl_get('f_reply', $forum_id) || $user->data['user_id'] == ANONYMOUS)) ? true : false,
 	'S_ENABLE_FEEDS_TOPIC'	=> ($config['feed_topic'] && !phpbb_optionget(FORUM_OPTION_FEED_EXCLUDE, $topic_data['forum_options'])) ? true : false,
 
-	'U_TOPIC'				=> ($global_seo == 1)?
+	'U_TOPIC'				=> ($config['enable_seo_url'] == 1)?
         $server_path . 'f' . $forum_id . '-t' . $topic_id . '.html' : "{$server_path}viewtopic.$phpEx?f=$forum_id&amp;t=$topic_id",
 	'U_FORUM'				=> $server_path,
 	'U_VIEW_TOPIC' 			=> $viewtopic_url,
-	'U_VIEW_FORUM' 			=> ($global_seo == 1)?
+	'U_VIEW_FORUM' 			=> ($config['enable_seo_url'] == 1)?
         append_sid($phpbb_root_path . 'f' . $forum_id . '.html')
         : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_id),
-	'U_VIEW_OLDER_TOPIC'	=> ($global_seo == 1)?
+	'U_VIEW_OLDER_TOPIC'	=> ($config['enable_seo_url'] == 1)?
         append_sid($phpbb_root_path . 'f' . $forum_id . '-t' . $topic_id . '.html?view=previous')
         : append_sid("{$phpbb_root_path}viewtopic.$phpEx", "f=$forum_id&amp;t=$topic_id&amp;view=previous"),
-	'U_VIEW_NEWER_TOPIC'	=> ($global_seo == 1)?
+	'U_VIEW_NEWER_TOPIC'	=> ($config['enable_seo_url'] == 1)?
         append_sid($phpbb_root_path . 'f' . $forum_id . '-t' . $topic_id . '.html?view=next')
         : append_sid("{$phpbb_root_path}viewtopic.$phpEx", "f=$forum_id&amp;t=$topic_id&amp;view=next"),
-	'U_PRINT_TOPIC'			=> ($auth->acl_get('f_print', $forum_id)) ? $viewtopic_url . '&amp;view=print' : '',
+	'U_PRINT_TOPIC'			=> ($auth->acl_get('f_print', $forum_id)) ? $viewtopic_url . (($config['enable_seo_url'] == 1)? '?':'&amp;') . 'view=print' : '',
 	'U_EMAIL_TOPIC'			=> ($auth->acl_get('f_email', $forum_id) && $config['email_enable']) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=email&amp;t=$topic_id") : '',
 
 	'U_WATCH_TOPIC' 		=> $s_watching_topic['link'],
 	'L_WATCH_TOPIC' 		=> $s_watching_topic['title'],
 	'S_WATCHING_TOPIC'		=> $s_watching_topic['is_watching'],
 
-	'U_BOOKMARK_TOPIC'		=> ($user->data['is_registered'] && $config['allow_bookmarks']) ? $viewtopic_url . '&amp;bookmark=1&amp;hash=' . generate_link_hash("topic_$topic_id") : '',
+	'U_BOOKMARK_TOPIC'		=> ($user->data['is_registered'] && $config['allow_bookmarks']) ? $viewtopic_url . (($config['enable_seo_url'] == 1)? '?':'&amp;') . 'bookmark=1&amp;hash=' . generate_link_hash("topic_$topic_id") : '',
 	'L_BOOKMARK_TOPIC'		=> ($user->data['is_registered'] && $config['allow_bookmarks'] && $topic_data['bookmarked']) ? $user->lang['BOOKMARK_TOPIC_REMOVE'] : $user->lang['BOOKMARK_TOPIC'],
 
 	'U_POST_NEW_TOPIC' 		=> ($auth->acl_get('f_post', $forum_id) || $user->data['user_id'] == ANONYMOUS) ? append_sid("{$phpbb_root_path}posting.$phpEx", "mode=post&amp;f=$forum_id") : '',

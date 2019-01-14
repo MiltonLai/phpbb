@@ -413,6 +413,8 @@ $lang = array_merge($lang, array(
 
 	'ENABLE_GZIP'				=> 'Enable GZip compression',
 	'ENABLE_GZIP_EXPLAIN'		=> 'Generated content will be compressed prior to sending it to the user. This can reduce network traffic but will also increase CPU usage on both server and client side. Requires zlib PHP extension to be loaded.',
+    'ENABLE_SEO_URL'			=> 'Enable SEO URL',
+    'ENABLE_SEO_URL_EXPLAIN'	=> 'The URL will be shown in search engine friendly format, e.g. http://yourforum/f123-t456-10.html. Need URL Rewrite support',
 	'FORCE_SERVER_VARS'			=> 'Force server URL settings',
 	'FORCE_SERVER_VARS_EXPLAIN'	=> 'If set to yes the server settings defined here will be used in favour of the automatically determined values.',
 	'ICONS_PATH'				=> 'Post icons storage path',

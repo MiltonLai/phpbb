@@ -413,6 +413,8 @@ $lang = array_merge($lang, array(
 
 	'ENABLE_GZIP'				=> '启用GZip压缩', 
 	'ENABLE_GZIP_EXPLAIN'		=> '生成的页面将在发送到浏览器前被压缩. 这将减少网络流量但是会增加服务器和客户端的CPU负载. 需要zlib支持',
+    'ENABLE_SEO_URL'			=> '启用搜索引擎优化URL',
+    'ENABLE_SEO_URL_EXPLAIN'	=> '页面URL将展示为http://yourforum/f123-t456-10.html这样的形式. 有助于搜索引擎优化. 需要服务器URL Rewrite支持',
 	'FORCE_SERVER_VARS'			=> '强制设置服务器URL',
 	'FORCE_SERVER_VARS_EXPLAIN'	=> '如果设置为是, 以下的设置将启用',
 	'ICONS_PATH'				=> '主题图标存储路径',

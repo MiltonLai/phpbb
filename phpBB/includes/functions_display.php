@@ -21,7 +21,7 @@ if (!defined('IN_PHPBB'))
 */
 function display_forums($root_data = '', $display_moderators = true, $return_moderators = false)
 {
-	global $db, $auth, $user, $template, $global_seo;
+	global $db, $auth, $user, $template;
 	global $phpbb_root_path, $phpEx, $config;
 
 	$forum_rows = $subforums = $forum_ids = $forum_ids_moderator = $forum_moderators = $active_forum_ary = array();
@@ -323,7 +323,7 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 				'FORUM_FOLDER_IMG_SRC'	=> '',
 				'FORUM_IMAGE'			=> ($row['forum_image']) ? '<img src="' . $phpbb_root_path . $row['forum_image'] . '" alt="' . $user->lang['FORUM_CAT'] . '" />' : '',
 				'FORUM_IMAGE_SRC'		=> ($row['forum_image']) ? $phpbb_root_path . $row['forum_image'] : '',
-				'U_VIEWFORUM'			=> ($global_seo == 1)?
+				'U_VIEWFORUM'			=> ($config['enable_seo_url'] == 1)?
                     append_sid($phpbb_root_path . 'f' . $row['forum_id'] . '.html')
                     : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']))
 			);
@@ -368,7 +368,7 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 				if ($subforum_row['display'] && $subforum_row['name'])
 				{
 					$subforums_list[] = array(
-						'link'		=> ($global_seo == 1)?
+						'link'		=> ($config['enable_seo_url'] == 1)?
                             append_sid($phpbb_root_path . 'f' . $subforum_id . '.html')
                             : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $subforum_id),
 						'name'		=> $subforum_row['name'],
@@ -420,7 +420,7 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 		{
 			$last_post_subject = $row['forum_last_post_subject'];
 			$last_post_time = $user->format_date($row['forum_last_post_time']);
-			if ($global_seo == 1)
+			if ($config['enable_seo_url'] == 1)
             {
                 $last_post_url = append_sid($phpbb_root_path . 'f' . $row['forum_id_last_post'] . '-p' . $row['forum_last_post_id']) . '.html' . '#p' . $row['forum_last_post_id'];
             }
@@ -453,7 +453,7 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 		$s_subforums_list = (string) implode(', ', $s_subforums_list);
 		$catless = ($row['parent_id'] == $root_data['forum_id']) ? true : false;
 
-		if ($global_seo == 1)
+		if ($config['enable_seo_url'] == 1)
 		{
             $u_viewforum = append_sid($phpbb_root_path . 'f' . $row['forum_id'] . '.html');
         }
@@ -578,7 +578,7 @@ function generate_forum_rules(&$forum_data)
 */
 function generate_forum_nav(&$forum_data)
 {
-	global $db, $user, $template, $auth, $config, $global_seo;
+	global $db, $user, $template, $auth, $config;
 	global $phpEx, $phpbb_root_path;
 
 	if (!$auth->acl_get('f_list', $forum_data['forum_id']))
@@ -608,7 +608,7 @@ function generate_forum_nav(&$forum_data)
 				'S_IS_POST'		=> ($parent_type == FORUM_POST) ? true : false,
 				'FORUM_NAME'	=> $parent_name,
 				'FORUM_ID'		=> $parent_forum_id,
-				'U_VIEW_FORUM'	=> ($global_seo == 1)?
+				'U_VIEW_FORUM'	=> ($config['enable_seo_url'] == 1)?
                     append_sid($phpbb_root_path. 'f' . $parent_forum_id . '.html')
                     : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $parent_forum_id))
 			);
@@ -621,7 +621,7 @@ function generate_forum_nav(&$forum_data)
 		'S_IS_POST'		=> ($forum_data['forum_type'] == FORUM_POST) ? true : false,
 		'FORUM_NAME'	=> $forum_data['forum_name'],
 		'FORUM_ID'		=> $forum_data['forum_id'],
-		'U_VIEW_FORUM'	=> ($global_seo == 1)?
+		'U_VIEW_FORUM'	=> ($config['enable_seo_url'] == 1)?
             append_sid($phpbb_root_path. 'f' . $forum_data['forum_id'] . '.html')
             : append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_data['forum_id']))
 	);

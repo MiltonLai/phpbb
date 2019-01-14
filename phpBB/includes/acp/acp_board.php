@@ -364,6 +364,7 @@ class acp_board
 						'server_name'			=> array('lang' => 'SERVER_NAME',		'validate' => 'string',			'type' => 'text:40:255', 'explain' => true),
 						'server_port'			=> array('lang' => 'SERVER_PORT',		'validate' => 'int:0',			'type' => 'text:5:5', 'explain' => true),
 						'script_path'			=> array('lang' => 'SCRIPT_PATH',		'validate' => 'script_path',	'type' => 'text::255', 'explain' => true),
+                        'enable_seo_url'		=> array('lang' => 'ENABLE_SEO_URL',	'validate' => 'bool',			'type' => 'radio:yes_no', 'explain' => true),
 
 						'legend4'					=> 'ACP_SUBMIT_CHANGES',
 					)
