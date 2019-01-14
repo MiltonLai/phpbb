@@ -253,6 +253,7 @@ $lang = array_merge($lang, array(
 	'GIB'						=> 'GiB',
 	'GO'						=> 'Go',
 	'GOTO_PAGE'					=> 'Go to page',
+    'GOTO_LAST_POST'			=> 'Go to last post',
 	'GROUP'						=> 'Group',
 	'GROUPS'					=> 'Groups',
 	'GROUP_ERR_TYPE'			=> 'Inappropriate group type specified.',

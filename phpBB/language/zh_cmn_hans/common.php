@@ -253,6 +253,7 @@ $lang = array_merge($lang, array(
     'GIB'                  => 'GiB',
 	'GO'						=> 'GO',
 	'GOTO_PAGE'					=> '前往页数',
+    'GOTO_LAST_POST'			=> '前往最新文章',
 	'GROUP'						=> '群组',
 	'GROUPS'					=> '群组',
 	'GROUP_ERR_TYPE'			=> '指定了不恰当的群组类型。',
